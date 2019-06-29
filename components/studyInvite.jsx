@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { Link } from '../routes';
 
-const studyInvite = () => {
-  const [link, setLink] = useState('https://....');
-  const [isClicked, setIsClicked] = useState(false);
+const StudyInvite = ({ link }) => {
+  const [show, setShow] = useState(false);
 
-  const clickLink = e => {
-    setIsClicked(true);
+  const clickLink = () => {
+    setShow(true);
     setTimeout(() => {
-      setIsClicked(false);
+      setShow(false);
     }, 800);
   };
 
@@ -20,7 +20,7 @@ const studyInvite = () => {
       <button onClick={clickLink} name="make" type="button">
         링크 복사
       </button>
-      {isClicked && <h5>링크가 복사되었습니다!</h5>}
+      {show && <h5>링크가 복사되었습니다!</h5>}
       <br />
       <Link route="/" href="/">
         메인으로 돌아가기
@@ -28,5 +28,8 @@ const studyInvite = () => {
     </div>
   );
 };
+StudyInvite.propTypes = {
+  link: PropTypes.string.isRequired,
+};
 
-export default studyInvite;
+export default StudyInvite;

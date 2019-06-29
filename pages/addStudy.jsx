@@ -6,10 +6,10 @@ import Header from '../components/Header';
 const AddStudy = () => {
   return (
     <div>
-      <Header/>
+      <Header />
       <CreateStudy />
     </div>
-  )
+  );
 };
 
 export default AddStudy;

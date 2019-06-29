@@ -23,13 +23,13 @@ const MainLogIn = () => {
       <div>
         {studies.length >= 1 ? (
           <>
-            {studies.map(study => {
+            {studies.map((study, idx) => {
               return (
-                <>
+                <div key={idx}>
                   <li>{study.title}</li>
-                  <li>{study.desc}</li>
+                  <li>{study.description}</li>
                   <br />
-                </>
+                </div>
               );
             })}
           </>
