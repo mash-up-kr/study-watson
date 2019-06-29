@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
+import {LOG_IN} from '../reducers/user';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>
@@ -218,8 +219,18 @@ MyApp.getInitialProps = async context => {
   if (isServer) {
     //
   } else {
-    //
+    // CSR
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // const dispatch = useDispatch();
+    // dispatch({
+    //   type: LOG_IN,
+    //   id: user.userId,
+    //   name: user.userName,
+    //   email: user.userEmail,
+    //   phone: user.userPhone,
+    // });
   }
+
   let pageProps = {};
   if (context.Component.getInitialProps) {
     pageProps = await context.Component.getInitialProps(context.ctx);
