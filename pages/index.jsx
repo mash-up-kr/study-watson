@@ -6,8 +6,8 @@ import Header from '../components/Header';
 import Main from '../components/Main';
 
 const StyledIndex = styled.div`
-width: '100vw',
-height: '100vh',
+width: 100vw;
+height: 100vh;
 `;
 
 const Index = () => {

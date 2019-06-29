@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux'
 
 import { Link } from '../routes';
 import Menu from './Menu'
@@ -7,7 +8,7 @@ import { canUseDOM } from '../common/canUesDOM'
 
 const StyledHeader = styled.div`
   width: 100%;
-  height: 50px;
+  height: 60px;
   border-bottom: 1px solid #EDEDED;
   display: flex;
   flex-direction: row;
@@ -28,6 +29,9 @@ const StyledRightButton = styled.div`
 
 const Header = () => {
   const [value, setValue] = useState(false)
+
+  const { isLogin } = useSelector(state => state.user)
+
   const onClick = () => {
     setValue(!value);
   }
@@ -39,6 +43,12 @@ const Header = () => {
     case '/profile':
       link = '/profile-edit';
       label = '프로필 수정';
+      break;
+    case '/':
+      if (!isLogin) {
+        link = '/login';
+        label = '로그인';
+      }
       break;
     default:
       break;

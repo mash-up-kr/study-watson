@@ -7,16 +7,50 @@ import uuidv4 from 'uuid/v4';
 
 // import fb from '../firebase';
 import Header from '../components/Header';
+import Start from '../components/Start';
 import { SIGN_UP } from '../reducers/user';
 import { useInput } from '../common/useInput';
+import { StyledButton, StyledLabel, StyledInput, StyledTitle, StyledForm } from '../common/StyledComponents';
 
-const StyledInput = styled.input`
-  color: blue;
+const StyledGoogleButton = styled.button`
+  position: fixed;
+  bottom: 1rem;
+  width: calc(100% - 2rem);
+  padding: 1rem 0;
+  font-size: 1rem;
+  color: rgba(0,0,0,0.5);
+  box-shadow: 0 0 1px 0 rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
-const StyledButton = styled.button`
-  background-color: blue;
-  color: white;
+const StyledContainer = styled.div`
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledScreen = styled.div`
+  width: calc(100% - 2rem);
+  height: calc(100vh - 110px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledComplete = styled.div`
+  width: calc(100% - 2rem);
+  height: calc(100vh - 110px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const SignUpEnd = () => {
@@ -25,10 +59,11 @@ export const SignUpEnd = () => {
   };
 
   return (
-    <div>
-      <div>회원가입이 완료되었습니다.</div>
-      <StyledButton onClick={onClick}>홈으로</StyledButton>
-    </div>
+    <StyledComplete>
+      <img src='/static/icon-complete.svg' alt='complete icon' style={{ 'margin-bottom': '1rem' }} />
+      <div>회원가입이 완료되었습니다!</div>
+      <StyledButton type='button' value='홈으로' onClick={onClick} />
+    </StyledComplete>
   );
 };
 
@@ -63,21 +98,24 @@ export const SignUpData = ({ changeDepth }) => {
   };
 
   return (
-    <form>
-      <div>
-        <label htmlFor="name">name</label>
-        <StyledInput id="name" type="text" value={name} onChange={setName} />
-      </div>
-      <div>
-        <label htmlFor="email">email</label>
-        <StyledInput type="text" id="email" value={email} onChange={setEmail} />
-      </div>
-      <div>
-        <label htmlFor="phone">phone number</label>
-        <StyledInput id="phone" type="text" value={phone} onChange={setPhone} />
-      </div>
-      <StyledButton onClick={onSubmit}>완료</StyledButton>
-    </form>
+    <StyledScreen>
+      <StyledTitle>회원가입</StyledTitle>
+      <StyledForm>
+        <div>
+          <StyledLabel htmlFor="name">이름</StyledLabel>
+          <StyledInput id="name" type="text" value={name} onChange={setName} />
+        </div>
+        <div>
+          <StyledLabel htmlFor="email">이메일</StyledLabel>
+          <StyledInput type="text" id="email" value={email} onChange={setEmail} />
+        </div>
+        <div>
+          <StyledLabel htmlFor="phone">전화번호</StyledLabel>
+          <StyledInput id="phone" type="text" value={phone} onChange={setPhone} />
+        </div>
+        <StyledButton type='button' value='완료' onClick={onSubmit} />
+      </StyledForm>
+    </StyledScreen>
   );
 };
 
@@ -87,12 +125,13 @@ SignUpData.propTypes = {
 
 const SignupStart = ({ changeDepth }) => {
   return (
-    <div>
-      <div>회원가입</div>
-      <StyledButton onClick={() => changeDepth(1)}>
+    <StyledContainer>
+      <Start />
+      <StyledGoogleButton onClick={() => changeDepth(1)}>
+        <img src='/static/icon-google.svg' alt='google logo' style={{ 'marginRight': '1rem' }} />
         Google로 시작하기
-      </StyledButton>
-    </div>
+      </StyledGoogleButton>
+    </StyledContainer>
   );
 };
 
@@ -108,7 +147,12 @@ const Signup = () => {
   };
 
   if (depth === 2) {
-    return <SignUpEnd />;
+    return (
+      <div>
+        <Header />
+        <SignUpEnd />
+      </div>
+    );
   }
 
   if (depth === 1) {
