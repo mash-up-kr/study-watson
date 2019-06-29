@@ -60,6 +60,9 @@ typings/
 # next.js build output
 .next
 
+# webstorm
+.idea/*
+
 package-lock.json
 
 default.json
@@ -74,4 +77,4 @@ build
 bundles
 out
 
-config/firebase.js
+config/firebase.json

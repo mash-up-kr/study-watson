@@ -17,7 +17,7 @@ dotenv.config();
 
 app.prepare().then(() => {
   const server = express();
-  // server.use('static ', express.static('./static'));
+  server.use('static ', express.static('./static'));
   server.use(handle);
   server.use(morgan('dev'));
   server.use(express.json());
@@ -29,7 +29,7 @@ app.prepare().then(() => {
 
     if (pathname === '/static/service-worker.js') {
       //   // const filePath = join(__dirname, '.next', pathname)
-      //   app.serveStatic(req, res, path.resolve("./static/service-worker.js"))
+      // app.serveStatic(req, res, path.resolve('./static/service-worker.js'));
     } else {
       handle(req, res, parsedUrl);
     }
