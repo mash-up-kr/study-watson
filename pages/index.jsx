@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Menu from '../components/Menu';
+import MainEmpty from '../components/MainEmpty';
 
 const Index = () => {
   const menuHeight = 16;
@@ -16,7 +16,6 @@ const Index = () => {
         // flexDirection: 'column',
       }}
     >
-      <Menu menuHeight={menuHeight} />
       <div
         style={{
           height: `calc(100vh - ${menuHeight}px)`,
@@ -26,7 +25,7 @@ const Index = () => {
           flexDirection: 'column',
         }}
       >
-        <div>메인페이지 입니다</div>
+        <MainEmpty />
       </div>
     </div>
   );
