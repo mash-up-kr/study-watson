@@ -45,14 +45,14 @@ const StyledTitle = styled.h2`
 const MainLogOut = () => {
   const onClick = () => {
     Router.pushRoute('/signup');
-  }
+  };
 
   return (
     <>
       <StyledScreen>
         <Start />
       </StyledScreen>
-      <StyledButton type='button' value='회원가입' onClick={onClick} />
+      <StyledButton type="button" value="회원가입" onClick={onClick} />
     </>
   );
 };
@@ -62,7 +62,7 @@ const MainLogIn = () => {
 
   const onClick = () => {
     Router.pushRoute('/addStudy');
-  }
+  };
 
   return (
     <div>

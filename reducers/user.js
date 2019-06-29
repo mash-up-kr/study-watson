@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
         email: action.email,
         phone: action.phone,
       };
-    case LOG_IN :
+    case LOG_IN:
       return {
         ...state,
         isLogin: true,
@@ -40,15 +40,16 @@ export default (state = initialState, action) => {
       };
 
     case LOG_OUT:
+      window.localStorage.removeItem('user');
       return {
         ...state,
-        isLogin: action.isLogin
+        isLogin: action.isLogin,
       };
 
     case WITHDRAW:
       return {
         ...state,
-        isLogin: action.isLogin
+        isLogin: action.isLogin,
       };
 
     default: {

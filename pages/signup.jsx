@@ -4,13 +4,20 @@ import { useDispatch } from 'react-redux';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
+import axios from 'axios';
 
 // import fb from '../firebase';
 import Header from '../components/Header';
 import Start from '../components/Start';
 import { SIGN_UP } from '../reducers/user';
 import { useInput } from '../common/useInput';
-import { StyledButton, StyledLabel, StyledInput, StyledTitle, StyledForm } from '../common/StyledComponents';
+import {
+  StyledButton,
+  StyledLabel,
+  StyledInput,
+  StyledTitle,
+  StyledForm,
+} from '../common/StyledComponents';
 
 const StyledGoogleButton = styled.button`
   position: fixed;
@@ -18,8 +25,8 @@ const StyledGoogleButton = styled.button`
   width: calc(100% - 2rem);
   padding: 1rem 0;
   font-size: 1rem;
-  color: rgba(0,0,0,0.5);
-  box-shadow: 0 0 1px 0 rgba(0,0,0,0.12);
+  color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -60,32 +67,67 @@ export const SignUpEnd = () => {
 
   return (
     <StyledComplete>
-      <img src='/static/icon-complete.svg' alt='complete icon' style={{ 'margin-bottom': '1rem' }} />
+      <img
+        src="/static/icon-complete.svg"
+        alt="complete icon"
+        style={{ marginBottom: '1rem' }}
+      />
       <div>회원가입이 완료되었습니다!</div>
-      <StyledButton type='button' value='홈으로' onClick={onClick} />
+      <StyledButton type="button" value="홈으로" onClick={onClick} />
     </StyledComplete>
   );
 };
 
 export const SignUpData = ({ changeDepth }) => {
-  const uid = uuidv4();
-  const [id] = useInput(uid);
   const [name, setName] = useInput('');
   const [email, setEmail] = useInput('');
+  const [password1, setPassword1] = useInput('');
+  const [password2, setPassword2] = useInput('');
+  const [type, setType] = useInput('');
   const [phone, setPhone] = useInput('');
 
   const dispatch = useDispatch();
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    dispatch({
-      type: SIGN_UP,
-      id,
-      name,
-      email,
-      phone,
-    });
-    localStorage.setItem('user', JSON.stringify({ id, name, email, phone }));
+    try {
+      const result = await axios.post(
+        'https://study-watson.lhy.kr/api/v1/members/',
+        {
+          username: name,
+          password1,
+          password2,
+          type,
+          email,
+          phoneNumber: phone,
+        },
+      );
+      console.log(111, result.data);
+
+      const json = {
+        id: result.data.pk,
+        name: result.data.username,
+        email: result.data.email,
+        phone: result.data.phoneNumber,
+      };
+      dispatch({
+        type: SIGN_UP,
+        ...json,
+      });
+      localStorage.setItem('user', JSON.stringify({ ...json }));
+      changeDepth(2);
+    } catch (error) {
+      console.log(222, error.response);
+    }
+
+    // dispatch({
+    //   type: SIGN_UP,
+    //   id,
+    //   name,
+    //   email,
+    //   phone,
+    // });
+    // localStorage.setItem('user', JSON.stringify({ id, name, email, phone }));
     // fb()
     //   .firestore()
     //   .collection('users')
@@ -94,7 +136,6 @@ export const SignUpData = ({ changeDepth }) => {
     //   .then(res => console.log(res))
     //   .then(() => console.log('signup success'))
     //   .catch(e => console.log(e));
-    changeDepth(2);
   };
 
   return (
@@ -107,13 +148,45 @@ export const SignUpData = ({ changeDepth }) => {
         </div>
         <div>
           <StyledLabel htmlFor="email">이메일</StyledLabel>
-          <StyledInput type="text" id="email" value={email} onChange={setEmail} />
+          <StyledInput
+            type="text"
+            id="email"
+            value={email}
+            onChange={setEmail}
+          />
         </div>
         <div>
           <StyledLabel htmlFor="phone">전화번호</StyledLabel>
-          <StyledInput id="phone" type="text" value={phone} onChange={setPhone} />
+          <StyledInput
+            id="phone"
+            type="text"
+            value={phone}
+            onChange={setPhone}
+          />
         </div>
-        <StyledButton type='button' value='완료' onClick={onSubmit} />
+        <div>
+          <StyledLabel htmlFor="password1">password1</StyledLabel>
+          <StyledInput
+            id="password1"
+            type="text"
+            value={password1}
+            onChange={setPassword1}
+          />
+        </div>
+        <div>
+          <StyledLabel htmlFor="password2">password2</StyledLabel>
+          <StyledInput
+            id="password2"
+            type="text"
+            value={password2}
+            onChange={setPassword2}
+          />
+        </div>
+        <div>
+          <StyledLabel htmlFor="type">type</StyledLabel>
+          <StyledInput id="type" type="text" value={type} onChange={setType} />
+        </div>
+        <StyledButton type="button" value="완료" onClick={onSubmit} />
       </StyledForm>
     </StyledScreen>
   );
@@ -128,7 +201,11 @@ const SignupStart = ({ changeDepth }) => {
     <StyledContainer>
       <Start />
       <StyledGoogleButton onClick={() => changeDepth(1)}>
-        <img src='/static/icon-google.svg' alt='google logo' style={{ 'marginRight': '1rem' }} />
+        <img
+          src="/static/icon-google.svg"
+          alt="google logo"
+          style={{ marginRight: '1rem' }}
+        />
         Google로 시작하기
       </StyledGoogleButton>
     </StyledContainer>

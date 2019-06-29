@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import styled from 'styled-components';
 
-import { StyledButton, StyledLabel, StyledInput, StyledTitle, StyledForm } from '../common/StyledComponents';
+import {
+  StyledButton,
+  StyledLabel,
+  StyledInput,
+  StyledTitle,
+  StyledForm,
+} from '../common/StyledComponents';
 
 const StyledContainer = styled.div`
   width: calc(100vw - 2rem);
@@ -16,7 +22,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledLink = styled.div`
-  border: 1px solid #EDEDED;
+  border: 1px solid #ededed;
   width: 100%;
   padding: 1rem;
   font-size: 1rem;
@@ -76,7 +82,7 @@ const StudyInvite = ({ link }) => {
       </StyledSmallButton>
       {show && <StyledToast>링크가 복사되었습니다!</StyledToast>}
       <br />
-      <StyledButton type='button' value='홈으로 돌아가기' onClick={onClick} />
+      <StyledButton type="button" value="홈으로 돌아가기" onClick={onClick} />
     </StyledContainer>
   );
 };
