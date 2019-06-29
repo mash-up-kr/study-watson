@@ -20,31 +20,26 @@ const StyledName = styled.div`
 const StyledItem = styled.div`
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid #D8D8D8;
+  border-bottom: 1px solid #d8d8d8;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const StyledProfile = styled.div`
+  width: 100vw;
+  height: 100vh;
 `;
 
 const StyledContainer = styled.ul`
   width: 100%;
 `;
 
-const Index = () => {
-  const user = useSelector(state => state.user);
-  const { name, email, phone } = user;
+const Profile = () => {
+  const { name, email, phone } = useSelector(state => state.user);
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        // display: 'flex',
-        // justifyContent: 'space-around',
-        // alignItems: 'center',
-        // flexDirection: 'column',
-      }}
-    >
+    <StyledProfile>
       <Header />
       <div
         style={{
@@ -71,13 +66,15 @@ const Index = () => {
           </li>
           <li>
             <StyledItem>
-              <Link route='/withdraw' href='/withdraw'>회원탈퇴</Link>
+              <Link route="/withdraw" href="/withdraw">
+                회원탈퇴
+              </Link>
             </StyledItem>
           </li>
         </StyledContainer>
       </div>
-    </div>
+    </StyledProfile>
   );
 };
 
-export default Index;
+export default Profile;

@@ -3,8 +3,13 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 import Header from '../components/Header';
-import { useInput } from '../common/useInput'
-import {EDIT_USER} from '../reducers/user';
+import { useInput } from '../common/useInput';
+import { EDIT_USER } from '../reducers/user';
+
+const StyledProfileEdit = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
 const StyledPhoto = styled.div`
   width: 64px;
@@ -14,7 +19,7 @@ const StyledPhoto = styled.div`
 `;
 
 const StyledInput = styled.input`
-  border: 1px solid #EDEDED;
+  border: 1px solid #ededed;
   width: 100%;
   padding: 1rem 0;
   font-size: 1rem;
@@ -23,17 +28,16 @@ const StyledInput = styled.input`
 const StyledButton = styled.input`
   width: 100%;
   padding: 1rem 0;
-  background-color: #0077FF;
+  background-color: #0077ff;
   font-size: 1rem;
   color: #fff;
   position: fixed;
   bottom: 0;
 `;
 
-const Index = () => {
+const profileEdit = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
-  const { name, email, phone } = user;
+  const { name, email, phone } = useSelector(state => state.user);
 
   const [inputName, setInputName] = useInput(name);
   const [inputEmail, setInputEmail] = useInput(email);
@@ -51,27 +55,37 @@ const Index = () => {
   };
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
+    <StyledProfileEdit>
       <Header />
       <div>
         <StyledPhoto />
         <form onSubmit={onSubmit}>
-          <label htmlFor='name'>이름</label>
-          <StyledInput type='text' id='name' value={inputName} onChange={setInputName} />
-          <label htmlFor='email'>이메일</label>
-          <StyledInput type='text' id='email' value={inputEmail} onChange={setInputEmail} />
-          <label htmlFor='phone'>전화번호</label>
-          <StyledInput type='text' id='phone' value={inputPhone} onChange={setInputPhone} />
-          <StyledButton type='submit' value='저장'/>
+          <label htmlFor="name">이름</label>
+          <StyledInput
+            type="text"
+            id="name"
+            value={inputName}
+            onChange={setInputName}
+          />
+          <label htmlFor="email">이메일</label>
+          <StyledInput
+            type="text"
+            id="email"
+            value={inputEmail}
+            onChange={setInputEmail}
+          />
+          <label htmlFor="phone">전화번호</label>
+          <StyledInput
+            type="text"
+            id="phone"
+            value={inputPhone}
+            onChange={setInputPhone}
+          />
+          <StyledButton type="submit" value="저장" />
         </form>
       </div>
-    </div>
+    </StyledProfileEdit>
   );
 };
 
-export default Index;
+export default profileEdit;
