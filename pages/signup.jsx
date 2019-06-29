@@ -1,42 +1,39 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import fb from '../firebase';
 import Router from 'next/router';
 
+// import fb from '../firebase';
 import Home from './index';
 import Header from '../components/Header';
-import {SIGN_UP} from '../reducers/user';
+import { SIGN_UP } from '../reducers/user';
 
-const Input = styled.input`
+const StyledInput = styled.input`
   color: blue;
 `;
 
-const Btn = styled.button`
+const StyledButton = styled.button`
   background-color: blue;
   color: white;
 `;
 
-
-const Index = () => {
+export const SignUpEnd = () => {
   const [click, isClicked] = useState(false);
 
   const BtnIsClicked = () => {
     isClicked(true);
-    console.log("구글로 회원가입하러 가기");
+    Router.pushRoute('/');
   };
 
-  return click
-    ? <SignUpData />
-    : (
+  return click ? (
+    <Home />
+  ) : (
     <div>
-      <Header/>
-      <div>
-        회원가입
-      </div>
-      <Btn onClick={BtnIsClicked}>Google로 시작하기</Btn>
+      <Header />
+      <div>회원가입이 완료되었습니다.</div>
+      <StyledButton onClick={BtnIsClicked}>홈으로</StyledButton>
     </div>
-  )
+  );
 };
 
 export const SignUpData = () => {
@@ -47,15 +44,15 @@ export const SignUpData = () => {
     userEmail: '',
     userPhone: '',
   });
-  const user = useSelector(state=> state.user);
+  const user = useSelector(state => state.user);
   console.log(user);
   const dispatch = useDispatch();
 
-  const onChange = (e) => {
+  const onChange = e => {
     setValues({
       ...form,
       userId: Math.random(),
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -69,62 +66,72 @@ export const SignUpData = () => {
       phone: form.userPhone,
     });
     localStorage.setItem('user', JSON.stringify(form));
-    fb().firestore().collection('users').doc('sample_user').set(form)
-      .then(res => console.log(res))
-      .then(() => console.log("signup success"))
-      .catch(e => console.log(e));
+    // fb()
+    //   .firestore()
+    //   .collection('users')
+    //   .doc('sample_user')
+    //   .set(form)
+    //   .then(res => console.log(res))
+    //   .then(() => console.log('signup success'))
+    //   .catch(e => console.log(e));
     isClicked(true);
-    console.log(form);
-    console.log("회원가입 완료");
-
   };
 
-
-
-  return click
-  ? <SignUpEnd />
-    : ( <div>
-      <Header/>
+  return click ? (
+    <SignUpEnd />
+  ) : (
+    <div>
+      <Header />
       <form>
         <div>
           <div>name</div>
-          <Input type="text" value={form.userName} name={"userName"} onChange={onChange}/>
+          <StyledInput
+            type="text"
+            value={form.userName}
+            name="userName"
+            onChange={onChange}
+          />
         </div>
         <div>
           <div>email</div>
-          <Input type="text" value={form.userEmail} name={"userEmail"} onChange={onChange}/>
+          <StyledInput
+            type="text"
+            value={form.userEmail}
+            name="userEmail"
+            onChange={onChange}
+          />
         </div>
         <div>
           <div>phone number</div>
-          <Input type="text" value={form.userPhone} name={"userPhone"} onChange={onChange}/>
+          <StyledInput
+            type="text"
+            value={form.userPhone}
+            name="userPhone"
+            onChange={onChange}
+          />
         </div>
-        <Btn onClick={onSubmit}>완료</Btn>
+        <StyledButton onClick={onSubmit}>완료</StyledButton>
       </form>
-    </div> )
+    </div>
+  );
 };
 
-export const SignUpEnd = () => {
+const Signup = () => {
   const [click, isClicked] = useState(false);
 
   const BtnIsClicked = () => {
     isClicked(true);
-    Router.pushRoute('/');
-    console.log('회원가입 완료');
   };
 
-  return click
-  ? <Home />
-    :(
+  return click ? (
+    <SignUpData />
+  ) : (
     <div>
-      <Header/>
-      <div>
-        회원가입이 완료되었습니다.
-      </div>
-      <Btn onClick={BtnIsClicked}>
-        홈으로
-      </Btn>
+      <Header />
+      <div>회원가입</div>
+      <StyledButton onClick={BtnIsClicked}>Google로 시작하기</StyledButton>
     </div>
-  )
+  );
 };
 
-export default Index;
+export default Signup;

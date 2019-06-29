@@ -1,13 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import { Link } from '../routes';
 
-const MainEmpty = () => {
+const StyledMain = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const MainLogOut = () => {
+  return <div>메인 페이지 입니다.</div>;
+};
+
+const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
   const ll = studies.length;
-  // console.log(studies.length);
-  // console.log(studies);
   return (
     <div>
       <div>
@@ -35,4 +45,10 @@ const MainEmpty = () => {
   );
 };
 
-export default MainEmpty;
+const Main = () => {
+  const { isLogin } = useSelector(state => state.user);
+
+  return <StyledMain>{isLogin ? <MainLogIn /> : <MainLogOut />}</StyledMain>;
+};
+
+export default Main;
