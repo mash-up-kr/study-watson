@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import fb from '../firebase';
+import Router from 'next/router';
 
+import Home from './index';
+import Header from '../components/Header';
 import {SIGN_UP} from '../reducers/user';
 
 const Input = styled.input`
@@ -27,6 +30,7 @@ const Index = () => {
     ? <SignUpData />
     : (
     <div>
+      <Header/>
       <div>
         회원가입
       </div>
@@ -80,6 +84,7 @@ export const SignUpData = () => {
   return click
   ? <SignUpEnd />
     : ( <div>
+      <Header/>
       <form>
         <div>
           <div>name</div>
@@ -103,15 +108,19 @@ export const SignUpEnd = () => {
 
   const BtnIsClicked = () => {
     isClicked(true);
-    console.log("홈으로 가기");
+    Router.pushRoute('/');
+    console.log('회원가입 완료');
   };
 
-  return (
+  return click
+  ? <Home />
+    :(
     <div>
+      <Header/>
       <div>
         회원가입이 완료되었습니다.
       </div>
-      <Btn isClick={BtnIsClicked}>
+      <Btn onClick={BtnIsClicked}>
         홈으로
       </Btn>
     </div>

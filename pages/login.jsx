@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 
+import Header from '../components/Header.jsx';
+
 const Index = () => {
 
   const [click, isClicked] = useState(false);
@@ -12,6 +14,7 @@ const Index = () => {
 
   return (
     <div>
+      <Header/>
       <div>로그인</div>
       <Btn onClick={goLogin}>Google로 시작하기</Btn>
     </div>
