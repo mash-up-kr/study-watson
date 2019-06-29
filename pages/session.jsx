@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Menu from '../components/Menu';
+import MainEmpty from '../components/MainEmpty';
 
 const Index = () => {
   const menuHeight = 16;
@@ -26,7 +27,7 @@ const Index = () => {
           flexDirection: 'column',
         }}
       >
-        <div>준비중이래요</div>
+        <MainEmpty />
       </div>
     </div>
   );
