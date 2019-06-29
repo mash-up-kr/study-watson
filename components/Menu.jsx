@@ -104,7 +104,7 @@ const LoginMenu = ({ name, value }) => {
 };
 
 LoginMenu.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.any.isRequired,
   value: PropTypes.bool.isRequired,
 };
 
@@ -136,7 +136,7 @@ const LogoutMenu = ({ value }) => {
 };
 
 LogoutMenu.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
 };
 
 const Menu = ({ value }) => {

@@ -8,10 +8,12 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const user = JSON.parse(window.localStorage.getItem('user'));
-    dispatch({
-      type: LOG_IN,
-      ...user,
-    });
+    if (user) {
+      dispatch({
+        type: LOG_IN,
+        ...user,
+      });
+    }
   });
 
   return <div>{children}</div>;

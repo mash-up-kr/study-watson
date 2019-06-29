@@ -31,14 +31,14 @@ const StyledText = styled.div`
 const MainLogOut = () => {
   const onClick = () => {
     Router.pushRoute('/signup');
-  }
+  };
 
   return (
     <>
       <StyledScreen>
         <Start />
       </StyledScreen>
-      <StyledButton type='button' value='회원가입' onClick={onClick} />
+      <StyledButton type="button" value="회원가입" onClick={onClick} />
     </>
   );
 };
@@ -48,7 +48,7 @@ const MainLogIn = () => {
 
   const onClick = () => {
     Router.pushRoute('/addStudy');
-  }
+  };
 
   return (
     <div>
@@ -66,16 +66,20 @@ const MainLogIn = () => {
             })}
           </>
         ) : (
-            <StyledContainer>
-              <img src='/static/icon-inbox.svg' alt='indox icon' style={{ 'margin-bottom': '1rem' }} />
-              <StyledText>
-                참여중인 스터디가 없습니다.
-                <br />
-                스터디를 만들고 관리해보세요!
-              </StyledText>
-            </StyledContainer>
-          )}
-        <StyledButton type='button' value='스터디 만들기' onClick={onClick} />
+          <StyledContainer>
+            <img
+              src="/static/icon-inbox.svg"
+              alt="indox icon"
+              style={{ marginBottom: '1rem' }}
+            />
+            <StyledText>
+              참여중인 스터디가 없습니다.
+              <br />
+              스터디를 만들고 관리해보세요!
+            </StyledText>
+          </StyledContainer>
+        )}
+        <StyledButton type="button" value="스터디 만들기" onClick={onClick} />
       </div>
     </div>
   );
