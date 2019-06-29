@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Router from 'next/router';
+import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 
 // import fb from '../firebase';
-import Home from './index';
 import Header from '../components/Header';
 import { SIGN_UP } from '../reducers/user';
+import { useInput } from '../common/useInput';
 
 const StyledInput = styled.input`
   color: blue;
@@ -18,54 +20,37 @@ const StyledButton = styled.button`
 `;
 
 export const SignUpEnd = () => {
-  const [click, isClicked] = useState(false);
-
-  const BtnIsClicked = () => {
-    isClicked(true);
+  const onClick = () => {
     Router.pushRoute('/');
   };
 
-  return click ? (
-    <Home />
-  ) : (
+  return (
     <div>
-      <Header />
       <div>회원가입이 완료되었습니다.</div>
-      <StyledButton onClick={BtnIsClicked}>홈으로</StyledButton>
+      <StyledButton onClick={onClick}>홈으로</StyledButton>
     </div>
   );
 };
 
-export const SignUpData = () => {
-  const [click, isClicked] = useState(false);
-  const [form, setValues] = useState({
-    userId: '',
-    userName: '',
-    userEmail: '',
-    userPhone: '',
-  });
-  const user = useSelector(state => state.user);
-  console.log(user);
-  const dispatch = useDispatch();
+export const SignUpData = ({ changeDepth }) => {
+  const uid = uuidv4();
+  const [id] = useInput(uid);
+  const [name, setName] = useInput('');
+  const [email, setEmail] = useInput('');
+  const [phone, setPhone] = useInput('');
 
-  const onChange = e => {
-    setValues({
-      ...form,
-      userId: Math.random(),
-      [e.target.name]: e.target.value,
-    });
-  };
+  const dispatch = useDispatch();
 
   const onSubmit = e => {
     e.preventDefault();
     dispatch({
       type: SIGN_UP,
-      id: form.userId,
-      name: form.userName,
-      email: form.userEmail,
-      phone: form.userPhone,
+      id,
+      name,
+      email,
+      phone,
     });
-    localStorage.setItem('user', JSON.stringify(form));
+    localStorage.setItem('user', JSON.stringify({ id, name, email, phone }));
     // fb()
     //   .firestore()
     //   .collection('users')
@@ -74,62 +59,71 @@ export const SignUpData = () => {
     //   .then(res => console.log(res))
     //   .then(() => console.log('signup success'))
     //   .catch(e => console.log(e));
-    isClicked(true);
+    changeDepth(2);
   };
 
-  return click ? (
-    <SignUpEnd />
-  ) : (
+  return (
+    <form>
+      <div>
+        <label htmlFor="name">name</label>
+        <StyledInput id="name" type="text" value={name} onChange={setName} />
+      </div>
+      <div>
+        <label htmlFor="email">email</label>
+        <StyledInput type="text" id="email" value={email} onChange={setEmail} />
+      </div>
+      <div>
+        <label htmlFor="phone">phone number</label>
+        <StyledInput id="phone" type="text" value={phone} onChange={setPhone} />
+      </div>
+      <StyledButton onClick={onSubmit}>완료</StyledButton>
+    </form>
+  );
+};
+
+SignUpData.propTypes = {
+  changeDepth: PropTypes.func.isRequired,
+};
+
+const SignupStart = ({ changeDepth }) => {
+  return (
     <div>
-      <Header />
-      <form>
-        <div>
-          <div>name</div>
-          <StyledInput
-            type="text"
-            value={form.userName}
-            name="userName"
-            onChange={onChange}
-          />
-        </div>
-        <div>
-          <div>email</div>
-          <StyledInput
-            type="text"
-            value={form.userEmail}
-            name="userEmail"
-            onChange={onChange}
-          />
-        </div>
-        <div>
-          <div>phone number</div>
-          <StyledInput
-            type="text"
-            value={form.userPhone}
-            name="userPhone"
-            onChange={onChange}
-          />
-        </div>
-        <StyledButton onClick={onSubmit}>완료</StyledButton>
-      </form>
+      <div>회원가입</div>
+      <StyledButton onClick={() => changeDepth(1)}>
+        Google로 시작하기
+      </StyledButton>
     </div>
   );
 };
 
-const Signup = () => {
-  const [click, isClicked] = useState(false);
+SignupStart.propTypes = {
+  changeDepth: PropTypes.func.isRequired,
+};
 
-  const BtnIsClicked = () => {
-    isClicked(true);
+const Signup = () => {
+  const [depth, setDepth] = useState(0);
+
+  const changeDepth = to => {
+    setDepth(to);
   };
 
-  return click ? (
-    <SignUpData />
-  ) : (
+  if (depth === 2) {
+    return <SignUpEnd />;
+  }
+
+  if (depth === 1) {
+    return (
+      <div>
+        <Header />
+        <SignUpData changeDepth={changeDepth} />
+      </div>
+    );
+  }
+
+  return (
     <div>
       <Header />
-      <div>회원가입</div>
-      <StyledButton onClick={BtnIsClicked}>Google로 시작하기</StyledButton>
+      <SignupStart changeDepth={changeDepth} />
     </div>
   );
 };
