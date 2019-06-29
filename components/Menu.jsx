@@ -105,6 +105,7 @@ const LoginMenu = ({ name, value }) => {
 
 LoginMenu.propTypes = {
   name: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
 };
 
 const LogoutMenu = ({ value }) => {
@@ -140,7 +141,11 @@ LogoutMenu.propTypes = {
 
 const Menu = ({ value }) => {
   const { isLogin, name } = useSelector(state => state.user);
-  return isLogin ? <LoginMenu name={name} value={value} /> : <LogoutMenu value={value} />;
+  return isLogin ? (
+    <LoginMenu name={name} value={value} />
+  ) : (
+    <LogoutMenu value={value} />
+  );
 };
 
 Menu.propTypes = {
