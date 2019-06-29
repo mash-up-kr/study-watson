@@ -93,7 +93,7 @@ const Menu = ({ value }) => {
                 </Link>
               </li>
               <li>
-                <Link route='/study' href='/study'>
+                <Link route='/' href='/'>
                   <StyledItem>내 스터디</StyledItem>
                 </Link>
               </li>
