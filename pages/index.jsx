@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Menu from '../components/Menu';
+import Header from '../components/Header';
 
 const Index = () => {
   const menuHeight = 16;
@@ -16,7 +16,7 @@ const Index = () => {
         // flexDirection: 'column',
       }}
     >
-      <Menu menuHeight={menuHeight} />
+      <Header />
       <div
         style={{
           height: `calc(100vh - ${menuHeight}px)`,

@@ -12,18 +12,31 @@
     "node": true,
     "es6": true
   },
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["import", "react-hooks"],
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "plugins": [
+    "import",
+    "react-hooks"
+  ],
   "rules": {
+    "jsx-a11y/no-static-element-interactions": false,
+    "jsx-a11y/click-events-have-key-events": false,
     "no-underscore-dangle": "off",
     "react/forbid-prop-types": 0,
     "object-curly-newline": 0,
     "jsx-a11y/label-has-for": [
       2,
       {
-        "components": ["Label"],
+        "components": [
+          "Label"
+        ],
         "required": {
-          "some": ["nesting", "id"]
+          "some": [
+            "nesting",
+            "id"
+          ]
         },
         "allowChildren": false
       }
@@ -31,9 +44,15 @@
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "labelComponents": ["CustomInputLabel"],
-        "labelAttributes": ["label"],
-        "controlComponents": ["CustomInput"],
+        "labelComponents": [
+          "CustomInputLabel"
+        ],
+        "labelAttributes": [
+          "label"
+        ],
+        "controlComponents": [
+          "CustomInput"
+        ],
         "depth": 3
       }
     ]
