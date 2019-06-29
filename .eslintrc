@@ -15,6 +15,8 @@
   "extends": ["airbnb", "prettier"],
   "plugins": ["import", "react-hooks"],
   "rules": {
+    "jsx-a11y/no-static-element-interactions": false,
+    "jsx-a11y/click-events-have-key-events": false,
     "no-underscore-dangle": "off",
     "react/forbid-prop-types": 0,
     "object-curly-newline": 0,
