@@ -57,7 +57,7 @@ const StyledName = styled.div`
   font-weight: bold;
 `;
 
-const LoginMenu = ({ name }) => {
+const LoginMenu = ({ name, value }) => {
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -70,32 +70,35 @@ const LoginMenu = ({ name }) => {
 
   return (
     <>
-      <StyledProfile>
-        <StyledPhoto />
-        <StyledName>{name}</StyledName>
-      </StyledProfile>
-      <ul>
-        <li>
-          <Link route="/profile" href="/profile">
-            <StyledItem>프로필 관리</StyledItem>
-          </Link>
-        </li>
-        <li>
-          <Link route="/create" href="/create">
-            <StyledItem>스터디 만들기</StyledItem>
-          </Link>
-        </li>
-        <li>
-          <Link route="/" href="/">
-            <StyledItem>내 스터디</StyledItem>
-          </Link>
-        </li>
-        <li>
-          <StyledItem>
-            <div onClick={onClick}>로그아웃</div>
-          </StyledItem>
-        </li>
-      </ul>
+      <StyledMenu show={value}>
+        <StyledProfile>
+          <StyledPhoto />
+          <StyledName>{name}</StyledName>
+        </StyledProfile>
+        <ul>
+          <li>
+            <Link route="/profile" href="/profile">
+              <StyledItem>프로필 관리</StyledItem>
+            </Link>
+          </li>
+          <li>
+            <Link route="/create" href="/create">
+              <StyledItem>스터디 만들기</StyledItem>
+            </Link>
+          </li>
+          <li>
+            <Link route="/" href="/">
+              <StyledItem>내 스터디</StyledItem>
+            </Link>
+          </li>
+          <li>
+            <StyledItem>
+              <div onClick={onClick}>로그아웃</div>
+            </StyledItem>
+          </li>
+        </ul>
+      </StyledMenu>
+      <StyledBackground show={value} />
     </>
   );
 };
@@ -137,7 +140,7 @@ LogoutMenu.propTypes = {
 
 const Menu = ({ value }) => {
   const { isLogin, name } = useSelector(state => state.user);
-  return isLogin ? <LoginMenu name={name} /> : <LogoutMenu value={value} />;
+  return isLogin ? <LoginMenu name={name} value={value} /> : <LogoutMenu value={value} />;
 };
 
 Menu.propTypes = {

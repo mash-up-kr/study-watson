@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
+
 import Header from '../components/Header';
 import { useInput } from '../common/useInput';
 import { EDIT_USER } from '../reducers/user';
+import { StyledButton, StyledInput } from '../common/StyledComponents';
 
 const StyledProfileEdit = styled.div`
   width: 100vw;
@@ -16,23 +18,6 @@ const StyledPhoto = styled.div`
   height: 64px;
   border-radius: 50%;
   background-color: #595959;
-`;
-
-const StyledInput = styled.input`
-  border: 1px solid #ededed;
-  width: 100%;
-  padding: 1rem 0;
-  font-size: 1rem;
-`;
-
-const StyledButton = styled.input`
-  width: 100%;
-  padding: 1rem 0;
-  background-color: #0077ff;
-  font-size: 1rem;
-  color: #fff;
-  position: fixed;
-  bottom: 0;
 `;
 
 const profileEdit = () => {

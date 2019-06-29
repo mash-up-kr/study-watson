@@ -1,25 +1,50 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 
-import Header from './Header';
 import StudyInvite from './StudyInvite';
 import { useInput } from '../common/useInput';
 import { ADD_STUDY } from '../reducers/study';
+import { StyledButton, StyledLabel, StyledInput, StyledTitle, StyledForm } from '../common/StyledComponents';
+
+const StyledScreen = styled.div`
+  width: calc(100% - 2rem);
+  height: calc(100vh - 110px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledSubtitle = styled.div`
+  width: 100%;
+  font-size: 0.8rem;
+  color: #595959;
+`;
+
+const StyledText = styled.div`
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.5rem 0;
+`;
 
 const ShowStudy = ({ title, description, setDepth }) => {
   return (
-    <div>
-      <h3>작성하신 내용을 확인해주세요</h3>
-      <h4>스터디 이름</h4>
-      <h4>{title}</h4>
-      <h4>설명</h4>
-      <h4>{description}</h4>
-      <button type="button" name="next" onClick={() => setDepth(2)}>
-        만들기
-      </button>
-    </div>
+    <StyledScreen>
+      <StyledTitle>
+        작성하신 내용을
+        <br />
+        확인해주세요
+      </StyledTitle>
+      <StyledSubtitle>스터디 이름</StyledSubtitle>
+      <StyledText>{title}</StyledText>
+      <StyledSubtitle>설명</StyledSubtitle>
+      <StyledText>{description}</StyledText>
+      <StyledButton type="button" name="next" value="만들기" onClick={() => setDepth(2)} />
+    </StyledScreen>
   );
 };
 
@@ -37,16 +62,16 @@ const MakeStudy = ({
   setDescription,
 }) => {
   return (
-    <div>
-      <h3>스터디 만들기</h3>
-      <form onSubmit={e => onSubmitForm(e, 1)}>
-        <label htmlFor="title">스터디 이름</label>
-        <input type="text" id="title" value={title} onChange={setTitle} />
-        <label htmlFor="description">스터디 설명</label>
-        <input type="text" value={description} onChange={setDescription} />
-        <input type="submit" value="다음" />
-      </form>
-    </div>
+    <StyledScreen>
+      <StyledTitle>스터디 만들기</StyledTitle>
+      <StyledForm onSubmit={e => onSubmitForm(e, 1)}>
+        <StyledLabel htmlFor="title">스터디 이름</StyledLabel>
+        <StyledInput type="text" id="title" value={title} onChange={setTitle} />
+        <StyledLabel htmlFor="description">스터디 설명</StyledLabel>
+        <StyledInput type="text" value={description} onChange={setDescription} />
+        <StyledButton type="submit" value="다음" />
+      </StyledForm>
+    </StyledScreen>
   );
 };
 
@@ -82,7 +107,6 @@ const CreateStudy = () => {
   if (depth === 2) {
     return (
       <div>
-        <Header />
         <StudyInvite link={id} />
       </div>
     );
@@ -90,7 +114,6 @@ const CreateStudy = () => {
   if (depth === 1) {
     return (
       <div>
-        <Header />
         <ShowStudy
           title={title}
           description={description}
@@ -102,7 +125,6 @@ const CreateStudy = () => {
   return (
     // MakeStudy - ShowStudy - StudyInvite
     <div>
-      <Header />
       <MakeStudy
         onSubmitForm={onSubmitForm}
         title={title}

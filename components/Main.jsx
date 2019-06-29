@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Router from 'next/router';
 
 import { Link } from '../routes';
+import Start from './Start';
+import { StyledButton, StyledScreen } from '../common/StyledComponents';
 
 const StyledMain = styled.div`
   display: flex;
@@ -11,13 +14,42 @@ const StyledMain = styled.div`
   flex-direction: column;
 `;
 
+const StyledContainer = styled.div`
+  height: calc(100vh - 110px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const StyledText = styled.div`
+  width: 100%;
+  text-align: center;
+  line-height: 1.5;
+`;
+
 const MainLogOut = () => {
-  return <div>메인 페이지 입니다.</div>;
+  const onClick = () => {
+    Router.pushRoute('/signup');
+  }
+
+  return (
+    <>
+      <StyledScreen>
+        <Start />
+      </StyledScreen>
+      <StyledButton type='button' value='회원가입' onClick={onClick} />
+    </>
+  );
 };
 
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
-  const ll = studies.length;
+
+  const onClick = () => {
+    Router.pushRoute('/addStudy');
+  }
+
   return (
     <div>
       <div>
@@ -34,12 +66,16 @@ const MainLogIn = () => {
             })}
           </>
         ) : (
-          <h3>스터디를 만들고 관리해보세요!</h3>
-        )}
-
-        <Link route="/addStudy" href="/addStudy">
-          스터디 만들기
-        </Link>
+            <StyledContainer>
+              <img src='/static/icon-inbox.svg' alt='indox icon' style={{ 'margin-bottom': '1rem' }} />
+              <StyledText>
+                참여중인 스터디가 없습니다.
+                <br />
+                스터디를 만들고 관리해보세요!
+              </StyledText>
+            </StyledContainer>
+          )}
+        <StyledButton type='button' value='스터디 만들기' onClick={onClick} />
       </div>
     </div>
   );
