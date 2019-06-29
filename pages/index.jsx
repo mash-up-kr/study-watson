@@ -1,9 +1,12 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 
-import Menu from '../components/Menu';
+import Header from '../components/Header';
+import Main from '../components/MainEmpty';
 
 const Index = () => {
   const menuHeight = 16;
+  const user = useSelector(state => state.user);
 
   return (
     <div
@@ -16,7 +19,7 @@ const Index = () => {
         // flexDirection: 'column',
       }}
     >
-      <Menu menuHeight={menuHeight} />
+      <Header />
       <div
         style={{
           height: `calc(100vh - ${menuHeight}px)`,
@@ -26,7 +29,13 @@ const Index = () => {
           flexDirection: 'column',
         }}
       >
-        <div>메인페이지 입니다</div>
+        {
+          (user.isLogin)
+          ? <Main />
+          : <div>메인 페이지 입니다.</div>
+        }
+
+
       </div>
     </div>
   );

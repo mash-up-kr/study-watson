@@ -1,0 +1,83 @@
+import React from 'react';
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+
+import Header from '../components/Header';
+import { Link } from '../routes';
+
+const StyledPhoto = styled.div`
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #595959;
+`;
+
+const StyledName = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
+const StyledItem = styled.div`
+  width: 100%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #D8D8D8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const StyledContainer = styled.ul`
+  width: 100%;
+`;
+
+const Index = () => {
+  const user = useSelector(state => state.user);
+  const { name, email, phone } = user;
+
+  return (
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        // display: 'flex',
+        // justifyContent: 'space-around',
+        // alignItems: 'center',
+        // flexDirection: 'column',
+      }}
+    >
+      <Header />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <StyledPhoto />
+        <StyledName>{name}</StyledName>
+        <StyledContainer>
+          <li>
+            <StyledItem>
+              <div>이메일</div>
+              <div>{email}</div>
+            </StyledItem>
+          </li>
+          <li>
+            <StyledItem>
+              <div>전화번호</div>
+              <div>{phone}</div>
+            </StyledItem>
+          </li>
+          <li>
+            <StyledItem>
+              <Link route='/withdraw' href='/withdraw'>회원탈퇴</Link>
+            </StyledItem>
+          </li>
+        </StyledContainer>
+      </div>
+    </div>
+  );
+};
+
+export default Index;
