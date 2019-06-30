@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-import Header from '../components/Header';
+import Header from '../containers/Header';
 
-const Index = () => {
+const StyledButton = styled.button`
+  background-color: blue;
+  color: white;
+`;
+
+const Login = () => {
   // const [click, isClicked] = useState(false);
   const dispatch = useDispatch();
   const goLogin = async () => {
@@ -35,14 +40,9 @@ const Index = () => {
     <div>
       <Header />
       <div>로그인</div>
-      <Btn onClick={goLogin}>Google로 시작하기</Btn>
+      <StyledButton onClick={goLogin}>Google로 시작하기</StyledButton>
     </div>
   );
 };
 
-const Btn = styled.button`
-  background-color: blue;
-  color: white;
-`;
-
-export default Index;
+export default Login;

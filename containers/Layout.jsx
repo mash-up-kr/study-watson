@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const user = JSON.parse(window.localStorage.getItem('user'));
-    if (user) {
+    if (user && user.email && user.name) {
       dispatch({
         type: LOG_IN,
         ...user,

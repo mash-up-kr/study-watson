@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
-import Header from '../components/Header';
+import Header from '../containers/Header';
 import { useInput } from '../common/useInput';
 import { EDIT_USER } from '../reducers/user';
 import { StyledButton, StyledInput } from '../common/StyledComponents';

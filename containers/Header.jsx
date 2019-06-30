@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import { Link } from '../routes';
-import Menu from './Menu'
-import { canUseDOM } from '../common/canUesDOM'
+import Menu from '../components/Menu';
+import { canUseDOM } from '../common/canUesDOM';
 
 const StyledHeader = styled.div`
   width: 100%;
   height: 60px;
-  border-bottom: 1px solid #EDEDED;
+  border-bottom: 1px solid #ededed;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -28,17 +28,17 @@ const StyledRightButton = styled.div`
 `;
 
 const Header = () => {
-  const [value, setValue] = useState(false)
+  const [value, setValue] = useState(false);
 
-  const { isLogin } = useSelector(state => state.user)
+  const { isLogin } = useSelector(state => state.user);
 
   const onClick = () => {
     setValue(!value);
-  }
+  };
   const path = canUseDOM() && window.location.pathname;
   // const isA = path.length > 0 && path.includes('profile')
   let link = '';
-  let label = ''
+  let label = '';
   switch (path) {
     case '/profile':
       link = '/profile-edit';
@@ -56,17 +56,21 @@ const Header = () => {
   return (
     <>
       <StyledHeader>
-        <StyledButton type="button" onClick={onClick}><img src='/static/icon-menu.svg' alt='menu icon' /></StyledButton>
-        <Link route='/' href='/'>
-          <img src='/static/logo.svg' alt='logo' />
+        <StyledButton type="button" onClick={onClick}>
+          <img src="/static/icon-menu.svg" alt="menu icon" />
+        </StyledButton>
+        <Link route="/" href="/">
+          <img src="/static/logo.svg" alt="logo" />
         </Link>
         <StyledRightButton>
-          <Link route={link} href={link}>{label}</Link>
+          <Link route={link} href={link}>
+            {label}
+          </Link>
         </StyledRightButton>
       </StyledHeader>
       <Menu value={value} />
     </>
-  )
-}
+  );
+};
 
 export default Header;

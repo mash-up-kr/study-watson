@@ -8,8 +8,7 @@ import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
-import { LOG_IN } from '../reducers/user';
-import Layout from '../components/Layout';
+import Layout from '../containers/Layout';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>

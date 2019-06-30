@@ -1,7 +1,7 @@
 import React from 'react';
 
-import CreateStudy from '../components/CreateStudy';
-import Header from '../components/Header';
+import CreateStudy from '../containers/CreateStudy';
+import Header from '../containers/Header';
 
 const AddStudy = () => {
   return (

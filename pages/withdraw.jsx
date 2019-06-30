@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import Router from 'next/router';
 
-import Header from '../components/Header';
+import Header from '../containers/Header';
 import { WITHDRAW } from '../reducers/user';
 
 const StyledWithdraw = styled.div`

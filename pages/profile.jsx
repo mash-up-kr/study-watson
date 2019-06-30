@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import Header from '../components/Header';
+import Header from '../containers/Header';
 import { Link } from '../routes';
 
 const StyledPhoto = styled.div`
