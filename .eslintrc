@@ -15,6 +15,8 @@
   "extends": ["airbnb", "prettier"],
   "plugins": ["import", "react-hooks"],
   "rules": {
+    "import/no-extraneous-dependencies": false,
+    "jsx-a11y/anchor-is-valid": false,
     "react/no-array-index-key": false,
     "jsx-a11y/no-static-element-interactions": false,
     "jsx-a11y/click-events-have-key-events": false,

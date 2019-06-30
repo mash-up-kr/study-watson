@@ -61,7 +61,7 @@ const MainLogIn = () => {
             <img
               src="/static/icon-inbox.svg"
               alt="indox icon"
-              style={{ 'margin-bottom': '1rem' }}
+              style={{ marginBottom: '1rem' }}
             />
             <StyledText>
               참여중인 스터디가 없습니다.

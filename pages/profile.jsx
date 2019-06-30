@@ -67,7 +67,7 @@ const Profile = () => {
           <li>
             <StyledItem>
               <Link route="/withdraw" href="/withdraw">
-                회원탈퇴
+                <a>회원탈퇴</a>
               </Link>
             </StyledItem>
           </li>

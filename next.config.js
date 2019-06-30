@@ -1,4 +1,3 @@
-// const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
 
 module.exports = {

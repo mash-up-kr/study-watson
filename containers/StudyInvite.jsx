@@ -71,7 +71,7 @@ const StudyInvite = ({ link }) => {
       <img
         src="/static/icon-send.svg"
         alt="send icon"
-        style={{ 'margin-bottom': '1rem' }}
+        style={{ marginBottom: '1rem' }}
       />
       <div>링크를 공유해서 스터디원을 초대해보세요!</div>
       <StyledLink>{link}</StyledLink>

@@ -78,17 +78,23 @@ const LoginMenu = ({ name, value }) => {
         <ul>
           <li>
             <Link route="/profile" href="/profile">
-              <StyledItem>프로필 관리</StyledItem>
+              <a>
+                <StyledItem>프로필 관리</StyledItem>
+              </a>
             </Link>
           </li>
           <li>
             <Link route="/create" href="/create">
-              <StyledItem>스터디 만들기</StyledItem>
+              <a>
+                <StyledItem>스터디 만들기</StyledItem>
+              </a>
             </Link>
           </li>
           <li>
             <Link route="/" href="/">
-              <StyledItem>내 스터디</StyledItem>
+              <a>
+                <StyledItem>내 스터디</StyledItem>
+              </a>
             </Link>
           </li>
           <li>

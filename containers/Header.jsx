@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -29,30 +29,33 @@ const StyledRightButton = styled.div`
 
 const Header = () => {
   const [value, setValue] = useState(false);
+  const [link, setLink] = useState('');
+  const [label, setLabel] = useState('');
 
   const { isLogin } = useSelector(state => state.user);
 
   const onClick = () => {
     setValue(!value);
   };
-  const path = canUseDOM() && window.location.pathname;
-  // const isA = path.length > 0 && path.includes('profile')
-  let link = '';
-  let label = '';
-  switch (path) {
-    case '/profile':
-      link = '/profile-edit';
-      label = '프로필 수정';
-      break;
-    case '/':
-      if (!isLogin) {
-        link = '/login';
-        label = '로그인';
-      }
-      break;
-    default:
-      break;
-  }
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    switch (path) {
+      case '/profile':
+        setLink('/profile-edit');
+        setLabel('프로필 수정');
+        break;
+      case '/':
+        if (!isLogin) {
+          setLink('/login');
+          setLabel('로그인');
+        }
+        break;
+      default:
+        break;
+    }
+  }, []);
+
   return (
     <>
       <StyledHeader>
@@ -60,11 +63,13 @@ const Header = () => {
           <img src="/static/icon-menu.svg" alt="menu icon" />
         </StyledButton>
         <Link route="/" href="/">
-          <img src="/static/logo.svg" alt="logo" />
+          <a>
+            <img src="/static/logo.svg" alt="logo" />
+          </a>
         </Link>
         <StyledRightButton>
           <Link route={link} href={link}>
-            {label}
+            <a>{label}</a>
           </Link>
         </StyledRightButton>
       </StyledHeader>

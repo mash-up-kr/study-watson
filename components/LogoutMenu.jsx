@@ -41,17 +41,23 @@ const LogoutMenu = ({ value }) => {
         <ul>
           <li>
             <Link route="/about" href="/about">
-              <StyledItem>알아보기</StyledItem>
+              <a>
+                <StyledItem>알아보기</StyledItem>
+              </a>
             </Link>
           </li>
           <li>
             <Link route="/signup" href="/signup">
-              <StyledItem>회원가입</StyledItem>
+              <a>
+                <StyledItem>회원가입</StyledItem>
+              </a>
             </Link>
           </li>
           <li>
             <Link route="/login" href="/login">
-              <StyledItem>로그인</StyledItem>
+              <a>
+                <StyledItem>로그인</StyledItem>
+              </a>
             </Link>
           </li>
         </ul>
