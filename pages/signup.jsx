@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 import axios from 'axios';
 
 // import fb from '../firebase';

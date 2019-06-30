@@ -5,9 +5,16 @@ import { useDispatch } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 
 import StudyInvite from './StudyInvite';
+
 import { useInput } from '../common/useInput';
 import { ADD_STUDY } from '../reducers/study';
-import { StyledButton, StyledLabel, StyledInput, StyledTitle, StyledForm } from '../common/StyledComponents';
+import {
+  StyledButton,
+  StyledLabel,
+  StyledInput,
+  StyledTitle,
+  StyledForm,
+} from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -43,7 +50,12 @@ const ShowStudy = ({ title, description, setDepth }) => {
       <StyledText>{title}</StyledText>
       <StyledSubtitle>설명</StyledSubtitle>
       <StyledText>{description}</StyledText>
-      <StyledButton type="button" name="next" value="만들기" onClick={() => setDepth(2)} />
+      <StyledButton
+        type="button"
+        name="next"
+        value="만들기"
+        onClick={() => setDepth(2)}
+      />
     </StyledScreen>
   );
 };
@@ -68,7 +80,11 @@ const MakeStudy = ({
         <StyledLabel htmlFor="title">스터디 이름</StyledLabel>
         <StyledInput type="text" id="title" value={title} onChange={setTitle} />
         <StyledLabel htmlFor="description">스터디 설명</StyledLabel>
-        <StyledInput type="text" value={description} onChange={setDescription} />
+        <StyledInput
+          type="text"
+          value={description}
+          onChange={setDescription}
+        />
         <StyledButton type="submit" value="다음" />
       </StyledForm>
     </StyledScreen>

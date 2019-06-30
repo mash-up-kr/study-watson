@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 import styled from 'styled-components';
 
-import {
-  StyledButton,
-  StyledLabel,
-  StyledInput,
-  StyledTitle,
-  StyledForm,
-} from '../common/StyledComponents';
+import { StyledButton } from '../common/StyledComponents';
 
 const StyledContainer = styled.div`
   width: calc(100vw - 2rem);
@@ -32,13 +26,13 @@ const StyledLink = styled.div`
 const StyledSmallButton = styled.button`
   padding: 1rem 2rem;
   font-size: 1rem;
-  border: 1px solid #0077FF;
-  color: #0077FF;
+  border: 1px solid #0077ff;
+  color: #0077ff;
   background-color: #fff;
 
   :active {
-    border: 1px solid #0077FF;
-    background-color: #0077FF;
+    border: 1px solid #0077ff;
+    background-color: #0077ff;
     color: #fff;
   }
 
@@ -74,7 +68,11 @@ const StudyInvite = ({ link }) => {
 
   return (
     <StyledContainer>
-      <img src='/static/icon-send.svg' alt='send icon' style={{ 'margin-bottom': '1rem' }} />
+      <img
+        src="/static/icon-send.svg"
+        alt="send icon"
+        style={{ 'margin-bottom': '1rem' }}
+      />
       <div>링크를 공유해서 스터디원을 초대해보세요!</div>
       <StyledLink>{link}</StyledLink>
       <StyledSmallButton onClick={clickLink} name="make" type="button">
