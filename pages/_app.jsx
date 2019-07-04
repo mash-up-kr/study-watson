@@ -1,6 +1,8 @@
 import { Container } from 'next/app';
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import createSagaMiddleware from 'redux-saga';
+import withReduxSaga from 'next-redux-saga';
 
 import withRedux from 'next-redux-wrapper';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -9,6 +11,7 @@ import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
 import Layout from '../containers/Layout';
+import rootSaga from '../sagas';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>
@@ -67,9 +70,14 @@ const MyApp = ({ Component, store, pageProps }) => (
 );
 
 const configureStore = (initialState, options) => {
+  const sagaMiddleware = createSagaMiddleware();
   const middlewares = [
+    sagaMiddleware,
     store => next => action => {
-      console.log(store, action);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(store, action);
+      }
+
       next(action);
     },
   ];
@@ -84,6 +92,7 @@ const configureStore = (initialState, options) => {
         )
       : compose(applyMiddleware(...middlewares));
   const store = createStore(reducer, initialState, enhancer);
+  store.sagaTask = sagaMiddleware.run(rootSaga);
   return store;
 };
 
@@ -108,4 +117,4 @@ MyApp.propTypes = {
   pageProps: PropTypes.any.isRequired,
 };
 
-export default withRedux(configureStore)(MyApp);
+export default withRedux(configureStore)(withReduxSaga(MyApp));
