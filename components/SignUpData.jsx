@@ -47,6 +47,7 @@ const SignUpData = ({ changeDepth }) => {
           phoneNumber: phone,
         },
       );
+      console.log(111, result);
 
       const json = {
         id: result.data.pk,
@@ -58,10 +59,9 @@ const SignUpData = ({ changeDepth }) => {
         type: SIGN_UP,
         ...json,
       });
-      localStorage.setItem('user', JSON.stringify({ ...json }));
       changeDepth(2);
     } catch (error) {
-      console.log(error);
+      console.log(222, error);
     }
 
     // dispatch({
