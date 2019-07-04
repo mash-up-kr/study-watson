@@ -5,14 +5,14 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "cross-env BUNDLE_ANALYZE=both next build",
+    "build": "next build",
     "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production next start",
+    "start": "NODE_ENV=production node server.js",
     "predeloy": "npm run build",
-    "deploy": "git pull && npm install && pm2 start ecosystem.config.js --env",
+    "deploy": "git pull && npm install && pm2 start ecosystem.config.js --env production",
     "export": "npm run build && next export"
   },
-  "author": "ZeroCho",
+  "author": "Yuni-Q",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.1",
@@ -35,7 +35,8 @@
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
     "styled-components": "^4.2.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webpack": "^4.35.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.4",
@@ -47,7 +48,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "nodemon": "^1.19.0",
-    "webpack": "^4.30.0"
+    "nodemon": "^1.19.0"
   }
 }
