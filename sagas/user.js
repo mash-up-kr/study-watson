@@ -1,77 +1,122 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-// import {
-//   LOAD_USER_FAILURE,
-//   LOAD_USER_REQUEST,
-//   LOAD_USER_SUCCESS,
-//   LOG_IN_FAILURE,
-//   LOG_IN_REQUEST,
-//   LOG_IN_SUCCESS,
-// } from '../reducers/user';
+import {
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
+  LOAD_USER_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOG_IN_FAILURE,
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
+} from '../reducers/user';
 
-// function logInAPI(loginData) {
-//   // 서버에 요청을 보내는 부분
-//   return axios.post('/signIn', loginData);
-// }
+// LOG_IN
+function logInAPI(loginData) {
+  return axios.post('/signIn', loginData);
+}
 
-// function* logIn(action) {
-//   try {
-//     const result = yield call(logInAPI, action.data);
-//     document.cookie = `token=${result.data.result.token}`;
-//     yield put({
-//       // put은 dispatch 동일
-//       type: LOG_IN_SUCCESS,
-//       data: result.data,
-//     });
-//     yield put({
-//       type: LOAD_USER_REQUEST,
-//       data: {
-//         token: result.data.result.token,
-//       },
-//     });
-//   } catch (e) {
-//     // loginAPI 실패
-//     console.error(e);
-//     yield put({
-//       type: LOG_IN_FAILURE,
-//     });
-//   }
-// }
+function* logIn(action) {
+  try {
+    const result = yield call(logInAPI, action.data);
+    document.cookie = `token=${result.data.result.token}`;
+    yield put({
+      type: LOG_IN_SUCCESS,
+      data: result.data,
+    });
+    yield put({
+      type: LOAD_USER_REQUEST,
+      data: {
+        token: result.data.result.token,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOG_IN_FAILURE,
+    });
+  }
+}
 
-// function* watchLogIn() {
-//   yield takeEvery(LOG_IN_REQUEST, logIn);
-// }
+function* watchLogIn() {
+  yield takeEvery(LOG_IN_REQUEST, logIn);
+}
 
-// function loadUserAPI({ token }) {
-//   // 서버에 요청을 보내는 부분
-//   return axios.get('/users/me', {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-// }
+// LOAD_USER
+function loadUserAPI({ token }) {
+  return axios.get('/users/me', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
 
-// function* loadUser(action) {
-//   try {
-//     // yield call(loadUserAPI);
-//     const result = yield call(loadUserAPI, action.data);
-//     yield put({
-//       // put은 dispatch 동일
-//       type: LOAD_USER_SUCCESS,
-//       data: result.data.result,
-//     });
-//   } catch (e) {
-//     // loginAPI 실패
-//     console.error(e);
-//     yield put({
-//       type: LOAD_USER_FAILURE,
-//       error: e,
-//     });
-//   }
-// }
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    const { pk, username, email, phoneNumber } = result;
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: {
+        pk,
+        username,
+        email,
+        phoneNumber,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: e,
+    });
+  }
+}
 
-// function* watchLoadUser() {
-//   yield takeEvery(LOAD_USER_REQUEST, loadUser);
-// }
+function* watchLoadUser() {
+  yield takeEvery(SIGN_UP_REQUEST, loadUser);
+}
+
+// LOAD_USER_REQUEST
+function signInAPI({
+  username,
+  password1,
+  password2,
+  type,
+  email,
+  phoneNumber,
+}) {
+  return axios.post('https://study-watson.lhy.kr/api/v1/members/', {
+    username,
+    password1,
+    password2,
+    type,
+    email,
+    phoneNumber,
+  });
+}
+
+function* signIn(action) {
+  try {
+    console.log(111);
+    const result = yield call(signInAPI, action.data);
+    yield put({
+      type: SIGN_UP_SUCCESS,
+      data: result.data.result,
+    });
+  } catch (e) {
+    console.log(22);
+    // console.error(e);
+    alert('회원가입에 실패하였습니다.');
+    yield put({
+      type: SIGN_UP_FAILURE,
+    });
+  }
+}
+
+function* watchSignUp() {
+  yield takeEvery(LOAD_USER_REQUEST, signIn);
+}
 
 export default function* userSaga() {
-  // yield all([fork(watchLogIn), fork(watchLoadUser)]);
+  yield all([fork(watchLogIn), fork(watchLoadUser), fork(watchSignUp)]);
 }

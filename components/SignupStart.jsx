@@ -26,11 +26,11 @@ const StyledGoogleButton = styled.button`
   align-items: center;
 `;
 
-const SignupStart = ({ changeDepth }) => {
+const SignupStart = ({ setDepth }) => {
   return (
     <StyledContainer>
       <Start />
-      <StyledGoogleButton onClick={() => changeDepth(1)}>
+      <StyledGoogleButton onClick={() => setDepth(true)}>
         <img
           src="/static/icon-google.svg"
           alt="google logo"
@@ -43,7 +43,7 @@ const SignupStart = ({ changeDepth }) => {
 };
 
 SignupStart.propTypes = {
-  changeDepth: PropTypes.func.isRequired,
+  setDepth: PropTypes.func.isRequired,
 };
 
 export default SignupStart;
