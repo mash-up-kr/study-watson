@@ -38,28 +38,55 @@ export default (state = initialState, action) => {
         ...state,
       };
     case SIGN_UP_SUCCESS:
-      const { pk, username, email, phoneNumber } = action.data;
       return {
         ...state,
-        pk,
-        username,
-        email,
-        phoneNumber,
-        isLogin: true,
+        // pk: action.data.pk,
+        // username: action.data.username,
+        // email: action.data.email,
+        // phoneNumber: action.data.phoneNumber,
+        // isLogin: true,
       };
     case SIGN_UP_FAILURE:
       return {
         ...state,
       };
+
     case LOG_IN_REQUEST:
       return {
         ...state,
-        isLogin: true,
-        id: action.id,
-        name: action.name,
-        email: action.email,
-        phone: action.phone,
       };
+    case LOG_IN_SUCCESS:
+      return {
+        ...state,
+        pk: action.data.pk,
+        username: action.data.username,
+        email: action.data.email,
+        phoneNumber: action.data.phoneNumber,
+        isLogin: true,
+      };
+    case LOG_IN_FAILURE:
+      return {
+        ...state,
+      };
+
+    case LOAD_USER_REQUEST:
+      return {
+        ...state,
+      };
+    case LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        pk: action.data.pk,
+        username: action.data.username,
+        email: action.data.email,
+        phoneNumber: action.data.phoneNumber,
+        isLogin: true,
+      };
+    case LOAD_USER_FAILURE:
+      return {
+        ...state,
+      };
+
     case EDIT_USER_REQUEST:
       return {
         ...state,
@@ -69,10 +96,21 @@ export default (state = initialState, action) => {
       };
 
     case LOG_OUT_REQUEST:
-      window.localStorage.removeItem('user');
       return {
         ...state,
-        isLogin: action.isLogin,
+      };
+    case LOG_OUT_SUCCESS:
+      return {
+        ...state,
+        pk: '',
+        username: '',
+        email: '',
+        phoneNumber: '',
+        isLogin: false,
+      };
+    case LOG_OUT_FAILURE:
+      return {
+        ...state,
       };
 
     case WITHDRAW_REQUEST:

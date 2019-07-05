@@ -6,9 +6,9 @@ import LogoutMenu from './LogoutMenu';
 import LoginMenu from './LoginMenu';
 
 const Menu = ({ value }) => {
-  const { isLogin, name } = useSelector(state => state.user);
+  const { isLogin, username } = useSelector(state => state.user);
   return isLogin ? (
-    <LoginMenu name={name} value={value} />
+    <LoginMenu username={username} value={value} />
   ) : (
     <LogoutMenu value={value} />
   );

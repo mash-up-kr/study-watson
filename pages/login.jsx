@@ -1,36 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 import Header from '../containers/Header';
-
-const StyledButton = styled.button`
-  background-color: blue;
-  color: white;
-`;
+import { LOG_IN_REQUEST } from '../reducers/user';
+import { useInput } from '../common/useInput';
 
 const Login = () => {
-  // const [click, isClicked] = useState(false);
+  const [email, setEmail] = useInput('');
+  const [password, setPassword] = useInput('');
+
   const dispatch = useDispatch();
-  const goLogin = async () => {
+
+  const onClick = async () => {
     try {
-      const result = await axios.post(
-        'https://study-watson.lhy.kr/api/v1/auth/token/',
-        { username: 'bb@bb.com', email: 'bb@bb.com', password: '12341234' },
-      );
-      console.log(result);
-      const json = {
-        id: result.data.user.pk,
-        name: result.data.user.username,
-        email: result.data.user.email,
-        phone: result.data.user.phoneNumber,
-      };
       dispatch({
-        type: 'LOG_IN',
-        ...json,
+        type: LOG_IN_REQUEST,
+        data: {
+          email,
+          password,
+        },
       });
-      localStorage.setItem('user', JSON.stringify({ ...json }));
     } catch (error) {
       console.log(error);
     }
@@ -39,8 +28,18 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div>로그인</div>
-      <StyledButton onClick={goLogin}>Google로 시작하기</StyledButton>
+      <label htmlFor="email">email</label>
+      <input type="email" id="email" value={email} onChange={setEmail} />
+      <br />
+      <label htmlFor="password">password</label>
+      <input
+        type="password"
+        id="password"
+        value={password}
+        onChange={setPassword}
+      />
+      <br />
+      <div onClick={onClick}>로그인</div>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React from 'react';
-import Router from 'next/router';
+// import Router from 'next/router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { Link } from '../routes';
-import { LOG_OUT } from '../reducers/user';
+import { LOG_OUT_REQUEST } from '../reducers/user';
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -57,15 +57,13 @@ const StyledName = styled.div`
   font-weight: bold;
 `;
 
-const LoginMenu = ({ name, value }) => {
+const LoginMenu = ({ username, value }) => {
   const dispatch = useDispatch();
 
   const onClick = () => {
     dispatch({
-      type: LOG_OUT,
-      isLogin: false,
+      type: LOG_OUT_REQUEST,
     });
-    Router.pushRoute('/');
   };
 
   return (
@@ -73,7 +71,7 @@ const LoginMenu = ({ name, value }) => {
       <StyledMenu show={value}>
         <StyledProfile>
           <StyledPhoto />
-          <StyledName>{name}</StyledName>
+          <StyledName>{username}</StyledName>
         </StyledProfile>
         <ul>
           <li>
@@ -110,7 +108,7 @@ const LoginMenu = ({ name, value }) => {
 };
 
 LoginMenu.propTypes = {
-  name: PropTypes.any.isRequired,
+  username: PropTypes.any.isRequired,
   value: PropTypes.bool.isRequired,
 };
 

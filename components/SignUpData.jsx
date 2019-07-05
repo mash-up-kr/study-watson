@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import { SIGN_UP_SUCCESS } from '../reducers/user';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 import { useInput } from '../common/useInput';
 import {
   StyledButton,
@@ -26,16 +26,16 @@ const SignUpData = () => {
   const [email, setEmail] = useInput('');
   const [password1, setPassword1] = useInput('');
   const [password2, setPassword2] = useInput('');
-  const [type, setType] = useInput('');
+  // const [type, setType] = useInput('email');
+  const type = 'email';
   const [phoneNumber, setPhoneNumber] = useInput('');
 
   const dispatch = useDispatch();
 
   const onSubmit = async e => {
     e.preventDefault();
-    console.log(11111);
     dispatch({
-      type: SIGN_UP_SUCCESS,
+      type: SIGN_UP_REQUEST,
       data: { username, password1, password2, type, email, phoneNumber },
     });
   };
@@ -89,10 +89,10 @@ const SignUpData = () => {
             onChange={setPassword2}
           />
         </div>
-        <div>
+        {/* <div>
           <StyledLabel htmlFor="type">type</StyledLabel>
           <StyledInput id="type" type="text" value={type} onChange={setType} />
-        </div>
+        </div> */}
         <StyledButton type="button" value="완료" onClick={onSubmit} />
       </StyledForm>
     </StyledScreen>

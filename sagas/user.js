@@ -1,5 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
+import Router from 'next/router';
+
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
@@ -10,29 +12,40 @@ import {
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILURE,
 } from '../reducers/user';
 
 // LOG_IN
-function logInAPI(loginData) {
-  return axios.post('/signIn', loginData);
+function logInAPI({ email, password }) {
+  return axios.post('https://study-watson.lhy.kr/api/v1/auth/token/', {
+    username: email,
+    email,
+    password,
+  });
 }
 
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    document.cookie = `token=${result.data.result.token}`;
+    console.log(result);
+    const { pk, username, email, phoneNumber } = result.data.user;
+    const { key } = result.data;
+    localStorage.setItem('token', key);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: LOAD_USER_REQUEST,
       data: {
-        token: result.data.result.token,
+        pk,
+        username,
+        email,
+        phoneNumber,
       },
     });
+    Router.pushRoute('/');
   } catch (e) {
     console.error(e);
+    alert('로그인에 실패하였습니다.');
     yield put({
       type: LOG_IN_FAILURE,
     });
@@ -44,16 +57,16 @@ function* watchLogIn() {
 }
 
 // LOAD_USER
-function loadUserAPI({ token }) {
-  return axios.get('/users/me', {
-    headers: { Authorization: `Bearer ${token}` },
+function loadUserAPI(key) {
+  return axios.get('https://study-watson.lhy.kr/api/v1/members/profile/', {
+    headers: { Authorization: `Token ${key}` },
   });
 }
 
 function* loadUser(action) {
   try {
-    const result = yield call(loadUserAPI, action.data);
-    const { pk, username, email, phoneNumber } = result;
+    const result = yield call(loadUserAPI, action.key);
+    const { pk, username, email, phoneNumber } = result.data;
     yield put({
       type: LOAD_USER_SUCCESS,
       data: {
@@ -65,6 +78,7 @@ function* loadUser(action) {
     });
   } catch (e) {
     console.error(e);
+    localStorage.removeItem('token');
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,
@@ -73,11 +87,11 @@ function* loadUser(action) {
 }
 
 function* watchLoadUser() {
-  yield takeEvery(SIGN_UP_REQUEST, loadUser);
+  yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
-// LOAD_USER_REQUEST
-function signInAPI({
+// SIGN_UP
+function signUpAPI({
   username,
   password1,
   password2,
@@ -95,28 +109,60 @@ function signInAPI({
   });
 }
 
-function* signIn(action) {
+function* signUp(action) {
   try {
-    console.log(111);
-    const result = yield call(signInAPI, action.data);
+    // const result =
+    yield call(signUpAPI, action.data);
+    // const { pk, email, phoneNumber, username } = result.data;
     yield put({
       type: SIGN_UP_SUCCESS,
-      data: result.data.result,
+      // data: {
+      //   pk,
+      //   email,
+      //   phoneNumber,
+      //   username,
+      // },
     });
+    Router.pushRoute('/');
   } catch (e) {
-    console.log(22);
-    // console.error(e);
-    alert('회원가입에 실패하였습니다.');
+    console.error(e);
+    alert('12회원가입에 실패하였습니다.');
     yield put({
       type: SIGN_UP_FAILURE,
     });
   }
 }
-
 function* watchSignUp() {
-  yield takeEvery(LOAD_USER_REQUEST, signIn);
+  yield takeEvery(SIGN_UP_REQUEST, signUp);
+}
+
+// LOG_OUT;
+
+function* logOut() {
+  try {
+    localStorage.removeItem('token');
+    yield put({
+      type: LOG_OUT_SUCCESS,
+    });
+    Router.pushRoute('/');
+  } catch (e) {
+    // console.error(e);
+    alert('로그아웃에 실패하였습니다.');
+    yield put({
+      type: LOG_OUT_FAILURE,
+    });
+  }
+}
+
+function* watchLogOut() {
+  yield takeEvery(LOG_OUT_REQUEST, logOut);
 }
 
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLoadUser), fork(watchSignUp)]);
+  yield all([
+    fork(watchLogIn),
+    fork(watchLoadUser),
+    fork(watchSignUp),
+    fork(watchLogOut),
+  ]);
 }
