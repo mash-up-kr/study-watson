@@ -18,7 +18,60 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
+  EDIT_USER_REQUEST,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILURE,
 } from '../reducers/user';
+
+// EDIT_USER
+function editAPI({ pk, email, password, imgProfile }) {
+  const token = localStorage.getItem('token');
+  console.log('to', token, pk);
+  return axios.patch(
+    `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
+    {
+      email,
+      password,
+      imgProfile,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* edit(action) {
+  try {
+    console.log(111, action.data);
+    const result = yield call(editAPI, action.data);
+    console.log('222', result);
+    const { pk, username, email, phoneNumber, imgProfile } = result.data;
+    yield put({
+      type: EDIT_USER_SUCCESS,
+      data: {
+        pk,
+        username,
+        email,
+        phoneNumber,
+        imgProfile,
+      },
+    });
+    Router.pushRoute('/profile');
+  } catch (e) {
+    console.error(e);
+    alert('수정에 실패하였습니다.');
+    yield put({
+      type: EDIT_USER_FAILURE,
+    });
+  }
+}
+
+function* watchEdit() {
+  yield takeEvery(EDIT_USER_REQUEST, edit);
+}
 
 // LOG_IN
 function logInAPI({ email, password }) {
@@ -69,7 +122,7 @@ function loadUserAPI(key) {
 function* loadUser(action) {
   try {
     const result = yield call(loadUserAPI, action.key);
-    const { pk, username, email, phoneNumber } = result.data;
+    const { pk, username, email, phoneNumber, imgProfile } = result.data;
     yield put({
       type: LOAD_USER_SUCCESS,
       data: {
@@ -77,6 +130,7 @@ function* loadUser(action) {
         username,
         email,
         phoneNumber,
+        imgProfile,
       },
     });
   } catch (e) {
@@ -167,5 +221,6 @@ export default function* userSaga() {
     fork(watchLoadUser),
     fork(watchSignUp),
     fork(watchLogOut),
+    fork(watchEdit),
   ]);
 }

@@ -4,6 +4,7 @@ export const initialState = {
   username: '',
   email: '',
   phoneNumber: '',
+  imgProfile: '',
   studies: [],
 };
 
@@ -84,6 +85,7 @@ export default (state = initialState, action) => {
         username: action.data.username,
         email: action.data.email,
         phoneNumber: action.data.phoneNumber,
+        imgProfile: action.data.imgProfile,
         isLogin: true,
       };
     case LOAD_USER_FAILURE:
@@ -94,9 +96,17 @@ export default (state = initialState, action) => {
     case EDIT_USER_REQUEST:
       return {
         ...state,
-        name: action.name,
-        email: action.email,
-        phone: action.phone,
+      };
+    case EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        imgProfile: action.data.imgProfile,
+        email: action.data.email,
+        phoneNumber: action.data.phoneNumber,
+      };
+    case EDIT_USER_FAILURE:
+      return {
+        ...state,
       };
 
     case LOG_OUT_REQUEST:

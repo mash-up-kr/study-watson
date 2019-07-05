@@ -36,11 +36,17 @@ const StyledContainer = styled.ul`
 `;
 
 const Profile = () => {
-  const { name, email, phone } = useSelector(state => state.user);
+  const { username, email, phoneNumber, imgProfile } = useSelector(
+    state => state.user,
+  );
+  console.log(imgProfile);
 
   return (
     <StyledProfile>
       <Header />
+      <div>
+        <img src={imgProfile} alt="" />
+      </div>
       <div
         style={{
           display: 'flex',
@@ -50,7 +56,7 @@ const Profile = () => {
         }}
       >
         <StyledPhoto />
-        <StyledName>{name}</StyledName>
+        <StyledName>{username}</StyledName>
         <StyledContainer>
           <li>
             <StyledItem>
@@ -61,7 +67,7 @@ const Profile = () => {
           <li>
             <StyledItem>
               <div>전화번호</div>
-              <div>{phone}</div>
+              <div>{phoneNumber}</div>
             </StyledItem>
           </li>
           <li>

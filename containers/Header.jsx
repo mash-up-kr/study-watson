@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import { Link } from '../routes';
 import Menu from '../components/Menu';
-import { canUseDOM } from '../common/canUesDOM';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -52,6 +51,8 @@ const Header = () => {
         }
         break;
       default:
+        setLink('');
+        setLabel('');
         break;
     }
   }, []);
