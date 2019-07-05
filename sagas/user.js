@@ -3,6 +3,9 @@ import axios from 'axios';
 import Router from 'next/router';
 
 import {
+  // USER_ATTRIBUTE_CHECK_REQUEST,
+  // USER_ATTRIBUTE_CHECK_SUCCESS,
+  // USER_ATTRIBUTE_CHECK_FAILURE,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
@@ -126,7 +129,7 @@ function* signUp(action) {
     Router.pushRoute('/');
   } catch (e) {
     console.error(e);
-    alert('12회원가입에 실패하였습니다.');
+    alert('회원가입에 실패하였습니다.');
     yield put({
       type: SIGN_UP_FAILURE,
     });
