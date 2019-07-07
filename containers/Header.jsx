@@ -48,6 +48,9 @@ const Header = () => {
         if (!isLogin) {
           setLink('/login');
           setLabel('로그인');
+        } else {
+          setLink('');
+          setLabel('');
         }
         break;
       default:
@@ -55,7 +58,7 @@ const Header = () => {
         setLabel('');
         break;
     }
-  }, []);
+  });
 
   return (
     <>

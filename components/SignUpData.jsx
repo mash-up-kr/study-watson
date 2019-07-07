@@ -23,7 +23,7 @@ const StyledScreen = styled.div`
 `;
 
 const SignUpData = () => {
-  const [username, setUsername] = useInput('');
+  const [nickname, setNickname] = useInput('');
   const [email, setEmail] = useInput('');
   const [emailConfirm, setEmailConfirm] = useState(false);
   const [password1, setPassword1] = useInput('');
@@ -39,7 +39,15 @@ const SignUpData = () => {
       e.preventDefault();
       dispatch({
         type: SIGN_UP_REQUEST,
-        data: { username, password1, password2, type, email, phoneNumber },
+        data: {
+          username: email,
+          password1,
+          password2,
+          type,
+          email,
+          phoneNumber,
+          nickname,
+        },
       });
     } else {
       alert('이메일 중복 체크가 필요합니다.');
@@ -69,12 +77,12 @@ const SignUpData = () => {
       <StyledTitle>회원가입</StyledTitle>
       <StyledForm>
         <div>
-          <StyledLabel htmlFor="username">이름</StyledLabel>
+          <StyledLabel htmlFor="nickname">nickname</StyledLabel>
           <StyledInput
-            id="username"
+            id="nickname"
             type="text"
-            value={username}
-            onChange={setUsername}
+            value={nickname}
+            onChange={setNickname}
           />
         </div>
 

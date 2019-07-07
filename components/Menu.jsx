@@ -6,12 +6,8 @@ import LogoutMenu from './LogoutMenu';
 import LoginMenu from './LoginMenu';
 
 const Menu = ({ value }) => {
-  const { isLogin, username } = useSelector(state => state.user);
-  return isLogin ? (
-    <LoginMenu username={username} value={value} />
-  ) : (
-    <LogoutMenu value={value} />
-  );
+  const { isLogin } = useSelector(state => state.user);
+  return isLogin ? <LoginMenu value={value} /> : <LogoutMenu value={value} />;
 };
 
 Menu.propTypes = {

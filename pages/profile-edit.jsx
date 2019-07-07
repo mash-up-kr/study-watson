@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -12,7 +12,7 @@ const StyledProfileEdit = styled.div`
   height: 100vh;
 `;
 
-const StyledPhoto = styled.div`
+const StyledPhoto = styled.img`
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -21,17 +21,40 @@ const StyledPhoto = styled.div`
 
 const profileEdit = () => {
   const dispatch = useDispatch();
-  const { pk, username, email, phoneNumber } = useSelector(state => state.user);
+  const { pk, nickname, email, phoneNumber, imgProfile } = useSelector(
+    state => state.user,
+  );
 
-  const [imgProfile, setImgProfile] = useState('');
-  const [inputName, setInputName] = useInput(username);
-  const [inputEmail, setInputEmail] = useInput(email);
-  const [inputPhone, setInputPhone] = useInput(phoneNumber);
+  const [inputImgProfile, setInputImgProfile] = useState('');
+  const [inputNickname, setInputNickname] = useInput(nickname || '');
+  const [inputEmail, setInputEmail] = useInput(email || '');
+  const [inputPhone, setInputPhone] = useInput(phoneNumber || '');
+
+  useEffect(() => {
+    const n = {
+      target: {
+        value: nickname,
+      },
+    };
+    setInputNickname(n);
+    const e = {
+      target: {
+        value: email,
+      },
+    };
+    setInputEmail(e);
+    const p = {
+      target: {
+        value: phoneNumber,
+      },
+    };
+    setInputPhone(p);
+  }, [pk, nickname, email, phoneNumber, imgProfile]);
 
   const onChangeFile = e => {
     const reader = new FileReader();
     reader.onload = () => {
-      setImgProfile(reader.result);
+      setInputImgProfile(reader.result);
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -42,10 +65,10 @@ const profileEdit = () => {
       type: EDIT_USER_REQUEST,
       data: {
         pk,
-        imgProfile,
-        username: inputName,
+        imgProfile: inputImgProfile,
         email: inputEmail,
         phoneNumber: inputPhone,
+        nickname: inputNickname,
       },
     });
   };
@@ -54,24 +77,16 @@ const profileEdit = () => {
     <StyledProfileEdit>
       <Header />
       <div>
-        <StyledPhoto />
+        <StyledPhoto src={inputImgProfile || imgProfile} alt="" />
         <form onSubmit={onSubmit}>
           <label htmlFor="image">image</label>
-          <StyledInput
-            type="file"
-            id="image"
-            // value={inputName}
-            onChange={onChangeFile}
-          />
-          <div>
-            <img src={imgProfile} alt="" />
-          </div>
-          <label htmlFor="name">이름</label>
+          <StyledInput type="file" id="image" onChange={onChangeFile} />
+          <label htmlFor="nickname">nickname</label>
           <StyledInput
             type="text"
-            id="name"
-            value={inputName}
-            onChange={setInputName}
+            id="nickname"
+            value={inputNickname}
+            onChange={setInputNickname}
           />
           <label htmlFor="email">이메일</label>
           <StyledInput

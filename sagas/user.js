@@ -2,6 +2,8 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 import Router from 'next/router';
 
+import { cleanNullArgs } from '../common/cleanNullArgs';
+
 import {
   // USER_ATTRIBUTE_CHECK_REQUEST,
   // USER_ATTRIBUTE_CHECK_SUCCESS,
@@ -27,15 +29,13 @@ import {
 } from '../reducers/user';
 
 // EDIT_USER
-function editAPI({ pk, email, password, imgProfile }) {
+function editAPI({ pk, password, imgProfile, email, nickname }) {
+  const data = cleanNullArgs({ password, imgProfile, email, nickname });
   const token = localStorage.getItem('token');
-  console.log('to', token, pk);
   return axios.patch(
     `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
     {
-      email,
-      password,
-      imgProfile,
+      ...data,
     },
     {
       headers: {
@@ -48,22 +48,21 @@ function editAPI({ pk, email, password, imgProfile }) {
 
 function* edit(action) {
   try {
-    console.log(111, action.data);
     const result = yield call(editAPI, action.data);
-    console.log('222', result);
-    const { pk, username, email, phoneNumber, imgProfile } = result.data;
+    const { pk, phoneNumber, imgProfile, nickname, email } = result.data;
     yield put({
       type: EDIT_USER_SUCCESS,
       data: {
         pk,
-        username,
-        email,
         phoneNumber,
         imgProfile,
+        nickname,
+        email,
       },
     });
     Router.pushRoute('/profile');
   } catch (e) {
+    console.log(JSON.stringify(e));
     console.error(e);
     alert('수정에 실패하였습니다.');
     yield put({
@@ -89,7 +88,7 @@ function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
     console.log(result);
-    const { pk, username, email, phoneNumber } = result.data.user;
+    const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
     localStorage.setItem('token', key);
     yield put({
@@ -99,6 +98,7 @@ function* logIn(action) {
         username,
         email,
         phoneNumber,
+        nickname,
       },
     });
     Router.pushRoute('/');
@@ -125,7 +125,14 @@ function loadUserAPI(key) {
 function* loadUser(action) {
   try {
     const result = yield call(loadUserAPI, action.key);
-    const { pk, username, email, phoneNumber, imgProfile } = result.data;
+    const {
+      pk,
+      username,
+      email,
+      phoneNumber,
+      imgProfile,
+      nickname,
+    } = result.data;
     yield put({
       type: LOAD_USER_SUCCESS,
       data: {
@@ -134,6 +141,7 @@ function* loadUser(action) {
         email,
         phoneNumber,
         imgProfile,
+        nickname,
       },
     });
   } catch (e) {
@@ -158,6 +166,7 @@ function signUpAPI({
   type,
   email,
   phoneNumber,
+  nickname,
 }) {
   return axios.post('https://study-watson.lhy.kr/api/v1/members/', {
     username,
@@ -166,22 +175,23 @@ function signUpAPI({
     type,
     email,
     phoneNumber,
+    nickname,
   });
 }
 
 function* signUp(action) {
   try {
-    // const result =
-    yield call(signUpAPI, action.data);
-    // const { pk, email, phoneNumber, username } = result.data;
+    const result = yield call(signUpAPI, action.data);
+    const { pk, email, phoneNumber, username, nickname } = result.data;
     yield put({
       type: SIGN_UP_SUCCESS,
-      // data: {
-      //   pk,
-      //   email,
-      //   phoneNumber,
-      //   username,
-      // },
+      data: {
+        pk,
+        email,
+        phoneNumber,
+        username,
+        nickname,
+      },
     });
     Router.pushRoute('/');
   } catch (e) {

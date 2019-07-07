@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Header from '../containers/Header';
 import { Link } from '../routes';
 
-const StyledPhoto = styled.div`
+const StyledPhoto = styled.img`
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -36,17 +36,13 @@ const StyledContainer = styled.ul`
 `;
 
 const Profile = () => {
-  const { username, email, phoneNumber, imgProfile } = useSelector(
+  const { nickname, email, phoneNumber, imgProfile } = useSelector(
     state => state.user,
   );
-  console.log(imgProfile);
 
   return (
     <StyledProfile>
       <Header />
-      <div>
-        <img src={imgProfile} alt="" />
-      </div>
       <div
         style={{
           display: 'flex',
@@ -55,8 +51,8 @@ const Profile = () => {
           flexDirection: 'column',
         }}
       >
-        <StyledPhoto />
-        <StyledName>{username}</StyledName>
+        <StyledPhoto src={imgProfile} alt="" />
+        <StyledName>{nickname}</StyledName>
         <StyledContainer>
           <li>
             <StyledItem>
