@@ -1,6 +1,8 @@
 import { Container } from 'next/app';
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import createSagaMiddleware from 'redux-saga';
+import withReduxSaga from 'next-redux-saga';
 
 import withRedux from 'next-redux-wrapper';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -8,142 +10,11 @@ import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
+import Layout from '../containers/Layout';
+import rootSaga from '../sagas';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>
-    <style jsx global>
-      {`
-        /* http://meyerweb.com/eric/tools/css/reset/ 
-        v2.0 | 20110126
-        License: none (public domain)
-     */
-
-        html,
-        body,
-        div,
-        span,
-        applet,
-        object,
-        iframe,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p,
-        blockquote,
-        pre,
-        a,
-        abbr,
-        acronym,
-        address,
-        big,
-        cite,
-        code,
-        del,
-        dfn,
-        em,
-        img,
-        ins,
-        kbd,
-        q,
-        s,
-        samp,
-        small,
-        strike,
-        strong,
-        sub,
-        sup,
-        tt,
-        var,
-        b,
-        u,
-        i,
-        center,
-        dl,
-        dt,
-        dd,
-        ol,
-        ul,
-        li,
-        fieldset,
-        form,
-        label,
-        legend,
-        table,
-        caption,
-        tbody,
-        tfoot,
-        thead,
-        tr,
-        th,
-        td,
-        article,
-        aside,
-        canvas,
-        details,
-        embed,
-        figure,
-        figcaption,
-        footer,
-        header,
-        hgroup,
-        menu,
-        nav,
-        output,
-        ruby,
-        section,
-        summary,
-        time,
-        mark,
-        audio,
-        video {
-          margin: 0;
-          padding: 0;
-          border: 0;
-          font-size: 100%;
-          font: inherit;
-          vertical-align: baseline;
-        }
-        /* HTML5 display-role reset for older browsers */
-        article,
-        aside,
-        details,
-        figcaption,
-        figure,
-        footer,
-        header,
-        hgroup,
-        menu,
-        nav,
-        section {
-          display: block;
-        }
-        body {
-          line-height: 1;
-        }
-        ol,
-        ul {
-          list-style: none;
-        }
-        blockquote,
-        q {
-          quotes: none;
-        }
-        blockquote:before,
-        blockquote:after,
-        q:before,
-        q:after {
-          content: '';
-          content: none;
-        }
-        table {
-          border-collapse: collapse;
-          border-spacing: 0;
-        }
-      `}
-    </style>
     <Provider store={store}>
       <Helmet
         title="study-watson"
@@ -185,17 +56,28 @@ const MyApp = ({ Component, store, pageProps }) => (
             href:
               'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css',
           },
+          {
+            rel: 'stylesheet',
+            href: '/static/reset.css',
+          },
         ]}
       />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </Provider>
   </Container>
 );
 
 const configureStore = (initialState, options) => {
+  const sagaMiddleware = createSagaMiddleware();
   const middlewares = [
+    sagaMiddleware,
     store => next => action => {
-      console.log(store, action);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(store, action);
+      }
+
       next(action);
     },
   ];
@@ -210,6 +92,7 @@ const configureStore = (initialState, options) => {
         )
       : compose(applyMiddleware(...middlewares));
   const store = createStore(reducer, initialState, enhancer);
+  store.sagaTask = sagaMiddleware.run(rootSaga);
   return store;
 };
 
@@ -218,8 +101,9 @@ MyApp.getInitialProps = async context => {
   if (isServer) {
     //
   } else {
-    //
+    // CSR
   }
+
   let pageProps = {};
   if (context.Component.getInitialProps) {
     pageProps = await context.Component.getInitialProps(context.ctx);
@@ -233,4 +117,4 @@ MyApp.propTypes = {
   pageProps: PropTypes.any.isRequired,
 };
 
-export default withRedux(configureStore)(MyApp);
+export default withRedux(configureStore)(withReduxSaga(MyApp));

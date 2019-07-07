@@ -1,38 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-import { Link } from '../routes';
+import LogoutMenu from './LogoutMenu';
+import LoginMenu from './LoginMenu';
 
-const Menu = ({ menuHeight }) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-        height: `${menuHeight}`,
-      }}
-    >
-      <div>
-        <Link route="/" href="/">
-          now
-        </Link>
-      </div>
-      <div>
-        <Link route="/session" href="/session">
-          session
-        </Link>
-      </div>
-      <div>
-        <Link route="/my" href="/my">
-          my
-        </Link>
-      </div>
-    </div>
+const Menu = ({ value }) => {
+  const { isLogin, username } = useSelector(state => state.user);
+  return isLogin ? (
+    <LoginMenu username={username} value={value} />
+  ) : (
+    <LogoutMenu value={value} />
   );
 };
 
 Menu.propTypes = {
-  menuHeight: PropTypes.any.isRequired,
+  value: PropTypes.bool.isRequired,
 };
 
 export default Menu;
