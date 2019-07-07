@@ -82,7 +82,7 @@ const LoginMenu = ({ value }) => {
             </Link>
           </li>
           <li>
-            <Link route="/create" href="/create">
+            <Link route="/addStudy" href="/addStudy">
               <a>
                 <StyledItem>스터디 만들기</StyledItem>
               </a>
