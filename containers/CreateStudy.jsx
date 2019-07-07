@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 import StudyInvite from './StudyInvite';
 import ShowStudy from '../components/ShowStudy';
@@ -12,11 +13,22 @@ const firstPage = 'firstPage';
 const secondPage = 'secondPage';
 const thirdPage = 'thirdPage';
 
+const StyledToast = styled.div`
+  width: 100%;
+  padding: 1rem 0;
+  background-color: #595959;
+  color: #fff;
+  position: fixed;
+  bottom: 60px;
+  font-size: 14px;
+  text-align: center;
+`;
+
 const CreateStudy = () => {
   const [page, setPage] = useState(firstPage);
   const [title, setTitle] = useInput('');
   const [description, setDescription] = useInput('');
-
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   const link = canUseDOM() && `${window.location.origin}/join/id`;
@@ -29,9 +41,20 @@ const CreateStudy = () => {
     setPage(secondPage);
   };
 
+  const clickLink = () => {
+    setShow(true);
+    setTimeout(() => {
+      setShow(false);
+    }, 1000);
+  };
+
   const onSubmitForm = e => {
     e.preventDefault();
-    addStudy();
+    if (title.length > 1 && description.length > 1) {
+      addStudy();
+    } else {
+      clickLink();
+    }
   };
 
   const moveThirdPage = () => {
@@ -40,13 +63,18 @@ const CreateStudy = () => {
 
   const components = {
     [firstPage]: (
-      <MakeStudy
-        onSubmitForm={onSubmitForm}
-        title={title}
-        setTitle={setTitle}
-        setDescription={setDescription}
-        description={description}
-      />
+      <>
+        <MakeStudy
+          onSubmitForm={onSubmitForm}
+          title={title}
+          setTitle={setTitle}
+          setDescription={setDescription}
+          description={description}
+        />
+        {show && (
+          <StyledToast>제목과 내용은 2자 이상 작성해주세요!</StyledToast>
+        )}
+      </>
     ),
     [secondPage]: (
       <ShowStudy
