@@ -21,6 +21,9 @@ import {
   EDIT_USER_REQUEST,
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
+  WITHDRAW_REQUEST,
+  WITHDRAW_SUCCESS,
+  WITHDRAW_FAILURE,
 } from '../reducers/user';
 
 // EDIT_USER
@@ -100,8 +103,8 @@ function* logIn(action) {
     });
     Router.pushRoute('/');
   } catch (e) {
-    console.error(e);
-    alert('로그인에 실패하였습니다.');
+    // console.error(e.response.data);
+    alert('입력하신 아이디/비밀번호에 해당하는 계정이 없습니다.');
     yield put({
       type: LOG_IN_FAILURE,
     });
@@ -215,6 +218,37 @@ function* watchLogOut() {
   yield takeEvery(LOG_OUT_REQUEST, logOut);
 }
 
+// WITHDRAW
+function withDrawAPI({ pk }) {
+  const token = localStorage.getItem('token');
+  return axios.delete(`https://study-watson.lhy.kr/api/v1/members/${pk}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+  });
+}
+
+function* withDraw(action) {
+  try {
+    const result = yield call(withDrawAPI, action.data);
+    console.log(result);
+    yield put({
+      type: WITHDRAW_SUCCESS,
+    });
+    Router.pushRoute('/');
+  } catch (e) {
+    console.error(e);
+    alert('탈퇴에 실패하였습니다.');
+    yield put({
+      type: WITHDRAW_FAILURE,
+    });
+  }
+}
+function* watchWithDraw() {
+  yield takeEvery(WITHDRAW_REQUEST, withDraw);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
@@ -222,5 +256,6 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchLogOut),
     fork(watchEdit),
+    fork(watchWithDraw),
   ]);
 }

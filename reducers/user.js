@@ -130,7 +130,19 @@ export default (state = initialState, action) => {
     case WITHDRAW_REQUEST:
       return {
         ...state,
-        isLogin: action.isLogin,
+      };
+    case WITHDRAW_SUCCESS:
+      return {
+        ...state,
+        pk: '',
+        username: '',
+        email: '',
+        phoneNumber: '',
+        isLogin: false,
+      };
+    case WITHDRAW_FAILURE:
+      return {
+        ...state,
       };
 
     default: {

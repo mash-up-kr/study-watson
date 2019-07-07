@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import Router from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../containers/Header';
-import { WITHDRAW } from '../reducers/user';
+import { WITHDRAW_REQUEST } from '../reducers/user';
 
 const StyledWithdraw = styled.div`
   width: 100vw;
@@ -23,14 +22,16 @@ const StyledButton = styled.div`
 `;
 
 const Withdraw = () => {
+  const { pk } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const onClick = () => {
     dispatch({
-      type: WITHDRAW,
-      isLogin: false,
+      type: WITHDRAW_REQUEST,
+      data: {
+        pk,
+      },
     });
-    Router.pushRoute('/');
   };
 
   return (
