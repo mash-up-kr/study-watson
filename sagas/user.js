@@ -195,7 +195,7 @@ function* signUp(action) {
     });
     Router.pushRoute('/');
   } catch (e) {
-    console.error(e);
+    console.log(JSON.stringify(e));
     alert('회원가입에 실패하였습니다.');
     yield put({
       type: SIGN_UP_FAILURE,
