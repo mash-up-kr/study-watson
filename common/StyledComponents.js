@@ -26,7 +26,7 @@ const StyledInput = styled.input`
   width: 100%;
   padding: 1rem;
   font-size: 1rem;
-  margin: 0.5rem 0 1.5rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   :focus {
     border: 1px solid #0077FF;
   }

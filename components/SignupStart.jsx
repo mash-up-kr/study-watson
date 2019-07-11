@@ -12,14 +12,14 @@ const StyledContainer = styled.div`
   align-items: center;
 `;
 
-const StyledGoogleButton = styled.button`
+const StyledEmailButton = styled.button`
   position: fixed;
   bottom: 1rem;
   width: calc(100% - 2rem);
   padding: 1rem 0;
   font-size: 1rem;
-  color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12);
+  color: #fff;
+  background-color: #0077FF;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -30,14 +30,14 @@ const SignupStart = ({ setDepth }) => {
   return (
     <StyledContainer>
       <Start />
-      <StyledGoogleButton onClick={() => setDepth(true)}>
+      <StyledEmailButton onClick={() => setDepth(true)}>
         <img
-          src="/static/icon-google.svg"
-          alt="google logo"
+          src="/static/icon-mail.svg"
+          alt="mail icon"
           style={{ marginRight: '1rem' }}
         />
-        Google로 시작하기
-      </StyledGoogleButton>
+        이메일로 가입하기
+      </StyledEmailButton>
     </StyledContainer>
   );
 };
