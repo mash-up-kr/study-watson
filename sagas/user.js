@@ -4,6 +4,7 @@ import Router from 'next/router';
 
 import { cleanNullArgs } from '../common/cleanNullArgs';
 import { getCookie } from '../common/cookie';
+import { canUseDOM } from '../common/canUesDOM';
 
 import {
   // USER_ATTRIBUTE_CHECK_REQUEST,
@@ -147,7 +148,7 @@ function* loadUser(action) {
     });
   } catch (e) {
     console.error(e);
-    // localStorage.removeItem('token');
+    if (canUseDOM()) document.cookie = `token=`;
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,
@@ -211,7 +212,7 @@ function* watchSignUp() {
 
 function* logOut() {
   try {
-    // localStorage.removeItem('token');
+    if (canUseDOM()) document.cookie = `token=`;
     yield put({
       type: LOG_OUT_SUCCESS,
     });
