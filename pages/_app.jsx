@@ -105,7 +105,8 @@ MyApp.getInitialProps = async context => {
   });
   let pageProps = {};
   if (context.Component.getInitialProps) {
-    pageProps = await context.Component.getInitialProps(context.ctx);
+    const { ctx } = context;
+    pageProps = await context.Component.getInitialProps({ ctx, token });
   }
   return { pageProps, isServer };
 };

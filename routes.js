@@ -1,8 +1,7 @@
 const routes = require('next-routes');
 
 // const router = routes().add('feed', '/feed/:feedId');
-const router = routes();
-// .add('tiket', '/tiket/:id', 'tiket');
+const router = routes().add('join', '/join/:id', 'join');
 exports.Link = router.Link;
 
 module.exports = router;
