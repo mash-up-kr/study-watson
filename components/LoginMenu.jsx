@@ -1,5 +1,4 @@
 import React from 'react';
-// import Router from 'next/router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
