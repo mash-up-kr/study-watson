@@ -35,7 +35,6 @@
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
     "styled-components": "^4.2.0",
-    "uuid": "^3.3.2",
     "webpack": "^4.35.2"
   },
   "devDependencies": {
