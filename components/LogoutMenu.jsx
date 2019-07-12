@@ -21,6 +21,9 @@ const StyledItem = styled.div`
   width: 100%;
   padding: 1rem 0;
   border-bottom: 1px solid #d8d8d8;
+  :first-child {
+    margin-top: 2rem;
+  }
 `;
 
 const StyledBackground = styled.div`
