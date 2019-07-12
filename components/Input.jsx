@@ -51,15 +51,24 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onClickReset: PropTypes.func.isRequired,
-  onClickInput: PropTypes.func.isRequired,
-  isValid: PropTypes.bool.isRequired,
-  focus: PropTypes.string.isRequired,
+  onClickInput: PropTypes.func,
+  isValid: PropTypes.bool,
+  focus: PropTypes.string,
   value: PropTypes.string.isRequired,
-  acceptableText: PropTypes.string.isRequired,
-  unacceptableText: PropTypes.string.isRequired,
+  acceptableText: PropTypes.string,
+  unacceptableText: PropTypes.string,
+};
+
+Input.defaultProps = {
+  placeholder: '',
+  onClickInput: () => {},
+  isValid: false,
+  focus: '',
+  acceptableText: '',
+  unacceptableText: '',
 };
 
 export default Input;

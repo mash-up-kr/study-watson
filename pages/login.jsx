@@ -1,15 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import Header from '../containers/Header';
 import { LOG_IN_REQUEST } from '../reducers/user';
 import { useInput } from '../common/useInput';
 import Input from '../components/Input';
-import {
-  StyledForm,
-  StyledTitle,
-} from '../common/StyledComponents';
+import { StyledForm, StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -20,7 +17,7 @@ const StyledScreen = styled.div`
 const StyledButton = styled.div`
   width: 100%;
   padding: 1rem 0;
-  background-color: #0077FF;
+  background-color: #0077ff;
   font-size: 1rem;
   color: #fff;
   position: fixed;
@@ -61,6 +58,7 @@ const Login = () => {
             type="email"
             value={email}
             onChange={setEmail}
+            onClickReset={() => setEmail('')}
           />
           <Input
             label="비밀번호"
@@ -68,11 +66,10 @@ const Login = () => {
             type="password"
             value={password}
             onChange={setPassword}
+            onClickReset={() => setPassword('')}
           />
         </StyledForm>
-        <StyledButton onClick={onClick}>
-          로그인
-        </StyledButton>
+        <StyledButton onClick={onClick}>로그인</StyledButton>
       </StyledScreen>
     </>
   );
