@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 
-import StudyInvite from "./StudyInvite";
+import StudyInvite from './StudyInvite';
 import ShowStudy from '../components/ShowStudy';
 import MakeStudy from '../components/MakeStudy';
 import { useInput } from '../common/useInput';
@@ -29,35 +29,21 @@ const CreateStudy = () => {
     addStudy(to);
   };
 
-  if (depth === 2) {
-    return (
-      <div>
-        <StudyInvite link={id} />
-      </div>
-    );
-  }
-  if (depth === 1) {
-    return (
-      <div>
-        <ShowStudy
-          title={title}
-          description={description}
-          setDepth={setDepth}
-        />
-      </div>
-    );
-  }
+  const components = [
+    <MakeStudy
+      onSubmitForm={onSubmitForm}
+      title={title}
+      setTitle={setTitle}
+      setDescription={setDescription}
+      description={description}
+    />,
+    <ShowStudy title={title} description={description} setDepth={setDepth} />,
+    <StudyInvite link={id} />,
+  ];
+
   return (
     // MakeStudy - ShowStudy - StudyInvite
-    <div>
-      <MakeStudy
-        onSubmitForm={onSubmitForm}
-        title={title}
-        setTitle={setTitle}
-        setDescription={setDescription}
-        description={description}
-      />
-    </div>
+    <div>{components[depth]}</div>
   );
 };
 
