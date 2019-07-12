@@ -3,6 +3,7 @@ import axios from 'axios';
 import Router from 'next/router';
 
 import { cleanNullArgs } from '../common/cleanNullArgs';
+import { getCookie } from '../common/cookie';
 
 import {
   // USER_ATTRIBUTE_CHECK_REQUEST,
@@ -31,7 +32,7 @@ import {
 // EDIT_USER
 function editAPI({ pk, password, imgProfile, email, nickname }) {
   const data = cleanNullArgs({ password, imgProfile, email, nickname });
-  const token = localStorage.getItem('token');
+  const token = getCookie('token');
   return axios.patch(
     `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
     {
@@ -90,7 +91,7 @@ function* logIn(action) {
     console.log(result);
     const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
-    localStorage.setItem('token', key);
+    document.cookie = `token=${key}`;
     yield put({
       type: LOG_IN_SUCCESS,
       data: {
@@ -116,7 +117,7 @@ function* watchLogIn() {
 }
 
 // LOAD_USER
-function loadUserAPI(key) {
+function loadUserAPI({ key }) {
   return axios.get('https://study-watson.lhy.kr/api/v1/members/profile/', {
     headers: { Authorization: `Token ${key}` },
   });
@@ -124,7 +125,7 @@ function loadUserAPI(key) {
 
 function* loadUser(action) {
   try {
-    const result = yield call(loadUserAPI, action.key);
+    const result = yield call(loadUserAPI, action);
     const {
       pk,
       username,
@@ -146,7 +147,7 @@ function* loadUser(action) {
     });
   } catch (e) {
     console.error(e);
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,
@@ -210,7 +211,7 @@ function* watchSignUp() {
 
 function* logOut() {
   try {
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -230,7 +231,7 @@ function* watchLogOut() {
 
 // WITHDRAW
 function withDrawAPI({ pk }) {
-  const token = localStorage.getItem('token');
+  const token = getCookie('token');
   return axios.delete(`https://study-watson.lhy.kr/api/v1/members/${pk}/`, {
     headers: {
       'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import createSagaMiddleware from 'redux-saga';
 import withReduxSaga from 'next-redux-saga';
+import axios from 'axios';
 
 import withRedux from 'next-redux-wrapper';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -10,8 +11,10 @@ import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
-import Layout from '../containers/Layout';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+// import Layout from '../containers/Layout';
 import rootSaga from '../sagas';
+import { getCookie } from '../common/cookie';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>
@@ -48,9 +51,7 @@ const MyApp = ({ Component, store, pageProps }) => (
           },
         ]}
       />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
     </Provider>
   </Container>
 );
@@ -83,13 +84,25 @@ const configureStore = (initialState, options) => {
 };
 
 MyApp.getInitialProps = async context => {
+  let token = '';
   const isServer = !!context.ctx.req;
   if (isServer) {
-    //
+    const decodedCookie = decodeURIComponent(context.ctx.req.headers.cookie);
+    const value = 'token';
+    const cookieList = decodedCookie.split(';');
+    const name = `${value}=`;
+    const cookie = cookieList
+      .map(e => e.trim())
+      .find(e => e.indexOf(name) === 0);
+    token = cookie ? cookie.substring(name.length) : '';
   } else {
-    // CSR
+    token = getCookie('token');
   }
-
+  axios.defaults.headers.Authorization = `Bearer ${token}`;
+  context.ctx.store.dispatch({
+    type: LOAD_USER_REQUEST,
+    key: token,
+  });
   let pageProps = {};
   if (context.Component.getInitialProps) {
     pageProps = await context.Component.getInitialProps(context.ctx);
