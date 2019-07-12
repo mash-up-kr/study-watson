@@ -28,7 +28,7 @@ const Join = ({ id, token }) => {
       );
       if (result.data.length > 0) {
         alert('이미 참여한 스터디 입니다.');
-        Router.pushRoute('/');
+        Router.pushRoute(`/studyDetail/${id}`);
       } else {
         const info = await Axios.get(
           `https://study-watson.lhy.kr/api/v1/study/${id}/`,
@@ -57,6 +57,7 @@ const Join = ({ id, token }) => {
       },
     );
     if (result.data.user.pk === user.pk) {
+      Router.pushRoute(`/studyDetail/${id}`);
       alert('참여에 성공했습니다.');
     } else {
       alert('참여에 실패 했습니다.');

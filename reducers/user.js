@@ -6,7 +6,6 @@ export const initialState = {
   phoneNumber: '',
   imgProfile: '',
   nickname: '',
-  studies: [],
 };
 
 // export const USER_ATTRIBUTE_CHECK_REQUEST = 'USER_ATTRIBUTE_CHECK_REQUEST';

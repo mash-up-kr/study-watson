@@ -6,7 +6,7 @@ import StudyInvite from './StudyInvite';
 import ShowStudy from '../components/ShowStudy';
 import MakeStudy from '../components/MakeStudy';
 import { useInput } from '../common/useInput';
-import { ADD_STUDY } from '../reducers/study';
+import { ADD_STUDY_REQUEST } from '../reducers/study';
 import { canUseDOM } from '../common/canUesDOM';
 
 const firstPage = 'firstPage';
@@ -35,7 +35,7 @@ const CreateStudy = () => {
 
   const addStudy = () => {
     dispatch({
-      type: ADD_STUDY,
+      type: ADD_STUDY_REQUEST,
       payload: { title, description },
     });
     setPage(secondPage);
