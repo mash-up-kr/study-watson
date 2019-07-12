@@ -147,11 +147,12 @@ function* loadUser(action) {
       },
     });
   } catch (e) {
-    console.error(e);
-    if (canUseDOM()) document.cookie = `token=`;
+    if (canUseDOM()) {
+      console.log(JSON.stringify(e.response.data.message));
+      document.cookie = `token=`;
+    }
     yield put({
       type: LOAD_USER_FAILURE,
-      error: e,
     });
   }
 }
