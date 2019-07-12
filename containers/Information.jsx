@@ -37,15 +37,16 @@ const Information = () => {
     <div>
       <StyledLogo>
         <img src="/static/big-logo-sample.png" alt="logo" />
+        {/* 새로운 로고로 교체하신 이후에, big-logo-sample 지워주세요 */}
       </StyledLogo>
 
+      {/* StyledTitle: 인삿말 입니다 */}
       <StyledTitle>
-        {/* 인삿말 입니다 */}
         안녕하세요. 모든 스터디 관리를 한 곳에서 도와주는 Study Watson 입니다.
       </StyledTitle>
 
+      {/* StyledFeature: 할 수 있는 기능에 대해 간략하게 설명합니다 */}
       <StyledFeature>
-        {/* 할 수 있는 기능에 대해 간략하게 설명 */}
         <ul>
           <StyledFeatureLi>스터디 관리</StyledFeatureLi>
           <StyledFeatureLi>포스팅</StyledFeatureLi>
@@ -55,8 +56,8 @@ const Information = () => {
         </ul>
       </StyledFeature>
 
+      {/* StyledDesc: StudyFeature 에서 말한 것을 상세하게 설명하는 부분입니다 */}
       <StyledDesc>
-        {/* StudyFeature 에서 말한 것을 상세하게 설명 */}
         <ol>
           <StyledDescTitleLi>스터디 관리</StyledDescTitleLi>
           <ul>

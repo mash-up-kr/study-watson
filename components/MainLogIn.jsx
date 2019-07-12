@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { LOAD_STUDIES_REQUEST } from '../reducers/study';
 import { StyledButton } from '../common/StyledComponents';
+import { getCookie } from '../common/cookie';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -35,11 +37,23 @@ const StyledTitle = styled.h2`
 `;
 
 const MainLogIn = () => {
+  const { pk } = useSelector(state => state.user);
   const { studies } = useSelector(state => state.study);
+
+  const dispatch = useDispatch();
 
   const onClick = () => {
     Router.pushRoute('/addStudy');
   };
+
+  useEffect(() => {
+    const token = getCookie('token');
+    dispatch({
+      type: LOAD_STUDIES_REQUEST,
+      token,
+      pk,
+    });
+  }, []);
 
   return (
     <div>
@@ -48,9 +62,14 @@ const MainLogIn = () => {
           <>
             {studies.map((study, idx) => {
               return (
-                <StyledCard key={idx}>
-                  <StyledTitle>{study.title}</StyledTitle>
-                  <div>{study.description}</div>
+                <StyledCard
+                  key={idx}
+                  onClick={() => {
+                    Router.pushRoute(`/studyDetail/${study.pk}`);
+                  }}
+                >
+                  <StyledTitle>{study.study.name}</StyledTitle>
+                  <div>{study.study.description}</div>
                   <br />
                 </StyledCard>
               );
