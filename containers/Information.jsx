@@ -36,7 +36,7 @@ const Information = () => {
   return (
     <div>
       <StyledLogo>
-        <img src="/static/big-logo-sample.png" alt="logo" />
+        <img style={{ width: '50px' }} src="/static/logo2.svg" alt="logo" />
         {/* 새로운 로고로 교체하신 이후에, big-logo-sample 지워주세요 */}
       </StyledLogo>
 

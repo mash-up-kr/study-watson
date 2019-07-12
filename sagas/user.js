@@ -3,8 +3,7 @@ import axios from 'axios';
 import Router from 'next/router';
 
 import { cleanNullArgs } from '../common/cleanNullArgs';
-import { getCookie } from '../common/cookie';
-import { canUseDOM } from '../common/canUesDOM';
+import { getCookie, deleteCookie } from '../common/cookie';
 
 import {
   // USER_ATTRIBUTE_CHECK_REQUEST,
@@ -147,10 +146,7 @@ function* loadUser(action) {
       },
     });
   } catch (e) {
-    if (canUseDOM()) {
-      console.log(JSON.stringify(e.response.data.message));
-      document.cookie = `token=`;
-    }
+    deleteCookie('token');
     yield put({
       type: LOAD_USER_FAILURE,
     });
@@ -213,7 +209,9 @@ function* watchSignUp() {
 
 function* logOut() {
   try {
-    if (canUseDOM()) document.cookie = `token=`;
+    console.log('111');
+    deleteCookie('token');
+    console.log('222');
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -249,6 +247,7 @@ function* withDraw(action) {
     yield put({
       type: WITHDRAW_SUCCESS,
     });
+    deleteCookie('token');
     Router.pushRoute('/');
   } catch (e) {
     console.error(e);

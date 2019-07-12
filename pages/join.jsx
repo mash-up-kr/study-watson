@@ -13,9 +13,13 @@ const Join = ({ id, token }) => {
   const user = useSelector(state => state.user);
 
   const fetchData = async () => {
+    if (!id || id === '0') {
+      alert('주소 확인이 필요합니다.');
+      Router.pushRoute('/');
+    }
     if (!user.isLogin) {
       alert('로그인이 필요합니다.');
-      window.location.href = '/login';
+      Router.pushRoute('/login');
     }
     try {
       const result = await Axios.get(
@@ -28,7 +32,7 @@ const Join = ({ id, token }) => {
       );
       if (result.data.length > 0) {
         alert('이미 참여한 스터디 입니다.');
-        Router.pushRoute(`/studyDetail/${id}`);
+        Router.pushRoute('/');
       } else {
         const info = await Axios.get(
           `https://study-watson.lhy.kr/api/v1/study/${id}/`,
@@ -38,6 +42,7 @@ const Join = ({ id, token }) => {
         );
         setName(info.data.name);
         setDescription(info.data.description);
+        console.log(info);
       }
     } catch (error) {
       console.log(error);
@@ -57,7 +62,9 @@ const Join = ({ id, token }) => {
       },
     );
     if (result.data.user.pk === user.pk) {
-      Router.pushRoute(`/studyDetail/${id}`);
+      Router.pushRoute(
+        `/studyDetail/${result.data.study.pk}/member/${result.data.pk}`,
+      );
       alert('참여에 성공했습니다.');
     } else {
       alert('참여에 실패 했습니다.');
@@ -87,7 +94,10 @@ const Join = ({ id, token }) => {
 };
 
 Join.getInitialProps = ({ ctx, token }) => {
-  return { id: ctx.query.id || '0', token };
+  return {
+    id: ctx.query.id || '0',
+    token,
+  };
 };
 
 Join.propTypes = {

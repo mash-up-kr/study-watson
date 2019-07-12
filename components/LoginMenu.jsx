@@ -43,7 +43,8 @@ const StyledProfile = styled.div`
   align-items: center;
 `;
 
-const StyledPhoto = styled.div`
+const StyledPhoto = styled.img`
+  flex-shrink: 0;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -51,13 +52,14 @@ const StyledPhoto = styled.div`
 `;
 
 const StyledName = styled.div`
+  overflow: scroll;
   margin-left: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
 `;
 
 const LoginMenu = ({ value }) => {
-  const { nickname } = useSelector(state => state.user);
+  const { nickname, imgProfile } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -70,7 +72,7 @@ const LoginMenu = ({ value }) => {
     <>
       <StyledMenu show={value}>
         <StyledProfile>
-          <StyledPhoto />
+          <StyledPhoto src={imgProfile} />
           <StyledName>{nickname}</StyledName>
         </StyledProfile>
         <ul>

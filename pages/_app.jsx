@@ -47,7 +47,7 @@ const MyApp = ({ Component, store, pageProps }) => (
         link={[
           {
             rel: 'shortcut icon',
-            href: '/favicon.ico',
+            href: '/static/logo2.svg',
           },
         ]}
       />

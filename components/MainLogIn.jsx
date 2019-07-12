@@ -65,7 +65,9 @@ const MainLogIn = () => {
                 <StyledCard
                   key={idx}
                   onClick={() => {
-                    Router.pushRoute(`/studyDetail/${study.pk}`);
+                    Router.pushRoute(
+                      `/studyDetail/${study.study.pk}/member/${study.pk}`,
+                    );
                   }}
                 >
                   <StyledTitle>{study.study.name}</StyledTitle>

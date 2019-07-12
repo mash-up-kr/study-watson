@@ -27,6 +27,9 @@ const Input = ({
   acceptableText,
   unacceptableText,
 }) => {
+  if (false) {
+    onClickReset();
+  }
   return (
     <StyledInputContainer>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
