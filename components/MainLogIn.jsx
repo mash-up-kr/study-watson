@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { LOAD_STUDIES_REQUEST } from '../reducers/study';
 import { StyledButton } from '../common/StyledComponents';
-import { getCookie } from '../common/cookie';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -37,27 +35,15 @@ const StyledTitle = styled.h2`
 `;
 
 const MainLogIn = () => {
-  const { pk } = useSelector(state => state.user);
   const { studies } = useSelector(state => state.study);
   const filterStudies = studies.filter(study => {
     return study.isWithdraw === false;
   });
-  const dispatch = useDispatch();
 
   const onClick = () => {
     Router.pushRoute('/addStudy');
   };
 
-  useEffect(() => {
-    const token = getCookie('token');
-    dispatch({
-      type: LOAD_STUDIES_REQUEST,
-      token,
-      pk,
-    });
-  }, []);
-
-  console.log(studies);
   return (
     <div>
       <div>

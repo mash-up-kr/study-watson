@@ -91,7 +91,8 @@ function* logIn(action) {
     console.log(result);
     const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
-    document.cookie = `token=${key}`;
+    document.cookie = `token=${key}; path=/`;
+    document.cookie = `pk=${pk}; path=/`;
     yield put({
       type: LOG_IN_SUCCESS,
       data: {
@@ -147,6 +148,7 @@ function* loadUser(action) {
     });
   } catch (e) {
     deleteCookie('token');
+    deleteCookie('pk');
     yield put({
       type: LOAD_USER_FAILURE,
     });
@@ -193,7 +195,8 @@ function* signUp(action) {
         nickname,
       },
     });
-    document.cookie = `token=${token}`;
+    document.cookie = `token=${token}; path=/`;
+    document.cookie = `pk=${pk}; path=/`;
     Router.pushRoute('/');
   } catch (e) {
     console.log(JSON.stringify(e));
@@ -213,6 +216,7 @@ function* logOut() {
   try {
     console.log('111');
     deleteCookie('token');
+    deleteCookie('pk');
     console.log('222');
     yield put({
       type: LOG_OUT_SUCCESS,
@@ -250,6 +254,7 @@ function* withDraw(action) {
       type: WITHDRAW_SUCCESS,
     });
     deleteCookie('token');
+    deleteCookie('pk');
     Router.pushRoute('/');
   } catch (e) {
     console.error(e);

@@ -14,7 +14,7 @@ import reducer from '../reducers';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 // import Layout from '../containers/Layout';
 import rootSaga from '../sagas';
-import { getCookie } from '../common/cookie';
+import { getCookie, getCookieServer } from '../common/cookie';
 
 const MyApp = ({ Component, store, pageProps }) => (
   <Container>
@@ -85,18 +85,14 @@ const configureStore = (initialState, options) => {
 
 MyApp.getInitialProps = async context => {
   let token = '';
+  let pk = '';
   const isServer = !!context.ctx.req;
   if (isServer) {
-    const decodedCookie = decodeURIComponent(context.ctx.req.headers.cookie);
-    const value = 'token';
-    const cookieList = decodedCookie.split(';');
-    const name = `${value}=`;
-    const cookie = cookieList
-      .map(e => e.trim())
-      .find(e => e.indexOf(name) === 0);
-    token = cookie ? cookie.substring(name.length) : '';
+    token = getCookieServer({ value: 'token', context });
+    pk = getCookieServer({ value: 'pk', context });
   } else {
     token = getCookie('token');
+    pk = getCookie('pk');
   }
   axios.defaults.headers.Authorization = `Bearer ${token}`;
   context.ctx.store.dispatch({
@@ -106,7 +102,7 @@ MyApp.getInitialProps = async context => {
   let pageProps = {};
   if (context.Component.getInitialProps) {
     const { ctx } = context;
-    pageProps = await context.Component.getInitialProps({ ctx, token });
+    pageProps = await context.Component.getInitialProps({ ctx, token, pk });
   }
   return { pageProps, isServer };
 };
