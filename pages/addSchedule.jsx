@@ -15,28 +15,32 @@ const addSchedule = ({ studyId, memberId, token }) => {
   const onSumit = async event => {
     event.preventDefault();
     console.log(date, dueDate);
-    const result = await Axios.post(
-      'https://study-watson.lhy.kr/api/v1/study/schedules/',
-      {
-        study: memberId,
-        location,
-        description,
-        date,
-        dueDate,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${token}`,
+    try {
+      const result = await Axios.post(
+        'https://study-watson.lhy.kr/api/v1/study/schedules/',
+        {
+          study: studyId,
+          location,
+          description,
+          date,
+          dueDate,
         },
-      },
-    );
-    console.log(111, result);
-    if (result.data.pk) {
-      alert('정상적으로 생성 되었습니다.');
-      Router.pushRoute(`/studyDetail/${studyId}/member/${memberId}`);
-    } else {
-      alert('일정 생성에 실패 하였습니다.');
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+          },
+        },
+      );
+      console.log(111, result);
+      if (result.data.pk) {
+        alert('정상적으로 생성 되었습니다.');
+        Router.pushRoute(`/studyDetail/${studyId}/member/${memberId}`);
+      } else {
+        alert('일정 생성에 실패 하였습니다.');
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error));
     }
   };
   return (
