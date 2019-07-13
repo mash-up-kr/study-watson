@@ -14,6 +14,15 @@ export const getCookie = value => {
   return null;
 };
 
+export const getCookieServer = ({ value, context }) => {
+  const decodedCookie = decodeURIComponent(context.ctx.req.headers.cookie);
+  const cookieList = decodedCookie.split(';');
+  const name = `${value}=`;
+  const cookie = cookieList.map(e => e.trim()).find(e => e.indexOf(name) === 0);
+
+  return cookie ? cookie.substring(name.length) : '';
+};
+
 export const deleteCookie = cookieName => {
   if (canUseDOM()) {
     const expireDate = new Date();
