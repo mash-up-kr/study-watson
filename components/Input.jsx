@@ -42,7 +42,7 @@ const Input = ({
         onClick={() => onClickInput(id)}
         autocomplete={type === 'password' ? 'new-password' : 'off'}
       />
-      {focus === 'email' && (
+      {focus === id && (
         <StyledHelpText>
           {isValid ? acceptableText : unacceptableText}
         </StyledHelpText>

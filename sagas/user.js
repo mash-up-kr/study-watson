@@ -181,7 +181,7 @@ function signUpAPI({
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data);
-    const { key } = result.data;
+    const { token } = result.data;
     const { pk, email, phoneNumber, username, nickname } = result.data.user;
     yield put({
       type: SIGN_UP_SUCCESS,
@@ -193,7 +193,7 @@ function* signUp(action) {
         nickname,
       },
     });
-    document.cookie = `token=${key}`;
+    document.cookie = `token=${token}`;
     Router.pushRoute('/');
   } catch (e) {
     console.log(JSON.stringify(e));

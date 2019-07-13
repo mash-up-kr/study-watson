@@ -17,13 +17,19 @@ const StyledMenu = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
+const StyledItem2 = styled.div`
+  width: 100%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #d8d8d8;
+  &:first-child {
+    margin-top: 2rem;
+  }
+`;
+
 const StyledItem = styled.div`
   width: 100%;
   padding: 1rem 0;
   border-bottom: 1px solid #d8d8d8;
-  :first-child {
-    margin-top: 2rem;
-  }
 `;
 
 const StyledBackground = styled.div`
@@ -45,7 +51,7 @@ const LogoutMenu = ({ value }) => {
           <li>
             <Link route="/about" href="/about">
               <a>
-                <StyledItem>알아보기</StyledItem>
+                <StyledItem2>알아보기</StyledItem2>
               </a>
             </Link>
           </li>

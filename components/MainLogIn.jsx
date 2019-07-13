@@ -39,7 +39,9 @@ const StyledTitle = styled.h2`
 const MainLogIn = () => {
   const { pk } = useSelector(state => state.user);
   const { studies } = useSelector(state => state.study);
-
+  const filterStudies = studies.filter(study => {
+    return study.isWithdraw === false;
+  });
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -55,12 +57,13 @@ const MainLogIn = () => {
     });
   }, []);
 
+  console.log(studies);
   return (
     <div>
       <div>
-        {studies.length > 0 ? (
+        {filterStudies.length > 0 ? (
           <>
-            {studies.map((study, idx) => {
+            {filterStudies.map((study, idx) => {
               return (
                 <StyledCard
                   key={idx}
