@@ -58,7 +58,7 @@ const MainLogIn = () => {
   return (
     <div>
       <div>
-        {studies.length >= 1 ? (
+        {studies.length > 0 ? (
           <>
             {studies.map((study, idx) => {
               return (
@@ -66,12 +66,16 @@ const MainLogIn = () => {
                   key={idx}
                   onClick={() => {
                     Router.pushRoute(
-                      `/studyDetail/${study.study.pk}/member/${study.pk}`,
+                      `/studyDetail/${study &&
+                        study.study &&
+                        study.study.pk}/member/${study && study.pk}`,
                     );
                   }}
                 >
-                  <StyledTitle>{study.study.name}</StyledTitle>
-                  <div>{study.study.description}</div>
+                  <StyledTitle>
+                    {study && study.study && study.study.name}
+                  </StyledTitle>
+                  <div>{study && study.study && study.study.description}</div>
                   <br />
                 </StyledCard>
               );

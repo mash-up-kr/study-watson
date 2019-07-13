@@ -35,9 +35,7 @@ function addAPI({ category, name, description }) {
 
 function* add(action) {
   try {
-    console.log(123123);
     const result = yield call(addAPI, action.data);
-    console.log('result', result);
     const { category, name, description } = result.data;
     yield put({
       type: ADD_STUDY_SUCCESS,
