@@ -114,7 +114,11 @@ MyApp.getInitialProps = async context => {
 MyApp.propTypes = {
   Component: PropTypes.any.isRequired,
   store: PropTypes.any.isRequired,
-  pageProps: PropTypes.any.isRequired,
+  pageProps: PropTypes.any,
+};
+
+MyApp.defaultProps = {
+  pageProps: {},
 };
 
 export default withRedux(configureStore)(withReduxSaga(MyApp));

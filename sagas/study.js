@@ -15,7 +15,9 @@ import {
 
 // ADD_STUDY
 function addAPI({ category, name, description }) {
+  console.log('category', category);
   const data = cleanNullArgs({ category, name, description });
+  console.log('data', data);
   const token = getCookie('token');
   return axios.post(
     `https://study-watson.lhy.kr/api/v1/study/`,
@@ -33,7 +35,9 @@ function addAPI({ category, name, description }) {
 
 function* add(action) {
   try {
+    console.log(123123);
     const result = yield call(addAPI, action.data);
+    console.log('result', result);
     const { category, name, description } = result.data;
     yield put({
       type: ADD_STUDY_SUCCESS,

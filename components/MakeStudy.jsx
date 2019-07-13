@@ -21,8 +21,8 @@ const StyledScreen = styled.div`
 
 const MakeStudy = ({
   onSubmitForm,
-  title,
-  setTitle,
+  name,
+  setName,
   description,
   setDescription,
 }) => {
@@ -30,8 +30,8 @@ const MakeStudy = ({
     <StyledScreen>
       <StyledTitle>스터디 만들기</StyledTitle>
       <StyledForm onSubmit={e => onSubmitForm(e, 1)}>
-        <StyledLabel htmlFor="title">스터디 이름</StyledLabel>
-        <StyledInput type="text" id="title" value={title} onChange={setTitle} />
+        <StyledLabel htmlFor="name">스터디 이름</StyledLabel>
+        <StyledInput type="text" id="name" value={name} onChange={setName} />
         <StyledLabel htmlFor="description">스터디 설명</StyledLabel>
         <StyledInput
           type="text"
@@ -46,8 +46,8 @@ const MakeStudy = ({
 
 MakeStudy.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  setName: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   setDescription: PropTypes.func.isRequired,
 };
