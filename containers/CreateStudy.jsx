@@ -26,7 +26,7 @@ const StyledToast = styled.div`
 
 const CreateStudy = () => {
   const [page, setPage] = useState(firstPage);
-  const [title, setTitle] = useInput('');
+  const [name, setName] = useInput('');
   const [description, setDescription] = useInput('');
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -34,11 +34,11 @@ const CreateStudy = () => {
   const link = canUseDOM() && `${window.location.origin}/join/id`;
 
   const addStudy = () => {
+    const category = 1;
     dispatch({
       type: ADD_STUDY_REQUEST,
-      payload: { title, description },
+      data: { name, description, category },
     });
-    setPage(secondPage);
   };
 
   const clickLink = () => {
@@ -50,14 +50,15 @@ const CreateStudy = () => {
 
   const onSubmitForm = e => {
     e.preventDefault();
-    if (title.length > 1 && description.length > 1) {
-      addStudy();
+    if (name.length > 1 && description.length > 1) {
+      setPage(secondPage);
     } else {
       clickLink();
     }
   };
 
   const moveThirdPage = () => {
+    addStudy();
     setPage(thirdPage);
   };
 
@@ -66,8 +67,8 @@ const CreateStudy = () => {
       <>
         <MakeStudy
           onSubmitForm={onSubmitForm}
-          title={title}
-          setTitle={setTitle}
+          name={name}
+          setName={setName}
           setDescription={setDescription}
           description={description}
         />
@@ -78,7 +79,7 @@ const CreateStudy = () => {
     ),
     [secondPage]: (
       <ShowStudy
-        title={title}
+        name={name}
         description={description}
         moveThirdPage={moveThirdPage}
       />
