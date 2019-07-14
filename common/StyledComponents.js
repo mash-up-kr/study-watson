@@ -1,9 +1,9 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components';
 
 const StyledButton = styled.input`
   width: 100%;
   padding: 1rem 0;
-  background-color: #0077FF;
+  background-color: #0077ff;
   font-size: 1rem;
   color: #fff;
   position: fixed;
@@ -22,13 +22,13 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
-  border: 1px solid #EDEDED;
+  border: 1px solid #ededed;
   width: 100%;
   padding: 1rem;
   font-size: 1rem;
   margin: 0.5rem 0 0.5rem 0;
   :focus {
-    border: 1px solid #0077FF;
+    border: 1px solid #0077ff;
   }
 `;
 
@@ -47,4 +47,151 @@ const StyledTitle = styled.h1`
   padding: 2rem 0;
 `;
 
-export { StyledButton, StyledLabel, StyledInput, StyledScreen, StyledTitle, StyledForm };
+export const GlobalStyle = createGlobalStyle`
+/* http://meyerweb.com/eric/tools/css/reset/ 
+        v2.0 | 20110126
+        License: none (public domain)
+     */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 16px;
+  font: inherit;
+  vertical-align: baseline;
+  color: #181818;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+}
+`;
+
+export {
+  StyledButton,
+  StyledLabel,
+  StyledInput,
+  StyledScreen,
+  StyledTitle,
+  StyledForm,
+};
