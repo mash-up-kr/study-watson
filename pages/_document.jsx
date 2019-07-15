@@ -29,7 +29,7 @@ export default class CustomDocument extends Document {
     const htmlAttrs = htmlAttributes.toComponent();
     const bodyAttrs = bodyAttributes.toComponent();
     return (
-      <html lang="ko" dir="rtl" {...htmlAttrs}>
+      <html lang="ko" dir="ltr" {...htmlAttrs}>
         <head>
           <script
             async
