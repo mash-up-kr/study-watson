@@ -1,46 +1,34 @@
 import React from 'react';
-import Axios from 'axios';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
-import Router from 'next/router';
+import { ADD_SCHEDULE_REQUEST } from '../reducers/schedule';
 import { useInput } from '../common/useInput';
 import Header from '../containers/Header';
 import Input from '../components/Input';
 
-const addSchedule = ({ studyId, memberId, token }) => {
+const addSchedule = ({ studyId, memberId }) => {
   const [location, setLocation] = useInput('');
   const [description, setDescription] = useInput('');
   const [date, setDate] = useInput('');
   const [dueDate, setDueDate] = useInput('');
+
+  const dispatch = useDispatch();
+
   const onSumit = async event => {
     event.preventDefault();
-    console.log(date, dueDate);
-    try {
-      const result = await Axios.post(
-        'https://study-watson.lhy.kr/api/v1/study/schedules/',
-        {
-          study: studyId,
-          location,
-          description,
-          date,
-          dueDate,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${token}`,
-          },
-        },
-      );
-      if (result.data.pk) {
-        alert('정상적으로 생성 되었습니다.');
-        Router.pushRoute(`/studyDetail/${studyId}/member/${memberId}`);
-      } else {
-        alert('일정 생성에 실패 하였습니다.');
-      }
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
+    dispatch({
+      type: ADD_SCHEDULE_REQUEST,
+      data: {
+        study: studyId,
+        location,
+        description,
+        date,
+        dueDate,
+      },
+      studyId,
+      memberId,
+    });
   };
   return (
     <>
@@ -95,7 +83,7 @@ addSchedule.getInitialProps = ({ ctx, token }) => {
 addSchedule.propTypes = {
   studyId: PropTypes.string.isRequired,
   memberId: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
+  // token: PropTypes.string.isRequired,
 };
 
 export default addSchedule;

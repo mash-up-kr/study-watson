@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
-
+// import { useDispatch} from 'react-redux'
 import Axios from 'axios';
+
+// import { ADD_SCHEDULE_REQUEST} from '../reducers/schedule'
 import Header from '../containers/Header';
-import { Link } from '../routes';
 
 const studyDetail = ({ studyId, memberId, token }) => {
   const [schedules, setSchedules] = useState([]);
+
+  // const dispatch = useDispatch()
+
   const getSchedule = async () => {
     const result = await Axios.get(
       `https://study-watson.lhy.kr/api/v1/study/schedules/?study=${studyId}`,
@@ -17,7 +21,28 @@ const studyDetail = ({ studyId, memberId, token }) => {
     console.log(result);
   };
 
-  const temp = pk => () => {
+  const deleteSchedule = pk => async () => {
+    try {
+      const result = await Axios.delete(
+        `https://study-watson.lhy.kr/api/v1/study/schedules/${pk}/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        },
+      );
+      console.log(result);
+      if (result.status === 204) {
+        alert('삭제에 성공하셨습니다.');
+        Router.pushRoute(`/studyDetail/${studyId}/member/${memberId}`);
+      } else {
+        alert('삭제에 실패하셨습니다.');
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error.response.data.message));
+      alert('삭제에 실패하셨습니다.');
+    }
+  };
+
+  const modifySchedule = pk => async () => {
     console.log('temp:', pk);
   };
 
@@ -62,7 +87,6 @@ const studyDetail = ({ studyId, memberId, token }) => {
               key={schedule.pk}
               style={{ border: '1px solid', margin: '30px 0' }}
             >
-              {console.log(schedule.pk)}
               <div>location</div>
               <div>{schedule.location}</div>
               <div>description</div>
@@ -71,16 +95,8 @@ const studyDetail = ({ studyId, memberId, token }) => {
               <div>{schedule.date}</div>
               <div>dueDate</div>
               <div>{schedule.dueDate}</div>
-              <Link route="/modifySchedule" href="/modifySchedule">
-                <a>[수정]</a>
-              </Link>
-              <Link
-                route="/deleteSchedule"
-                href="/deleteSchedule"
-                onClick={temp(schedule.pk)}
-              >
-                <a>[삭제]</a>
-              </Link>
+              <div onClick={modifySchedule(schedule.pk)}>[수정]</div>
+              <div onClick={deleteSchedule(schedule.pk)}>[삭제]</div>
             </div>
           );
         })}
