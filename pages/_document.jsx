@@ -29,7 +29,7 @@ export default class CustomDocument extends Document {
     const htmlAttrs = htmlAttributes.toComponent();
     const bodyAttrs = bodyAttributes.toComponent();
     return (
-      <html lang="ko" {...htmlAttrs}>
+      <html lang="ko" dir="rtl" {...htmlAttrs}>
         <head>
           <script
             async
@@ -44,6 +44,42 @@ export default class CustomDocument extends Document {
             }}
           />
           {this.props.styleTags}
+          <meta charset="utf-8" />
+          <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+          />
+          <title>study-watson</title>
+          <meta
+            name="description"
+            content="모든 스터디 관리를 한 곳에서 도와주는 Study Watson 입니다."
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content="https://study-watson.herokuapp.com/"
+          />
+          <meta property="og:title" content="study-watson" />
+          <meta property="og:image" content="/static/meta-image.png" />
+          <meta
+            property="og:description"
+            content="모든 스터디 관리를 한 곳에서 도와주는 Study Watson 입니다."
+          />
+          <meta property="og:site_name" content="study-watson" />
+          <meta property="og:locale" content="ko" />
+          {/* <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" /> */}
+          {/* <meta name="twitter:card" content="summary" />
+          <meta name="twitter:site" content="@site_account" />
+          <meta name="twitter:creator" content="@individual_account" />
+          <meta name="twitter:url" content="https://example.com/page.html" />
+          <meta name="twitter:title" content="Content Title" />
+          <meta
+            name="twitter:description"
+            content="Content description less than 200 characters"
+          />
+          <meta name="twitter:image" content="https://example.com/image.jpg" /> */}
           {Object.values(helmet).map(el => el.toComponent())}
           <GlobalStyle />
         </head>
