@@ -24,9 +24,6 @@ const MyApp = ({ Component, store, pageProps }) => (
         htmlAttributes={{ lang: 'ko' }}
         meta={[
           {
-            charset: 'UTF-8',
-          },
-          {
             name: 'viewport',
             content:
               'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
@@ -47,7 +44,7 @@ const MyApp = ({ Component, store, pageProps }) => (
         link={[
           {
             rel: 'shortcut icon',
-            href: '/static/logo2.svg',
+            href: '/static/logo-32.png',
           },
         ]}
       />

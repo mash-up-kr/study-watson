@@ -32,7 +32,6 @@ const addSchedule = ({ studyId, memberId, token }) => {
           },
         },
       );
-      console.log(111, result);
       if (result.data.pk) {
         alert('정상적으로 생성 되었습니다.');
         Router.pushRoute(`/studyDetail/${studyId}/member/${memberId}`);
