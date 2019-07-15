@@ -21,7 +21,7 @@ const StyledText = styled.div`
 const Start = () => {
   return (
     <StyledContainer>
-      <StyledLogo src='/static/logo.svg' alt='logo' />
+      <StyledLogo src="/static/logo.svg" alt="logo" />
       <StyledText>
         스터디 왓슨과 함께
         <br />

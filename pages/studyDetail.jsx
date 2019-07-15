@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Axios from 'axios';
 import Header from '../containers/Header';
+import { Link } from '../routes';
 
 const studyDetail = ({ studyId, memberId, token }) => {
   const [schedules, setSchedules] = useState([]);
@@ -14,6 +15,10 @@ const studyDetail = ({ studyId, memberId, token }) => {
     );
     setSchedules(result.data);
     console.log(result);
+  };
+
+  const temp = pk => () => {
+    console.log('temp:', pk);
   };
 
   const onClick = async () => {
@@ -57,6 +62,7 @@ const studyDetail = ({ studyId, memberId, token }) => {
               key={schedule.pk}
               style={{ border: '1px solid', margin: '30px 0' }}
             >
+              {console.log(schedule.pk)}
               <div>location</div>
               <div>{schedule.location}</div>
               <div>description</div>
@@ -65,6 +71,16 @@ const studyDetail = ({ studyId, memberId, token }) => {
               <div>{schedule.date}</div>
               <div>dueDate</div>
               <div>{schedule.dueDate}</div>
+              <Link route="/modifySchedule" href="/modifySchedule">
+                <a>[수정]</a>
+              </Link>
+              <Link
+                route="/deleteSchedule"
+                href="/deleteSchedule"
+                onClick={temp(schedule.pk)}
+              >
+                <a>[삭제]</a>
+              </Link>
             </div>
           );
         })}
