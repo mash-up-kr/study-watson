@@ -9,6 +9,9 @@ import {
   ADD_SCHEDULE_REQUEST,
   ADD_SCHEDULE_SUCCESS,
   ADD_SCHEDULE_FAILURE,
+  LOAD_SCHEDULE_REQUEST,
+  LOAD_SCHEDULE_SUCCESS,
+  LOAD_SCHEDULE_FAILURE,
   LOAD_SCHEDULES_REQUEST,
   LOAD_SCHEDULES_SUCCESS,
   LOAD_SCHEDULES_FAILURE,
@@ -58,12 +61,41 @@ function* watchAddSchedule() {
   yield takeEvery(ADD_SCHEDULE_REQUEST, addSchedule);
 }
 
+// LOAD_SCHEDULE
+function loadScheduleAPI({ token, scheduleId }) {
+  return axios.get(
+    `https://study-watson.lhy.kr/api/v1/study/schedules/${scheduleId}/`,
+    { headers: { Authorization: `Token ${token}` } },
+  );
+}
+
+function* loadSchedule(action) {
+  try {
+    const result = yield call(loadScheduleAPI, action.data);
+    // console.log(123, result.data);
+    yield put({
+      type: LOAD_SCHEDULE_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log('스케쥴 1개 로드 실패 !! 두둥쓰 !');
+    console.log(JSON.stringify(error));
+    yield put({
+      type: LOAD_SCHEDULE_FAILURE,
+    });
+  }
+}
+
 // LOAD_SCHEDULES
 function loadSchedulesAPI({ token, studyId }) {
   return axios.get(
     `https://study-watson.lhy.kr/api/v1/study/schedules/?study=${studyId}`,
     { headers: { Authorization: `Token ${token}` } },
   );
+}
+
+function* watchLoadSchedule() {
+  yield takeEvery(LOAD_SCHEDULE_REQUEST, loadSchedule);
 }
 
 function* loadSchedules(action) {
@@ -75,7 +107,8 @@ function* loadSchedules(action) {
     });
   } catch (error) {
     console.log('스케쥴 로드 실패');
-    console.log(error);
+    console.log(JSON.stringify(error));
+    // console.log(error);
     yield put({
       type: LOAD_SCHEDULES_FAILURE,
     });
@@ -123,6 +156,7 @@ function* watchDeleteSchedule() {
 export default function* ScheduleSaga() {
   yield all([
     fork(watchAddSchedule),
+    fork(watchLoadSchedule),
     fork(watchLoadSchedules),
     fork(watchDeleteSchedule),
   ]);

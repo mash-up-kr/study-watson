@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from '../routes';
 
 // import { ADD_SCHEDULE_REQUEST} from '../reducers/schedule'
 import Header from '../containers/Header';
@@ -29,9 +30,9 @@ const studyDetail = ({ studyId, memberId, token }) => {
     }
   };
 
-  const modifySchedule = pk => async () => {
-    console.log('temp:', pk);
-  };
+  // const modifySchedule = pk => async () => {
+  //   console.log('temp:', pk);
+  // };
 
   const onClickWithdrawStudy = () => {
     if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
@@ -72,9 +73,12 @@ const studyDetail = ({ studyId, memberId, token }) => {
                 <div>{schedule.date}</div>
                 <div>dueDate</div>
                 <div>{schedule.dueDate}</div>
-                <div data-pk={schedule.pk} onClick={modifySchedule}>
-                  [수정]
-                </div>
+                <Link
+                  route={`/editSchedule/${schedule.pk}`}
+                  href={`/editSchedule/${schedule.pk}`}
+                >
+                  <a>[수정]</a>
+                </Link>
                 <div data-pk={schedule.pk} onClick={deleteSchedule}>
                   [삭제]
                 </div>

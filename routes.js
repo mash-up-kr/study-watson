@@ -4,7 +4,8 @@ const routes = require('next-routes');
 const router = routes()
   .add('join', '/join/:id', 'join')
   .add('studyDetail', '/studyDetail/:studyId/member/:memberId', 'studyDetail')
-  .add('addSchedule', '/addSchedule/:studyId/member/:memberId', 'addSchedule');
+  .add('addSchedule', '/addSchedule/:studyId/member/:memberId', 'addSchedule')
+  .add('editSchedule', '/editSchedule/:scheduleId', 'editSchedule');
 exports.Link = router.Link;
 
 module.exports = router;
