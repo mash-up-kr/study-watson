@@ -5,9 +5,14 @@ export const initialState = {
 export const ADD_STUDY_REQUEST = 'ADD_STUDY_REQUEST';
 export const ADD_STUDY_SUCCESS = 'ADD_STUDY_SUCCESS';
 export const ADD_STUDY_FAILURE = 'ADD_STUDY_FAILURE';
+
 export const LOAD_STUDIES_REQUEST = 'LOAD_STUDIES_REQUEST';
 export const LOAD_STUDIES_SUCCESS = 'LOAD_STUDIES_SUCCESS';
 export const LOAD_STUDIES_FAILURE = 'LOAD_STUDIES_FAILURE';
+
+export const WITHDRAW_STUDY_REQUEST = 'WITHDRAW_STUDY_REQUEST';
+export const WITHDRAW_STUDY_SUCCESS = 'WITHDRAW_STUDY_SUCCESS';
+export const WITHDRAW_STUDY_FAILURE = 'WITHDRAW_STUDY_FAILURE';
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +50,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case WITHDRAW_STUDY_REQUEST:
+      return {
+        ...state,
+      };
+    case WITHDRAW_STUDY_SUCCESS:
+      return {
+        ...state,
+      };
+    case WITHDRAW_STUDY_FAILURE:
+      return {
+        ...state,
+      };
+
     default: {
       return {
         ...state,

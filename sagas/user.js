@@ -24,9 +24,9 @@ import {
   EDIT_USER_REQUEST,
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
-  WITHDRAW_REQUEST,
-  WITHDRAW_SUCCESS,
-  WITHDRAW_FAILURE,
+  WITHDRAW_USER_REQUEST,
+  WITHDRAW_USER_SUCCESS,
+  WITHDRAW_USER_FAILURE,
 } from '../reducers/user';
 
 // EDIT_USER
@@ -251,7 +251,7 @@ function* withDraw(action) {
     const result = yield call(withDrawAPI, action.data);
     console.log(result);
     yield put({
-      type: WITHDRAW_SUCCESS,
+      type: WITHDRAW_USER_SUCCESS,
     });
     deleteCookie('token');
     deleteCookie('pk');
@@ -260,12 +260,12 @@ function* withDraw(action) {
     console.error(e);
     alert('탈퇴에 실패하였습니다.');
     yield put({
-      type: WITHDRAW_FAILURE,
+      type: WITHDRAW_USER_FAILURE,
     });
   }
 }
 function* watchWithDraw() {
-  yield takeEvery(WITHDRAW_REQUEST, withDraw);
+  yield takeEvery(WITHDRAW_USER_REQUEST, withDraw);
 }
 
 export default function* userSaga() {

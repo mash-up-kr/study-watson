@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../containers/Header';
-import { WITHDRAW_REQUEST } from '../reducers/user';
+import { WITHDRAW_USER_REQUEST } from '../reducers/user';
 
 const StyledWithdraw = styled.div`
   width: 100vw;
@@ -27,7 +27,7 @@ const Withdraw = () => {
 
   const onClick = () => {
     dispatch({
-      type: WITHDRAW_REQUEST,
+      type: WITHDRAW_USER_REQUEST,
       data: {
         pk,
       },
