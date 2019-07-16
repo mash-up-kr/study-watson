@@ -17,7 +17,6 @@ import {
 // ADD SCHEDULE
 function addScheduleAPI({ study, location, description, date, dueDate }) {
   const data = cleanNullArgs({ study, location, description, date, dueDate });
-  console.log('data', data);
   const token = getCookie('token');
   return axios.post(
     `https://study-watson.lhy.kr/api/v1/study/schedules/`,
@@ -57,27 +56,23 @@ function* watchAddSchedule() {
 }
 
 // LOAD_SCHEDULES
-function loadSchedulesAPI({ token, pk }) {
+function loadSchedulesAPI({ token, studyId }) {
+  console.log('223232', studyId);
   return axios.get(
-    `https://study-watson.lhy.kr/api/v1/study/schedules/${pk}/`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    },
+    `https://study-watson.lhy.kr/api/v1/study/schedules/?study=${studyId}`,
+    { headers: { Authorization: `Token ${token}` } },
   );
 }
 
 function* loadSchedules(action) {
   try {
-    const result = yield call(loadSchedulesAPI, action);
+    const result = yield call(loadSchedulesAPI, action.data);
     yield put({
       type: LOAD_SCHEDULES_SUCCESS,
       data: result.data,
     });
-  } catch (e) {
-    console.log(JSON.stringify(e));
+  } catch (error) {
+    console.log(error);
     yield put({
       type: LOAD_SCHEDULES_FAILURE,
     });
