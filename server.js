@@ -25,14 +25,7 @@ app.prepare().then(() => {
 
   createServer((req, res) => {
     const parsedUrl = parse(req.url, true);
-    const { pathname } = parsedUrl;
-
-    if (pathname === '/static/service-worker.js') {
-      //   // const filePath = join(__dirname, '.next', pathname)
-      // app.serveStatic(req, res, path.resolve('./static/service-worker.js'));
-    } else {
-      handle(req, res, parsedUrl);
-    }
+    handle(req, res, parsedUrl);
   }).listen(port, err => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
