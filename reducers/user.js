@@ -28,9 +28,9 @@ export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
-export const WITHDRAW_REQUEST = 'WITHDRAW_REQUEST';
-export const WITHDRAW_SUCCESS = 'WITHDRAW_SUCCESS';
-export const WITHDRAW_FAILURE = 'WITHDRAW_FAILURE';
+export const WITHDRAW_USER_REQUEST = 'WITHDRAW_USER_REQUEST';
+export const WITHDRAW_USER_SUCCESS = 'WITHDRAW_USER_SUCCESS';
+export const WITHDRAW_USER_FAILURE = 'WITHDRAW_USER_FAILURE';
 
 export const EDIT_USER_REQUEST = 'EDIT_USER_REQUEST';
 export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
@@ -132,11 +132,11 @@ export default (state = initialState, action) => {
         ...state,
       };
 
-    case WITHDRAW_REQUEST:
+    case WITHDRAW_USER_REQUEST:
       return {
         ...state,
       };
-    case WITHDRAW_SUCCESS:
+    case WITHDRAW_USER_SUCCESS:
       return {
         ...state,
         pk: '',
@@ -146,7 +146,7 @@ export default (state = initialState, action) => {
         nickname: '',
         isLogin: false,
       };
-    case WITHDRAW_FAILURE:
+    case WITHDRAW_USER_FAILURE:
       return {
         ...state,
       };

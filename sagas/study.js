@@ -1,6 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
+import Router from 'next/router';
 import { cleanNullArgs } from '../common/cleanNullArgs';
 import { getCookie } from '../common/cookie';
 
@@ -11,13 +12,14 @@ import {
   LOAD_STUDIES_REQUEST,
   LOAD_STUDIES_SUCCESS,
   LOAD_STUDIES_FAILURE,
+  WITHDRAW_STUDY_REQUEST,
+  WITHDRAW_STUDY_SUCCESS,
+  WITHDRAW_STUDY_FAILURE,
 } from '../reducers/study';
 
 // ADD_STUDY
-function addAPI({ category, name, description }) {
-  console.log('category', category);
+function addStudyAPI({ category, name, description }) {
   const data = cleanNullArgs({ category, name, description });
-  console.log('data', data);
   const token = getCookie('token');
   return axios.post(
     `https://study-watson.lhy.kr/api/v1/study/`,
@@ -33,9 +35,9 @@ function addAPI({ category, name, description }) {
   );
 }
 
-function* add(action) {
+function* addStudy(action) {
   try {
-    const result = yield call(addAPI, action.data);
+    const result = yield call(addStudyAPI, action.data);
     const { category, name, description } = result.data;
     yield put({
       type: ADD_STUDY_SUCCESS,
@@ -56,7 +58,7 @@ function* add(action) {
 }
 
 function* watchAdd() {
-  yield takeEvery(ADD_STUDY_REQUEST, add);
+  yield takeEvery(ADD_STUDY_REQUEST, addStudy);
 }
 
 // LOAD_STUDIES
@@ -92,6 +94,46 @@ function* watchLoadStudies() {
   yield takeEvery(LOAD_STUDIES_REQUEST, loadStudies);
 }
 
+// WITHDRAW_STUDY
+function withdrawStudyAPI({ token, memberId }) {
+  return axios.delete(
+    `https://study-watson.lhy.kr/api/v1/study/members/${memberId}/`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* withdrawStudy(action) {
+  try {
+    const result = yield call(withdrawStudyAPI, action.data);
+    console.log('result', result);
+    if (result.status === 204) {
+      alert('스터디 탈퇴에 성공하셨습니다.');
+
+      Router.pushRoute(`/`);
+    } else {
+      alert('스터디 탈퇴에 실패하셨습니다.');
+    }
+    yield put({
+      type: WITHDRAW_STUDY_SUCCESS,
+    });
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    alert('스터디 탈퇴에 실패하셨습니다.');
+    yield put({
+      type: WITHDRAW_STUDY_FAILURE,
+    });
+  }
+}
+
+function* watchWithdrawStudy() {
+  yield takeEvery(WITHDRAW_STUDY_REQUEST, withdrawStudy);
+}
+
 export default function* StudySaga() {
-  yield all([fork(watchAdd), fork(watchLoadStudies)]);
+  yield all([fork(watchAdd), fork(watchLoadStudies), fork(watchWithdrawStudy)]);
 }

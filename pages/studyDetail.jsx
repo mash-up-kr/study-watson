@@ -1,16 +1,18 @@
 import React from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Axios from 'axios';
 
 // import { ADD_SCHEDULE_REQUEST} from '../reducers/schedule'
 import Header from '../containers/Header';
 import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
+import { WITHDRAW_STUDY_REQUEST } from '../reducers/study';
 
 const studyDetail = ({ studyId, memberId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
 
+  const dispatch = useDispatch();
   const deleteSchedule = pk => async () => {
     try {
       const result = await Axios.delete(
@@ -36,26 +38,14 @@ const studyDetail = ({ studyId, memberId, token }) => {
     console.log('temp:', pk);
   };
 
-  const onClick = async () => {
-    console.log(token);
-    try {
-      const result = await Axios.delete(
-        `https://study-watson.lhy.kr/api/v1/study/members/${memberId}/`,
-        {
-          headers: { Authorization: `Token ${token}` },
-        },
-      );
-      console.log(result);
-      if (result.status === 204) {
-        alert('탈퇴에 성공하셨습니다.');
-        Router.pushRoute('/');
-      } else {
-        alert('탈퇴에 실패하셨습니다.');
-      }
-    } catch (error) {
-      console.log(JSON.stringify(error.response.data.message));
-      alert('탈퇴에 실패하셨습니다.');
-    }
+  const onClickWithdrawStudy = () => {
+    dispatch({
+      type: WITHDRAW_STUDY_REQUEST,
+      data: {
+        token,
+        memberId,
+      },
+    });
   };
 
   return (
@@ -91,7 +81,7 @@ const studyDetail = ({ studyId, memberId, token }) => {
             );
           })}
       </div>
-      <div onClick={onClick}>스터디 나가기</div>
+      <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
     </div>
   );
 };
