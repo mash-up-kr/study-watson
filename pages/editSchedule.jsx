@@ -9,7 +9,6 @@ import Input from '../components/Input';
 import { LOAD_SCHEDULE_REQUEST } from '../reducers/schedule';
 
 const editSchedule = ({ scheduleId, token }) => {
-  const cnt = useRef(1);
   const dispatch = useDispatch();
   const reduxState = useSelector(state => state);
 
@@ -38,8 +37,6 @@ const editSchedule = ({ scheduleId, token }) => {
   }, []);
 
   useEffect(() => {
-    cnt.current += 1;
-    console.log('>>cnt: ', cnt.current);
     console.log('>> props information의 값이 바뀌었습니다');
     console.log('>> information: ', information);
     // console.log(location);
