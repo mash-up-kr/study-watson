@@ -1,5 +1,5 @@
 import { Container } from 'next/app';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import createSagaMiddleware from 'redux-saga';
 import withReduxSaga from 'next-redux-saga';
@@ -16,42 +16,56 @@ import { LOAD_USER_REQUEST } from '../reducers/user';
 import rootSaga from '../sagas';
 import { getCookie, getCookieServer } from '../common/cookie';
 
-const MyApp = ({ Component, store, pageProps }) => (
-  <Container>
-    <Provider store={store}>
-      <Helmet
-        title="study-watson"
-        htmlAttributes={{ lang: 'ko' }}
-        meta={[
-          {
-            name: 'viewport',
-            content:
-              'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
-          },
-          {
-            'http-equiv': 'X-UA-Compatible',
-            content: 'IE=edge',
-          },
-          {
-            name: 'description',
-            content: 'study-watson',
-          },
-          {
-            property: 'og:type',
-            content: 'website',
-          },
-        ]}
-        link={[
-          {
-            rel: 'shortcut icon',
-            href: '/static/logo-32.png',
-          },
-        ]}
-      />
-      <Component {...pageProps} />
-    </Provider>
-  </Container>
-);
+const MyApp = ({ Component, store, pageProps }) => {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/static/service-worker.js')
+        .then(() => {
+          console.log('service worker registration successful');
+        })
+        .catch(err => {
+          console.log('service worker registration failed', err.message);
+        });
+    }
+  }, []);
+  return (
+    <Container>
+      <Provider store={store}>
+        <Helmet
+          title="study-watson"
+          htmlAttributes={{ lang: 'ko' }}
+          meta={[
+            {
+              name: 'viewport',
+              content:
+                'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
+            },
+            {
+              'http-equiv': 'X-UA-Compatible',
+              content: 'IE=edge',
+            },
+            {
+              name: 'description',
+              content: 'study-watson',
+            },
+            {
+              property: 'og:type',
+              content: 'website',
+            },
+          ]}
+          link={[
+            {
+              rel: 'shortcut icon',
+              href: '/static/logo-32.png',
+            },
+          ]}
+        />
+        <Component {...pageProps} />
+      </Provider>
+    </Container>
+  );
+};
 
 const configureStore = (initialState, options) => {
   const sagaMiddleware = createSagaMiddleware();

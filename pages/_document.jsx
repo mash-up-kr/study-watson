@@ -81,6 +81,8 @@ export default class CustomDocument extends Document {
           />
           <meta name="twitter:image" content="https://example.com/image.jpg" /> */}
           {Object.values(helmet).map(el => el.toComponent())}
+          <link rel="manifest" href="/static/manifest.json" />
+          <meta name="theme-color" content="black" />
           <GlobalStyle />
         </head>
         <body {...bodyAttrs}>
