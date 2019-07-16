@@ -12,7 +12,6 @@ import Helmet from 'react-helmet';
 
 import reducer from '../reducers';
 import { LOAD_USER_REQUEST } from '../reducers/user';
-// import Layout from '../containers/Layout';
 import rootSaga from '../sagas';
 import { getCookie, getCookieServer } from '../common/cookie';
 
