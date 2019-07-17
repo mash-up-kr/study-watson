@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const { createServer } = require('http');
 const { parse } = require('url');
+const { resolve } = require('path');
 
 const port = process.env.PORT || 8080;
 const router = require('./routes');
@@ -25,7 +26,13 @@ app.prepare().then(() => {
 
   createServer((req, res) => {
     const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
+    const { pathname } = parsedUrl;
+
+    if (pathname === '/service-worker.js') {
+      app.serveStatic(req, res, resolve('./static/service-worker.js'));
+    } else {
+      handle(req, res, parsedUrl);
+    }
   }).listen(port, err => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
