@@ -19,9 +19,9 @@ const MyApp = ({ Component, store, pageProps }) => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/static/service-worker.js')
-        .then(() => {
-          console.log('service worker registration successful');
+        .register('/service-worker.js')
+        .then(result => {
+          console.log('service worker registration successful', result);
         })
         .catch(err => {
           console.log('service worker registration failed', err.message);
