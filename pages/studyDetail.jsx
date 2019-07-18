@@ -12,7 +12,8 @@ import { WITHDRAW_STUDY_REQUEST, LOAD_STUDY_REQUEST } from '../reducers/study';
 
 const studyDetail = ({ studyId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
-  const { pk: memberId } = useSelector(state => state.study.study);
+  const { pk: memberId, role } = useSelector(state => state.study.study);
+  console.log(role);
 
   const dispatch = useDispatch();
 
@@ -76,9 +77,16 @@ const studyDetail = ({ studyId, token }) => {
                 <div data-pk={schedule.pk} onClick={deleteSchedule}>
                   [삭제]
                 </div>
-                <div data-pk={schedule.pk} onClick={deleteSchedule}>
-                  [출결 관리]
-                </div>
+                {(role === 'manager' || role === 'sub_manager') && (
+                  <Link
+                    route={`/schedule/${schedule.pk}`}
+                    href={`/schedule/${schedule.pk}`}
+                  >
+                    <a>
+                      <div>[출결 관리]</div>
+                    </a>
+                  </Link>
+                )}
               </div>
             );
           })}
