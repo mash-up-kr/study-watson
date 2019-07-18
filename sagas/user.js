@@ -91,8 +91,8 @@ function* logIn(action) {
     console.log(result);
     const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
-    document.cookie = `token=${key}`;
-    document.cookie = `pk=${pk}`;
+    document.cookie = `token=${key}; path=/`;
+    document.cookie = `pk=${pk}; path=/`;
     yield put({
       type: LOG_IN_SUCCESS,
       data: {

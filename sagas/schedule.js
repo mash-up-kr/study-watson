@@ -12,6 +12,9 @@ import {
   LOAD_SCHEDULES_REQUEST,
   LOAD_SCHEDULES_SUCCESS,
   LOAD_SCHEDULES_FAILURE,
+  LOAD_SCHEDULE_REQUEST,
+  LOAD_SCHEDULE_SUCCESS,
+  LOAD_SCHEDULE_FAILURE,
   DELETE_SCHEDULE_REQUEST,
   DELETE_SCHEDULE_SUCCESS,
   DELETE_SCHEDULE_FAILURE,
@@ -98,6 +101,34 @@ function* watchLoadSchedules() {
   yield takeEvery(LOAD_SCHEDULES_REQUEST, loadSchedules);
 }
 
+// LOAD_SCHEDULE
+function loadScheduleAPI({ token, scheduleId }) {
+  return axios.get(
+    `https://study-watson.lhy.kr/api/v1/study/schedules/${scheduleId}/`,
+    { headers: { Authorization: `Token ${token}` } },
+  );
+}
+
+function* loadSchedule(action) {
+  try {
+    const result = yield call(loadScheduleAPI, action.data);
+    yield put({
+      type: LOAD_SCHEDULE_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log('스케쥴 로드 실패');
+    console.log(error);
+    yield put({
+      type: LOAD_SCHEDULE_FAILURE,
+    });
+  }
+}
+
+function* watchLoadSchedule() {
+  yield takeEvery(LOAD_SCHEDULE_REQUEST, loadSchedule);
+}
+
 // DELETE_SCHEDULES
 function deleteScheduleAPI({ token, pk }) {
   return axios.delete(
@@ -136,6 +167,7 @@ export default function* ScheduleSaga() {
   yield all([
     fork(watchAddSchedule),
     fork(watchLoadSchedules),
+    fork(watchLoadSchedule),
     fork(watchDeleteSchedule),
   ]);
 }
