@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
 import styled from 'styled-components';
 
 import { StyledButton } from '../common/StyledComponents';
+import { Link } from '../routes';
 
 const StyledContainer = styled.div`
   width: calc(100vw - 2rem);
@@ -62,10 +62,6 @@ const StudyInvite = ({ link }) => {
     }, 1000);
   };
 
-  const onClick = () => {
-    Router.pushRoute('/');
-  };
-
   return (
     <StyledContainer>
       <img
@@ -80,7 +76,11 @@ const StudyInvite = ({ link }) => {
       </StyledSmallButton>
       {show && <StyledToast>링크가 복사되었습니다!</StyledToast>}
       <br />
-      <StyledButton type="button" value="홈으로 돌아가기" onClick={onClick} />
+      <Link route="/" href="/">
+        <a>
+          <StyledButton type="button" value="홈으로 돌아가기" />
+        </a>
+      </Link>
     </StyledContainer>
   );
 };

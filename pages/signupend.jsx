@@ -1,8 +1,8 @@
 import React from 'react';
-import Router from 'next/router';
 import styled from 'styled-components';
 
 import { StyledButton } from '../common/StyledComponents';
+import { Link } from '../routes';
 
 const StyledComplete = styled.div`
   width: calc(100% - 2rem);
@@ -15,10 +15,6 @@ const StyledComplete = styled.div`
 `;
 
 const SignUpEnd = () => {
-  const onClick = () => {
-    Router.pushRoute('/');
-  };
-
   return (
     <StyledComplete>
       <img
@@ -27,7 +23,11 @@ const SignUpEnd = () => {
         style={{ marginBottom: '1rem' }}
       />
       <div>회원가입이 완료되었습니다!</div>
-      <StyledButton type="button" value="홈으로" onClick={onClick} />
+      <Link route="/" href="/">
+        <a>
+          <StyledButton type="button" value="홈으로" />
+        </a>
+      </Link>
     </StyledComplete>
   );
 };

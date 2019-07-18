@@ -1,9 +1,9 @@
 import React from 'react';
-import Router from 'next/router';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { StyledButton } from '../common/StyledComponents';
+import { Link } from '../routes';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -40,10 +40,6 @@ const MainLogIn = () => {
     return study.isWithdraw === false;
   });
 
-  const onClick = () => {
-    Router.pushRoute('/addStudy');
-  };
-
   return (
     <div>
       <div>
@@ -51,20 +47,27 @@ const MainLogIn = () => {
           <>
             {filterStudies.map((study, idx) => {
               return (
-                <StyledCard
+                <Link
                   key={idx}
-                  onClick={() => {
-                    Router.pushRoute(
-                      `/studyDetail/${study && study.study && study.study.pk}`,
-                    );
-                  }}
+                  route={`/studyDetail/${study &&
+                    study.study &&
+                    study.study.pk}`}
+                  href={`/studyDetail/${study &&
+                    study.study &&
+                    study.study.pk}`}
                 >
-                  <StyledTitle>
-                    {study && study.study && study.study.name}
-                  </StyledTitle>
-                  <div>{study && study.study && study.study.description}</div>
-                  <br />
-                </StyledCard>
+                  <a>
+                    <StyledCard>
+                      <StyledTitle>
+                        {study && study.study && study.study.name}
+                      </StyledTitle>
+                      <div>
+                        {study && study.study && study.study.description}
+                      </div>
+                      <br />
+                    </StyledCard>
+                  </a>
+                </Link>
               );
             })}
           </>
@@ -82,7 +85,11 @@ const MainLogIn = () => {
             </StyledText>
           </StyledContainer>
         )}
-        <StyledButton type="button" value="스터디 만들기" onClick={onClick} />
+        <Link route="/addStudy" href="/addStudy">
+          <a>
+            <StyledButton type="button" value="스터디 만들기" />
+          </a>
+        </Link>
       </div>
     </div>
   );

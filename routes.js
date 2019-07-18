@@ -1,6 +1,5 @@
 const routes = require('next-routes');
 
-// const router = routes().add('feed', '/feed/:feedId');
 const router = routes()
   .add('join', '/join/:id', 'join')
   .add('studyDetail', '/studyDetail/:studyId', 'studyDetail')

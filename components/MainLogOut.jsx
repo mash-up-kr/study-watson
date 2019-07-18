@@ -1,20 +1,20 @@
 import React from 'react';
-import Router from 'next/router';
 
 import Start from './Start';
 import { StyledButton, StyledScreen } from '../common/StyledComponents';
+import { Link } from '../routes';
 
 const MainLogOut = () => {
-  const onClick = () => {
-    Router.pushRoute('/signup');
-  };
-
   return (
     <>
       <StyledScreen>
         <Start />
       </StyledScreen>
-      <StyledButton type="button" value="회원가입" onClick={onClick} />
+      <Link route="/signup" href="/signup">
+        <a>
+          <StyledButton type="button" value="회원가입" />
+        </a>
+      </Link>
     </>
   );
 };
