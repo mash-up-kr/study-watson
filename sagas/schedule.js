@@ -41,9 +41,7 @@ function* addSchedule(action) {
     yield put({
       type: ADD_SCHEDULE_SUCCESS,
     });
-    Router.pushRoute(
-      `/studyDetail/${action.studyId}/member/${action.memberId}`,
-    );
+    Router.pushRoute(`/studyDetail/${action.data.study}`);
   } catch (e) {
     console.log(JSON.stringify(e));
     console.error(e);

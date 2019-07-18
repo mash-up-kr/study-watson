@@ -55,9 +55,7 @@ const MainLogIn = () => {
                   key={idx}
                   onClick={() => {
                     Router.pushRoute(
-                      `/studyDetail/${study &&
-                        study.study &&
-                        study.study.pk}/member/${study && study.pk}`,
+                      `/studyDetail/${study && study.study && study.study.pk}`,
                     );
                   }}
                 >

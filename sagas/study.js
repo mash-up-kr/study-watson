@@ -12,6 +12,9 @@ import {
   LOAD_STUDIES_REQUEST,
   LOAD_STUDIES_SUCCESS,
   LOAD_STUDIES_FAILURE,
+  LOAD_STUDY_REQUEST,
+  LOAD_STUDY_SUCCESS,
+  LOAD_STUDY_FAILURE,
   WITHDRAW_STUDY_REQUEST,
   WITHDRAW_STUDY_SUCCESS,
   WITHDRAW_STUDY_FAILURE,
@@ -93,6 +96,38 @@ function* loadStudies(action) {
 function* watchLoadStudies() {
   yield takeEvery(LOAD_STUDIES_REQUEST, loadStudies);
 }
+// LOAD_STUDY
+function loadStudyAPI({ token, pk, studyId }) {
+  return axios.get(
+    `https://study-watson.lhy.kr/api/v1/study/members/?user=${pk}&study=${studyId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* loadStudy(action) {
+  try {
+    const result = yield call(loadStudyAPI, action.data);
+    // const { category, name, description } = result.data;
+    yield put({
+      type: LOAD_STUDY_SUCCESS,
+      data: result.data[0],
+    });
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    yield put({
+      type: LOAD_STUDY_FAILURE,
+    });
+  }
+}
+
+function* watchLoadStudy() {
+  yield takeEvery(LOAD_STUDY_REQUEST, loadStudy);
+}
 
 // WITHDRAW_STUDY
 function withdrawStudyAPI({ token, memberId }) {
@@ -135,5 +170,10 @@ function* watchWithdrawStudy() {
 }
 
 export default function* StudySaga() {
-  yield all([fork(watchAdd), fork(watchLoadStudies), fork(watchWithdrawStudy)]);
+  yield all([
+    fork(watchAdd),
+    fork(watchLoadStudies),
+    fork(watchWithdrawStudy),
+    fork(watchLoadStudy),
+  ]);
 }

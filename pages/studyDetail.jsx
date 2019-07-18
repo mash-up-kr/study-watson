@@ -9,10 +9,11 @@ import {
   LOAD_SCHEDULES_REQUEST,
   DELETE_SCHEDULE_REQUEST,
 } from '../reducers/schedule';
-import { WITHDRAW_STUDY_REQUEST } from '../reducers/study';
+import { WITHDRAW_STUDY_REQUEST, LOAD_STUDY_REQUEST } from '../reducers/study';
 
-const studyDetail = ({ studyId, memberId, token }) => {
+const studyDetail = ({ studyId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
+  const { pk: memberId } = useSelector(state => state.study.study);
 
   const dispatch = useDispatch();
 
@@ -48,11 +49,7 @@ const studyDetail = ({ studyId, memberId, token }) => {
   return (
     <div>
       <Header />
-      <div
-        onClick={() =>
-          Router.pushRoute(`/addSchedule/${studyId}/member/${memberId}`)
-        }
-      >
+      <div onClick={() => Router.pushRoute(`/addSchedule/${studyId}`)}>
         일정 생성
       </div>
       <div>
@@ -87,8 +84,8 @@ const studyDetail = ({ studyId, memberId, token }) => {
   );
 };
 
-studyDetail.getInitialProps = ({ ctx, token }) => {
-  const { studyId = 0, memberId = 0 } = ctx.query;
+studyDetail.getInitialProps = ({ ctx, token, pk }) => {
+  const { studyId = 0 } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_SCHEDULES_REQUEST,
     data: {
@@ -96,16 +93,22 @@ studyDetail.getInitialProps = ({ ctx, token }) => {
       token,
     },
   });
+  ctx.store.dispatch({
+    type: LOAD_STUDY_REQUEST,
+    data: {
+      studyId,
+      pk,
+      token,
+    },
+  });
   return {
     studyId,
-    memberId,
     token,
   };
 };
 
 studyDetail.propTypes = {
   studyId: PropTypes.string.isRequired,
-  memberId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
 };
 

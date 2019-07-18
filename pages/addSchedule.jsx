@@ -7,7 +7,7 @@ import { useInput } from '../common/useInput';
 import Header from '../containers/Header';
 import Input from '../components/Input';
 
-const addSchedule = ({ studyId, memberId }) => {
+const addSchedule = ({ studyId }) => {
   const [location, setLocation] = useInput('');
   const [description, setDescription] = useInput('');
   const [date, setDate] = useInput('');
@@ -26,8 +26,6 @@ const addSchedule = ({ studyId, memberId }) => {
         date,
         dueDate,
       },
-      studyId,
-      memberId,
     });
   };
   return (
@@ -73,17 +71,15 @@ const addSchedule = ({ studyId, memberId }) => {
 };
 
 addSchedule.getInitialProps = ({ ctx, token }) => {
+  const studyId = ctx.query.studyId || '0';
   return {
-    studyId: ctx.query.studyId || '0',
-    memberId: ctx.query.memberId || '0',
+    studyId,
     token,
   };
 };
 
 addSchedule.propTypes = {
   studyId: PropTypes.string.isRequired,
-  memberId: PropTypes.string.isRequired,
-  // token: PropTypes.string.isRequired,
 };
 
 export default addSchedule;
