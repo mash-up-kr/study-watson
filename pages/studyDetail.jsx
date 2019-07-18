@@ -1,9 +1,8 @@
 import React from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
-// import { ADD_SCHEDULE_REQUEST} from '../reducers/schedule'
+import { Link } from '../routes';
 import Header from '../containers/Header';
 import {
   LOAD_SCHEDULES_REQUEST,
@@ -49,9 +48,9 @@ const studyDetail = ({ studyId, token }) => {
   return (
     <div>
       <Header />
-      <div onClick={() => Router.pushRoute(`/addSchedule/${studyId}`)}>
+      <Link route={`/addSchedule/${studyId}`} href={`/addSchedule/${studyId}`}>
         일정 생성
-      </div>
+      </Link>
       <div>
         {schedules &&
           schedules.length > 0 &&
@@ -74,6 +73,9 @@ const studyDetail = ({ studyId, token }) => {
                 </div>
                 <div data-pk={schedule.pk} onClick={deleteSchedule}>
                   [삭제]
+                </div>
+                <div data-pk={schedule.pk} onClick={deleteSchedule}>
+                  [출결 관리]
                 </div>
               </div>
             );
