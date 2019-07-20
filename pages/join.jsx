@@ -23,7 +23,7 @@ const Join = ({ id, token }) => {
     }
     try {
       const result = await Axios.get(
-        `https://study-watson.lhy.kr/api/v1/study/members/?study=${id}&user=${
+        `https://study-watson.lhy.kr/api/v1/study/memberships/?study=${id}&user=${
           user.pk
         }`,
         {
@@ -51,7 +51,7 @@ const Join = ({ id, token }) => {
 
   const join = async () => {
     const result = await Axios.post(
-      `https://study-watson.lhy.kr/api/v1/study/members/`,
+      `https://study-watson.lhy.kr/api/v1/study/memberships/`,
       {
         user: user.pk,
         study: id,

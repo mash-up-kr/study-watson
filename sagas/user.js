@@ -34,7 +34,7 @@ function editAPI({ pk, password, imgProfile, email, nickname }) {
   const data = cleanNullArgs({ password, imgProfile, email, nickname });
   const token = getCookie('token');
   return axios.patch(
-    `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
+    `https://study-watson.lhy.kr/api/v1/memberships/${pk}/`,
     {
       ...data,
     },
@@ -119,7 +119,7 @@ function* watchLogIn() {
 
 // LOAD_USER
 function loadUserAPI({ key }) {
-  return axios.get('https://study-watson.lhy.kr/api/v1/members/profile/', {
+  return axios.get('https://study-watson.lhy.kr/api/v1/memberships/profile/', {
     headers: { Authorization: `Token ${key}` },
   });
 }
@@ -169,7 +169,7 @@ function signUpAPI({
   phoneNumber,
   nickname,
 }) {
-  return axios.post('https://study-watson.lhy.kr/api/v1/members/', {
+  return axios.post('https://study-watson.lhy.kr/api/v1/memberships/', {
     username,
     password1,
     password2,
@@ -238,7 +238,7 @@ function* watchLogOut() {
 // WITHDRAW
 function withDrawAPI({ pk }) {
   const token = getCookie('token');
-  return axios.delete(`https://study-watson.lhy.kr/api/v1/members/${pk}/`, {
+  return axios.delete(`https://study-watson.lhy.kr/api/v1/memberships/${pk}/`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,

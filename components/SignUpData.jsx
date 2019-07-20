@@ -94,7 +94,7 @@ const SignUpData = () => {
     event.preventDefault();
     try {
       const result = await axios.post(
-        'https://study-watson.lhy.kr/api/v1/members/available/',
+        'https://study-watson.lhy.kr/api/v1/memberships/available/',
         {
           attributeName: 'email',
           value: email,
