@@ -8,30 +8,42 @@ import Header from '../containers/Header';
 import Input from '../components/Input';
 
 const addSchedule = ({ studyId }) => {
+  const [subject, setSubject] = useInput('');
   const [location, setLocation] = useInput('');
   const [description, setDescription] = useInput('');
-  const [date, setDate] = useInput('');
-  const [dueDate, setDueDate] = useInput('');
+  const [voteEndAt, setvoteEndAt] = useInput('');
+  const [startAt, setStartAt] = useInput('');
+  const [studyingTime, setStudyTime] = useInput('');
 
   const dispatch = useDispatch();
 
   const onSumit = async event => {
     event.preventDefault();
-    dispatch({
-      type: ADD_SCHEDULE_REQUEST,
-      data: {
-        study: studyId,
-        location,
-        description,
-        date,
-        dueDate,
-      },
-    });
+    // dispatch({
+    //   type: ADD_SCHEDULE_REQUEST,
+    //   data: {
+    //     study: studyId,
+    //     subject,
+    //     location,
+    //     description,
+    //     voteEndAt,
+    //     startAt,
+    //     studyingTime,
+    //   },
+    // });
   };
   return (
     <>
       <Header />
       <form onSubmit={onSumit}>
+        <Input
+          label="주제"
+          id="subject"
+          type="text"
+          value={subject}
+          onChange={setSubject}
+          onClickReset={() => setSubject('')}
+        />
         <Input
           label="장소"
           id="location"
@@ -49,20 +61,28 @@ const addSchedule = ({ studyId }) => {
           onClickReset={() => setDescription('')}
         />
         <Input
-          label="시간"
-          id="date"
+          label="투표 종류 일시"
+          id="voteEndAt"
           type="text"
-          value={date}
-          onChange={setDate}
-          onClickReset={() => setDate('')}
+          value={voteEndAt}
+          onChange={setvoteEndAt}
+          onClickReset={() => setvoteEndAt('')}
         />
         <Input
-          label="투표 기간"
-          id="dueDate"
+          label="스터디 시작 일시"
+          id="startAt"
           type="text"
-          value={dueDate}
-          onChange={setDueDate}
-          onClickReset={() => setDueDate('')}
+          value={startAt}
+          onChange={setStartAt}
+          onClickReset={() => setStartAt('')}
+        />
+        <Input
+          label="스터디 시간"
+          id="startAt"
+          type="text"
+          value={startAt}
+          onChange={setStudyTime}
+          onClickReset={() => setStudyTime('')}
         />
         <input type="submit" value="생성" />
       </form>
