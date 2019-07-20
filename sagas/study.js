@@ -67,7 +67,7 @@ function* watchAdd() {
 // LOAD_STUDIES
 function loadStudiesAPI({ token, pk }) {
   return axios.get(
-    `https://study-watson.lhy.kr/api/v1/study/members/?user=${pk}`,
+    `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function* watchLoadStudies() {
 // LOAD_STUDY
 function loadStudyAPI({ token, pk, studyId }) {
   return axios.get(
-    `https://study-watson.lhy.kr/api/v1/study/members/?user=${pk}&study=${studyId}`,
+    `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}&study=${studyId}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ function* watchLoadStudy() {
 // WITHDRAW_STUDY
 function withdrawStudyAPI({ token, memberId }) {
   return axios.delete(
-    `https://study-watson.lhy.kr/api/v1/study/members/${memberId}/`,
+    `https://study-watson.lhy.kr/api/v1/study/memberships/${memberId}/`,
     {
       headers: {
         'Content-Type': 'application/json',
