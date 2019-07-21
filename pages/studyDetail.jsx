@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import Router from 'next/router';
 
 import { Link } from '../routes';
 import Header from '../containers/Header';
@@ -8,12 +9,16 @@ import {
   LOAD_SCHEDULES_REQUEST,
   DELETE_SCHEDULE_REQUEST,
 } from '../reducers/schedule';
-import { WITHDRAW_STUDY_REQUEST, LOAD_STUDY_REQUEST } from '../reducers/study';
+import {
+  WITHDRAW_STUDY_REQUEST,
+  LOAD_STUDY_MEMBERSHIPS_REQUEST,
+} from '../reducers/study';
 
 const studyDetail = ({ studyId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
-  const { pk: memberId, role } = useSelector(state => state.study.study);
-  console.log(role);
+  const { pk: memberId, role } = useSelector(state => state.study.memberships);
+  const study = useSelector(state => state.study);
+  console.log(111, study);
 
   const dispatch = useDispatch();
 
@@ -91,6 +96,9 @@ const studyDetail = ({ studyId, token }) => {
             );
           })}
       </div>
+      <div onClick={() => Router.push(`/studyMembers/${studyId}`)}>
+        멤버 관리
+      </div>
       <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
     </div>
   );
@@ -106,7 +114,7 @@ studyDetail.getInitialProps = ({ ctx, token, pk }) => {
     },
   });
   ctx.store.dispatch({
-    type: LOAD_STUDY_REQUEST,
+    type: LOAD_STUDY_MEMBERSHIPS_REQUEST,
     data: {
       studyId,
       pk,

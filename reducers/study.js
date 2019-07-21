@@ -1,6 +1,7 @@
 export const initialState = {
   studies: [],
   study: {},
+  memberships: {},
 };
 
 export const ADD_STUDY_REQUEST = 'ADD_STUDY_REQUEST';
@@ -14,6 +15,10 @@ export const LOAD_STUDIES_FAILURE = 'LOAD_STUDIES_FAILURE';
 export const LOAD_STUDY_REQUEST = 'LOAD_STUDY_REQUEST';
 export const LOAD_STUDY_SUCCESS = 'LOAD_STUDY_SUCCESS';
 export const LOAD_STUDY_FAILURE = 'LOAD_STUDY_FAILURE';
+
+export const LOAD_STUDY_MEMBERSHIPS_REQUEST = 'LOAD_STUDY_MEMBERSHIPS_REQUEST';
+export const LOAD_STUDY_MEMBERSHIPS_SUCCESS = 'LOAD_STUDY_MEMBERSHIPS_SUCCESS';
+export const LOAD_STUDY_MEMBERSHIPS_FAILURE = 'LOAD_STUDY_MEMBERSHIPS_FAILURE';
 
 export const WITHDRAW_STUDY_REQUEST = 'WITHDRAW_STUDY_REQUEST';
 export const WITHDRAW_STUDY_SUCCESS = 'WITHDRAW_STUDY_SUCCESS';
@@ -66,6 +71,20 @@ export default (state = initialState, action) => {
         study: action.data,
       };
     case LOAD_STUDY_FAILURE:
+      return {
+        ...state,
+      };
+
+    case LOAD_STUDY_MEMBERSHIPS_REQUEST:
+      return {
+        ...state,
+      };
+    case LOAD_STUDY_MEMBERSHIPS_SUCCESS:
+      return {
+        ...state,
+        memberships: action.data,
+      };
+    case LOAD_STUDY_MEMBERSHIPS_FAILURE:
       return {
         ...state,
       };

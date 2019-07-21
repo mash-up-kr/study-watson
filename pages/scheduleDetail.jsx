@@ -2,11 +2,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-
 import Axios from 'axios';
+
+import Header from '../containers/Header';
+import Attendance from '../components/Attendance';
+import { Link } from '../routes';
 import { LOAD_SCHEDULE_REQUEST } from '../reducers/schedule';
 
-const scheduleDetail = ({ scheduleId }) => {
+const ScheduleDetail = ({ scheduleId }) => {
   const { schedule } = useSelector(state => state.schedule);
   const attend = [];
   const late = [];
@@ -45,37 +48,22 @@ const scheduleDetail = ({ scheduleId }) => {
 
   return (
     <div>
+      <Header />
+      <Link
+        route={`/studyDetail/${schedule.study}`}
+        href={`/studyDetail/${schedule.study}`}
+      >
+        <a>스터디로 가기</a>
+      </Link>
       <div>
         <div>1.미정</div>
         {none.map(attendance => {
           return (
-            <div key={attendance.pk}>
-              <div>{attendance.user.nickname}</div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="attend"
-                onClick={onClickAttendance}
-              >
-                출석
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="late"
-                onClick={onClickAttendance}
-              >
-                지각
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="absent"
-                onClick={onClickAttendance}
-              >
-                결석
-              </div>
-            </div>
+            <Attendance
+              key={attendance.pk}
+              attendance={attendance}
+              onClickAttendance={onClickAttendance}
+            />
           );
         })}
       </div>
@@ -83,33 +71,11 @@ const scheduleDetail = ({ scheduleId }) => {
         <div>2.출석</div>
         {attend.map(attendance => {
           return (
-            <div key={attendance.pk}>
-              <div>{attendance.user.nickname}</div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="attend"
-                onClick={onClickAttendance}
-              >
-                출석
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="late"
-                onClick={onClickAttendance}
-              >
-                지각
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="absent"
-                onClick={onClickAttendance}
-              >
-                결석
-              </div>
-            </div>
+            <Attendance
+              key={attendance.pk}
+              attendance={attendance}
+              onClickAttendance={onClickAttendance}
+            />
           );
         })}
       </div>
@@ -117,33 +83,11 @@ const scheduleDetail = ({ scheduleId }) => {
         <div>3.지각</div>
         {late.map(attendance => {
           return (
-            <div key={attendance.pk}>
-              <div>{attendance.user.nickname}</div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="attend"
-                onClick={onClickAttendance}
-              >
-                출석
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="late"
-                onClick={onClickAttendance}
-              >
-                지각
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-user={attendance.user.pk}
-                data-attendance="absent"
-                onClick={onClickAttendance}
-              >
-                결석
-              </div>
-            </div>
+            <Attendance
+              key={attendance.pk}
+              attendance={attendance}
+              onClickAttendance={onClickAttendance}
+            />
           );
         })}
       </div>
@@ -151,30 +95,11 @@ const scheduleDetail = ({ scheduleId }) => {
         <div>4.결석</div>
         {absent.map(attendance => {
           return (
-            <div key={attendance.pk}>
-              <div>{attendance.user.nickname}</div>
-              <div
-                data-pk={attendance.pk}
-                data-attendance="attend"
-                onClick={onClickAttendance}
-              >
-                출석
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-attendance="late"
-                onClick={onClickAttendance}
-              >
-                지각
-              </div>
-              <div
-                data-pk={attendance.pk}
-                data-attendance="absent"
-                onClick={onClickAttendance}
-              >
-                결석
-              </div>
-            </div>
+            <Attendance
+              key={attendance.pk}
+              attendance={attendance}
+              onClickAttendance={onClickAttendance}
+            />
           );
         })}
       </div>
@@ -182,7 +107,7 @@ const scheduleDetail = ({ scheduleId }) => {
   );
 };
 
-scheduleDetail.getInitialProps = ({ ctx, token }) => {
+ScheduleDetail.getInitialProps = ({ ctx, token }) => {
   const { scheduleId } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_SCHEDULE_REQUEST,
@@ -194,8 +119,8 @@ scheduleDetail.getInitialProps = ({ ctx, token }) => {
   return { scheduleId };
 };
 
-scheduleDetail.propTypes = {
+ScheduleDetail.propTypes = {
   scheduleId: PropTypes.string.isRequired,
 };
 
-export default scheduleDetail;
+export default ScheduleDetail;
