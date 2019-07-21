@@ -15,6 +15,9 @@ import {
   LOAD_STUDY_REQUEST,
   LOAD_STUDY_SUCCESS,
   LOAD_STUDY_FAILURE,
+  LOAD_STUDY_MEMBERSHIPS_REQUEST,
+  LOAD_STUDY_MEMBERSHIPS_SUCCESS,
+  LOAD_STUDY_MEMBERSHIPS_FAILURE,
   WITHDRAW_STUDY_REQUEST,
   WITHDRAW_STUDY_SUCCESS,
   WITHDRAW_STUDY_FAILURE,
@@ -96,26 +99,26 @@ function* loadStudies(action) {
 function* watchLoadStudies() {
   yield takeEvery(LOAD_STUDIES_REQUEST, loadStudies);
 }
+
 // LOAD_STUDY
-function loadStudyAPI({ token, pk, studyId }) {
-  return axios.get(
-    `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}&study=${studyId}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
+function loadStudyAPI({ token, studyId }) {
+  console.log(34444);
+  return axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
     },
-  );
+  });
 }
 
 function* loadStudy(action) {
   try {
     const result = yield call(loadStudyAPI, action.data);
+    console.log(3333, result.data);
     // const { category, name, description } = result.data;
     yield put({
       type: LOAD_STUDY_SUCCESS,
-      data: result.data[0],
+      data: result.data,
     });
   } catch (e) {
     console.log(JSON.stringify(e));
@@ -127,6 +130,38 @@ function* loadStudy(action) {
 
 function* watchLoadStudy() {
   yield takeEvery(LOAD_STUDY_REQUEST, loadStudy);
+}
+// LOAD_STUDY_MEMBERSHIPS
+function loadStudyMemvershipsAPI({ token, pk, studyId }) {
+  return axios.get(
+    `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}&study=${studyId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* loadStudyMemverships(action) {
+  try {
+    const result = yield call(loadStudyMemvershipsAPI, action.data);
+    // const { category, name, description } = result.data;
+    yield put({
+      type: LOAD_STUDY_MEMBERSHIPS_SUCCESS,
+      data: result.data[0],
+    });
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    yield put({
+      type: LOAD_STUDY_MEMBERSHIPS_FAILURE,
+    });
+  }
+}
+
+function* watchLoadStudyMemberships() {
+  yield takeEvery(LOAD_STUDY_MEMBERSHIPS_REQUEST, loadStudyMemverships);
 }
 
 // WITHDRAW_STUDY
@@ -175,5 +210,6 @@ export default function* StudySaga() {
     fork(watchLoadStudies),
     fork(watchWithdrawStudy),
     fork(watchLoadStudy),
+    fork(watchLoadStudyMemberships),
   ]);
 }
