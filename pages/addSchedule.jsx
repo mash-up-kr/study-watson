@@ -19,18 +19,20 @@ const addSchedule = ({ studyId }) => {
 
   const onSumit = async event => {
     event.preventDefault();
-    // dispatch({
-    //   type: ADD_SCHEDULE_REQUEST,
-    //   data: {
-    //     study: studyId,
-    //     subject,
-    //     location,
-    //     description,
-    //     voteEndAt,
-    //     startAt,
-    //     studyingTime,
-    //   },
-    // });
+    const voteEndAtToISOString = new Date(voteEndAt).toISOString();
+    const startAtToISOString = new Date(startAt).toISOString();
+    dispatch({
+      type: ADD_SCHEDULE_REQUEST,
+      data: {
+        study: studyId,
+        subject,
+        location,
+        description,
+        voteEndAt: voteEndAtToISOString,
+        startAt: startAtToISOString,
+        studyingTime: `${studyingTime}:00`,
+      },
+    });
   };
   return (
     <>
@@ -63,7 +65,7 @@ const addSchedule = ({ studyId }) => {
         <Input
           label="투표 종류 일시"
           id="voteEndAt"
-          type="text"
+          type="datetime-local"
           value={voteEndAt}
           onChange={setvoteEndAt}
           onClickReset={() => setvoteEndAt('')}
@@ -71,16 +73,16 @@ const addSchedule = ({ studyId }) => {
         <Input
           label="스터디 시작 일시"
           id="startAt"
-          type="text"
+          type="datetime-local"
           value={startAt}
           onChange={setStartAt}
           onClickReset={() => setStartAt('')}
         />
         <Input
           label="스터디 시간"
-          id="startAt"
-          type="text"
-          value={startAt}
+          id="studyingTime"
+          type="time"
+          value={studyingTime}
           onChange={setStudyTime}
           onClickReset={() => setStudyTime('')}
         />
