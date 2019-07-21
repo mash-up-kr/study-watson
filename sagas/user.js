@@ -91,8 +91,8 @@ function* logIn(action) {
     console.log(result);
     const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
-    document.cookie = `token=${key}; path=/`;
-    document.cookie = `pk=${pk}; path=/`;
+    document.cookie = `token=${key}`;
+    document.cookie = `pk=${pk}`;
     yield put({
       type: LOG_IN_SUCCESS,
       data: {
@@ -105,7 +105,7 @@ function* logIn(action) {
     });
     Router.pushRoute('/');
   } catch (e) {
-    // console.error(e.response.data);
+    console.error(e.response);
     alert('입력하신 아이디/비밀번호에 해당하는 계정이 없습니다.');
     yield put({
       type: LOG_IN_FAILURE,
@@ -119,7 +119,7 @@ function* watchLogIn() {
 
 // LOAD_USER
 function loadUserAPI({ key }) {
-  return axios.get('https://study-watson.lhy.kr/api/v1/memberships/profile/', {
+  return axios.get('https://study-watson.lhy.kr/api/v1/members/profile/', {
     headers: { Authorization: `Token ${key}` },
   });
 }
@@ -146,7 +146,8 @@ function* loadUser(action) {
         nickname,
       },
     });
-  } catch (e) {
+  } catch (error) {
+    console.log(error);
     deleteCookie('token');
     deleteCookie('pk');
     yield put({

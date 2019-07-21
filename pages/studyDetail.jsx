@@ -49,7 +49,7 @@ const studyDetail = ({ studyId, token }) => {
     <div>
       <Header />
       <Link route={`/addSchedule/${studyId}`} href={`/addSchedule/${studyId}`}>
-        일정 생성
+        <a>일정 생성</a>
       </Link>
       <div>
         {schedules &&
@@ -64,10 +64,12 @@ const studyDetail = ({ studyId, token }) => {
                 <div>{schedule.location}</div>
                 <div>description</div>
                 <div>{schedule.description}</div>
-                <div>date</div>
-                <div>{schedule.date}</div>
-                <div>dueDate</div>
-                <div>{schedule.dueDate}</div>
+                <div>투표 만료 시간</div>
+                <div>{schedule.voteEndAt}</div>
+                <div>스터디 시작 시간</div>
+                <div>{schedule.startAt}</div>
+                <div>스터디 시간</div>
+                <div>{schedule.studyingTime}</div>
                 <div data-pk={schedule.pk} onClick={modifySchedule}>
                   [수정]
                 </div>

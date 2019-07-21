@@ -18,8 +18,23 @@ import {
 } from '../reducers/schedule';
 
 // ADD SCHEDULE
-function addScheduleAPI({ study, location, description, date, dueDate }) {
-  const data = cleanNullArgs({ study, location, description, date, dueDate });
+function addScheduleAPI({
+  // eslint-disable-next-line camelcase
+  study,
+  location,
+  description,
+  voteEndAt,
+  startAt,
+  studyingTime,
+}) {
+  const data = cleanNullArgs({
+    study,
+    location,
+    description,
+    voteEndAt,
+    startAt,
+    studyingTime,
+  });
   const token = getCookie('token');
   return axios.post(
     `https://study-watson.lhy.kr/api/v1/study/schedules/`,
@@ -42,9 +57,8 @@ function* addSchedule(action) {
       type: ADD_SCHEDULE_SUCCESS,
     });
     Router.pushRoute(`/studyDetail/${action.data.study}`);
-  } catch (e) {
-    console.log(JSON.stringify(e));
-    console.error(e);
+  } catch (error) {
+    console.log(error.response.data);
     alert('스케줄 추가에 실패했습니다');
     yield put({
       type: ADD_SCHEDULE_FAILURE,
