@@ -7,7 +7,8 @@ const router = routes()
   .add('afterStudy', '/studyDetail/:studyId/afterStudy', 'afterStudy')
   .add('addSchedule', '/addSchedule/:studyId', 'addSchedule')
   .add('scheduleDetail', '/schedule/:scheduleId', 'scheduleDetail')
-  .add('studyMembers', '/studyMembers/:studyId', 'studyMembers');
+  .add('studyMembers', '/studyMembers/:studyId', 'studyMembers')
+  .add('studyMembersInfo', '/studyMembersInfo/:studyId', 'studyMembersInfo');
 exports.Link = router.Link;
 
 module.exports = router;
