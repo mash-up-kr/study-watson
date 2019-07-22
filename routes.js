@@ -3,6 +3,8 @@ const routes = require('next-routes');
 const router = routes()
   .add('join', '/join/:id', 'join')
   .add('studyDetail', '/studyDetail/:studyId', 'studyDetail')
+  .add('beforeStudy', '/studyDetail/:studyId/beforeStudy', 'beforeStudy')
+  .add('afterStudy', '/studyDetail/:studyId/afterStudy', 'afterStudy')
   .add('addSchedule', '/addSchedule/:studyId', 'addSchedule')
   .add('scheduleDetail', '/schedule/:scheduleId', 'scheduleDetail')
   .add('studyMembers', '/studyMembers/:studyId', 'studyMembers');
