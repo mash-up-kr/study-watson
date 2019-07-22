@@ -108,7 +108,15 @@ const studyDetail = ({ studyId, token }) => {
         href={`/studyMembers/${studyId}`}
       >
         <a>
-          <div>멤버 관리</div>
+          <div>출석 관리</div>
+        </a>
+      </Link>
+      <Link
+        route={`/studyMembersInfo/${studyId}`}
+        href={`/studyMembersInfo/${studyId}`}
+      >
+        <a>
+          <div>멤버 정보</div>
         </a>
       </Link>
       <Link
