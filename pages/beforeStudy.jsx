@@ -13,19 +13,19 @@ import {
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 
-const studyDetail = ({ studyId, token }) => {
+const beforeStudy = ({ studyId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { pk: memberId, role } = useSelector(state => state.study.memberships);
 
   const filterSchedules =
     schedules &&
     schedules.filter(schedule => {
-      return schedule.startAt > new Date().toISOString();
+      return schedule.startAt < new Date().toISOString();
     });
 
   const recentSchedules = [...filterSchedules];
   recentSchedules.sort((a, b) => {
-    if (a.startAt > b.startAt) {
+    if (a.startAt < b.startAt) {
       return 1;
     }
     return -1;
@@ -69,39 +69,43 @@ const studyDetail = ({ studyId, token }) => {
         <a>일정 생성</a>
       </Link>
       <div>
-        {recentSchedules && recentSchedules.length > 0 && (
-          <div
-            key={recentSchedules[0].pk}
-            style={{ border: '1px solid', margin: '30px 0' }}
-          >
-            <div>location</div>
-            <div>{recentSchedules[0].location}</div>
-            <div>description</div>
-            <div>{recentSchedules[0].description}</div>
-            <div>투표 만료 시간</div>
-            <div>{recentSchedules[0].voteEndAt}</div>
-            <div>스터디 시작 시간</div>
-            <div>{recentSchedules[0].startAt}</div>
-            <div>스터디 시간</div>
-            <div>{recentSchedules[0].studyingTime}</div>
-            <div data-pk={recentSchedules[0].pk} onClick={modifySchedule}>
-              [수정]
-            </div>
-            <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
-              [삭제]
-            </div>
-            {(role === 'manager' || role === 'sub_manager') && (
-              <Link
-                route={`/schedule/${recentSchedules[0].pk}`}
-                href={`/schedule/${recentSchedules[0].pk}`}
+        {recentSchedules &&
+          recentSchedules.length > 0 &&
+          recentSchedules.map(schedule => {
+            return (
+              <div
+                key={schedule.pk}
+                style={{ border: '1px solid', margin: '30px 0' }}
               >
-                <a>
-                  <div>[출결 관리]</div>
-                </a>
-              </Link>
-            )}
-          </div>
-        )}
+                <div>location</div>
+                <div>{schedule.location}</div>
+                <div>description</div>
+                <div>{schedule.description}</div>
+                <div>투표 만료 시간</div>
+                <div>{schedule.voteEndAt}</div>
+                <div>스터디 시작 시간</div>
+                <div>{schedule.startAt}</div>
+                <div>스터디 시간</div>
+                <div>{schedule.studyingTime}</div>
+                <div data-pk={schedule.pk} onClick={modifySchedule}>
+                  [수정]
+                </div>
+                <div data-pk={schedule.pk} onClick={deleteSchedule}>
+                  [삭제]
+                </div>
+                {(role === 'manager' || role === 'sub_manager') && (
+                  <Link
+                    route={`/schedule/${schedule.pk}`}
+                    href={`/schedule/${schedule.pk}`}
+                  >
+                    <a>
+                      <div>[출결 관리]</div>
+                    </a>
+                  </Link>
+                )}
+              </div>
+            );
+          })}
       </div>
       <Link
         route={`/studyMembers/${studyId}`}
@@ -111,20 +115,9 @@ const studyDetail = ({ studyId, token }) => {
           <div>멤버 관리</div>
         </a>
       </Link>
-      <Link
-        route={`/studyDetail/${studyId}/beforeStudy`}
-        href={`/studyDetail/${studyId}/beforeStudy`}
-      >
+      <Link route={`/studyDetail/${studyId}`} href={`/studyDetail/${studyId}`}>
         <a>
-          <div>이전 스터디</div>
-        </a>
-      </Link>
-      <Link
-        route={`/studyDetail/${studyId}/afterStudy`}
-        href={`/studyDetail/${studyId}/afterStudy`}
-      >
-        <a>
-          <div>이후 스터디</div>
+          <div>스터디로 돌아가기</div>
         </a>
       </Link>
       <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
@@ -132,7 +125,7 @@ const studyDetail = ({ studyId, token }) => {
   );
 };
 
-studyDetail.getInitialProps = ({ ctx, token, pk }) => {
+beforeStudy.getInitialProps = ({ ctx, token, pk }) => {
   const { studyId = 0 } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_SCHEDULES_REQUEST,
@@ -155,9 +148,9 @@ studyDetail.getInitialProps = ({ ctx, token, pk }) => {
   };
 };
 
-studyDetail.propTypes = {
+beforeStudy.propTypes = {
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
 };
 
-export default studyDetail;
+export default beforeStudy;
