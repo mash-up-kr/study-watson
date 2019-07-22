@@ -26,7 +26,7 @@ const StyledText = styled.div`
   margin: 0.5rem 0 1.5rem 0;
 `;
 
-const ShowStudy = ({ name, description, moveThirdPage }) => {
+const ShowStudy = ({ name, description, moveThirdPage, category }) => {
   return (
     <StyledScreen>
       <StyledTitle>
@@ -38,6 +38,8 @@ const ShowStudy = ({ name, description, moveThirdPage }) => {
       <StyledText>{name}</StyledText>
       <StyledSubtitle>설명</StyledSubtitle>
       <StyledText>{description}</StyledText>
+      <StyledSubtitle>카테고리</StyledSubtitle>
+      <StyledText>{category === '3' ? 'Develop' : 'Design'}</StyledText>
       <StyledButton
         type="button"
         name="next"
@@ -50,6 +52,7 @@ const ShowStudy = ({ name, description, moveThirdPage }) => {
 
 ShowStudy.propTypes = {
   name: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   moveThirdPage: PropTypes.func.isRequired,
 };

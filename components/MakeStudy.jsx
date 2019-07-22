@@ -23,6 +23,8 @@ const MakeStudy = ({
   onSubmitForm,
   name,
   setName,
+  category,
+  setCategory,
   description,
   setDescription,
 }) => {
@@ -38,6 +40,11 @@ const MakeStudy = ({
           value={description}
           onChange={setDescription}
         />
+        <StyledLabel htmlFor="category">카테고리</StyledLabel>
+        <select id="category" onChange={setCategory} value={category}>
+          <option value="3">Develop</option>
+          <option value="4">Design</option>
+        </select>
         <StyledButton type="submit" value="다음" />
       </StyledForm>
     </StyledScreen>
@@ -48,6 +55,8 @@ MakeStudy.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   setName: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  setCategory: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   setDescription: PropTypes.func.isRequired,
 };

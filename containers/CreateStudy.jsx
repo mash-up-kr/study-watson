@@ -25,6 +25,7 @@ const StyledToast = styled.div`
 `;
 
 const CreateStudy = () => {
+  const [category, setCategory] = useInput('3');
   const [page, setPage] = useState(firstPage);
   const [name, setName] = useInput('');
   const [description, setDescription] = useInput('');
@@ -34,7 +35,7 @@ const CreateStudy = () => {
   const link = canUseDOM() && `${window.location.origin}/join/id`;
 
   const addStudy = () => {
-    const category = 1;
+    // const category = 1;
     dispatch({
       type: ADD_STUDY_REQUEST,
       data: { name, description, category },
@@ -71,6 +72,8 @@ const CreateStudy = () => {
           setName={setName}
           setDescription={setDescription}
           description={description}
+          category={category}
+          setCategory={setCategory}
         />
         {show && (
           <StyledToast>제목과 내용은 2자 이상 작성해주세요!</StyledToast>
@@ -80,6 +83,7 @@ const CreateStudy = () => {
     [secondPage]: (
       <ShowStudy
         name={name}
+        category={category}
         description={description}
         moveThirdPage={moveThirdPage}
       />
