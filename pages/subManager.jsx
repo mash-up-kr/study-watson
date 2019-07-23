@@ -1,53 +1,63 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Axios from 'axios';
 import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import { Link } from '../routes';
 
-const studyMembersInfo = ({ studyId }) => {
+const subManager = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  console.log(11, membershipSet[0].roleDisplay);
+  const [memberList, setMemberList] = useState([]);
+  const mount = useRef(null);
+  if (!mount.current) {
+    mount.current = true;
+    const filterMemberList = membershipSet.filter(membership => {
+      return membership.role !== 'manager';
+    });
+    setMemberList(filterMemberList);
+  }
+  const onClick = async event => {
+    const { pk } = event.target.dataset;
+    try {
+      const newData = await Axios.patch(
+        `https://study-watson.lhy.kr/api/v1/study/memberships/${pk}/`,
+        {
+          role: 'sub_manager',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+          },
+        },
+      );
+      const filterMemberList = membershipSet.filter(membership => {
+        return JSON.stringify(membership.pk) === JSON.stringify(pk);
+      });
+      setMemberList([...filterMemberList, newData.data]);
+    } catch (error) {
+      console.log(error);
+      if (error) {
+        console.log(error.response);
+      }
+    }
+  };
   return (
     <div>
       <Header />
       <div>
         <div>
-          <div>
-            <Link
-              route={`/studyDetail/${studyId}`}
-              href={`/studyDetail/${studyId}`}
-            >
-              <a>스터디로 돌아가기</a>
-            </Link>
-          </div>
-          <div>
-            <Link route={`/manager/${studyId}`} href={`/manager/${studyId}`}>
-              <a>리더 임명</a>
-            </Link>
-          </div>
-          <div>
-            <Link
-              route={`/subManager/${studyId}`}
-              href={`/subManager/${studyId}`}
-            >
-              <a>임시 리더 임명</a>
-            </Link>
-          </div>
-          <div>
-            <Link route={`/normal/${studyId}`} href={`/normal/${studyId}`}>
-              <a>일반 유저</a>
-            </Link>
-          </div>
-          <div>
-            <Link route={`/rormal/${studyId}`} href={`/rormal/${studyId}`}>
-              <a>제명</a>
-            </Link>
-          </div>
+          <Link
+            route={`/studyDetail/${studyId}`}
+            href={`/studyDetail/${studyId}`}
+          >
+            <a>스터디로 돌아가기</a>
+          </Link>
         </div>
-        {membershipSet &&
-          membershipSet.map(membership => {
+        {memberList &&
+          memberList.map(membership => {
             return (
               <div key={membership.pk}>
                 {membership.user.imgProfile && (
@@ -85,6 +95,9 @@ const studyMembersInfo = ({ studyId }) => {
                     <div>{membership.roleDisplay}</div>
                   </div>
                 )}
+                <div data-pk={membership.pk} onClick={onClick}>
+                  임시 리더 임명
+                </div>
                 <hr />
               </div>
             );
@@ -94,17 +107,18 @@ const studyMembersInfo = ({ studyId }) => {
   );
 };
 
-studyMembersInfo.getInitialProps = ({ ctx, token }) => {
+subManager.getInitialProps = ({ ctx, token }) => {
   const { studyId } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_STUDY_REQUEST,
     data: { token, studyId },
   });
-  return { studyId };
+  return { studyId, token };
 };
 
-studyMembersInfo.propTypes = {
+subManager.propTypes = {
   studyId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
-export default studyMembersInfo;
+export default subManager;
