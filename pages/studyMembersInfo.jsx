@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,15 @@ import { Link } from '../routes';
 
 const studyMembersInfo = ({ studyId }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  console.log(11, membershipSet[0].roleDisplay);
+  const [memberList, setMemberList] = useState([]);
+  const mount = useRef(null);
+  if (!mount.current) {
+    mount.current = true;
+    const filterMemberList = membershipSet.filter(membership => {
+      return membership.isWithdraw !== true;
+    });
+    setMemberList(filterMemberList);
+  }
   return (
     <div>
       <Header />
@@ -41,13 +49,16 @@ const studyMembersInfo = ({ studyId }) => {
             </Link>
           </div>
           <div>
-            <Link route={`/rormal/${studyId}`} href={`/rormal/${studyId}`}>
+            <Link
+              route={`/withdrawStudy/${studyId}`}
+              href={`/withdrawStudy/${studyId}`}
+            >
               <a>제명</a>
             </Link>
           </div>
         </div>
-        {membershipSet &&
-          membershipSet.map(membership => {
+        {memberList &&
+          memberList.map(membership => {
             return (
               <div key={membership.pk}>
                 {membership.user.imgProfile && (

@@ -14,7 +14,7 @@ const Manager = ({ studyId, token }) => {
     return membership.role === 'manager';
   });
   const memberList = membershipSet.filter(membership => {
-    return membership.role !== 'manager';
+    return membership.isWithdraw !== true && membership.role !== 'manager';
   });
   const onClick = async event => {
     try {

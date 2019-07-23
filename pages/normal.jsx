@@ -14,7 +14,11 @@ const Normal = ({ studyId, token }) => {
   if (!mount.current) {
     mount.current = true;
     const filterMemberList = membershipSet.filter(membership => {
-      return membership.role !== 'manager' && membership.role !== 'normal';
+      return (
+        membership.isWithdraw !== true &&
+        membership.role !== 'manager' &&
+        membership.role !== 'normal'
+      );
     });
     setMemberList(filterMemberList);
   }

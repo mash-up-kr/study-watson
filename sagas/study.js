@@ -102,7 +102,6 @@ function* watchLoadStudies() {
 
 // LOAD_STUDY
 function loadStudyAPI({ token, studyId }) {
-  console.log(34444);
   return axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
     headers: {
       'Content-Type': 'application/json',
