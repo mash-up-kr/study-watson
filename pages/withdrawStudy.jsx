@@ -7,7 +7,7 @@ import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import { Link } from '../routes';
 
-const subManager = ({ studyId, token }) => {
+const WithdrawStudy = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
   const [memberList, setMemberList] = useState([]);
   const mount = useRef(null);
@@ -21,10 +21,10 @@ const subManager = ({ studyId, token }) => {
   const onClick = async event => {
     const { pk } = event.target.dataset;
     try {
-      const newData = await Axios.patch(
+      await Axios.delete(
         `https://study-watson.lhy.kr/api/v1/study/memberships/${pk}/`,
         {
-          role: 'sub_manager',
+          role: 'normal',
         },
         {
           headers: {
@@ -36,7 +36,7 @@ const subManager = ({ studyId, token }) => {
       const filterMemberList = membershipSet.filter(membership => {
         return JSON.stringify(membership.pk) === JSON.stringify(pk);
       });
-      setMemberList([...filterMemberList, newData.data]);
+      setMemberList(filterMemberList);
     } catch (error) {
       console.log(error);
       if (error) {
@@ -96,7 +96,7 @@ const subManager = ({ studyId, token }) => {
                   </div>
                 )}
                 <div data-pk={membership.pk} onClick={onClick}>
-                  임시 리더 임명
+                  제명
                 </div>
                 <hr />
               </div>
@@ -107,7 +107,7 @@ const subManager = ({ studyId, token }) => {
   );
 };
 
-subManager.getInitialProps = ({ ctx, token }) => {
+WithdrawStudy.getInitialProps = ({ ctx, token }) => {
   const { studyId } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_STUDY_REQUEST,
@@ -116,9 +116,9 @@ subManager.getInitialProps = ({ ctx, token }) => {
   return { studyId, token };
 };
 
-subManager.propTypes = {
+WithdrawStudy.propTypes = {
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
 };
 
-export default subManager;
+export default WithdrawStudy;
