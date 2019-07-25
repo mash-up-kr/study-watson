@@ -44,15 +44,12 @@ function addStudyAPI({ category, name, description }) {
 function* addStudy(action) {
   try {
     const result = yield call(addStudyAPI, action.data);
-    const { category, name, description } = result.data;
+    const { data } = result;
     yield put({
       type: ADD_STUDY_SUCCESS,
-      data: {
-        category,
-        name,
-        description,
-      },
+      data,
     });
+    Router.pushRoute(`/studyDetail/${data.pk}`);
   } catch (e) {
     console.log(JSON.stringify(e));
     console.error(e);

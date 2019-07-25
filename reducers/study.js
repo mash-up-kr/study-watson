@@ -33,14 +33,7 @@ export default (state = initialState, action) => {
     case ADD_STUDY_SUCCESS:
       return {
         ...state,
-        studies: [
-          ...state.studies,
-          {
-            category: action.data.category,
-            name: action.data.name,
-            description: action.data.description,
-          },
-        ],
+        studies: [...state.studies, action.data],
       };
     case ADD_STUDY_FAILURE:
       return {

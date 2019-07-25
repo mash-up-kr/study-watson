@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import StudyInvite from './StudyInvite';
 import ShowStudy from '../components/ShowStudy';
 import MakeStudy from '../components/MakeStudy';
 import { useInput } from '../common/useInput';
 import { ADD_STUDY_REQUEST } from '../reducers/study';
-import { canUseDOM } from '../common/canUesDOM';
 
 const firstPage = 'firstPage';
 const secondPage = 'secondPage';
-const thirdPage = 'thirdPage';
 
 const StyledToast = styled.div`
   width: 100%;
@@ -32,10 +29,7 @@ const CreateStudy = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const link = canUseDOM() && `${window.location.origin}/join/id`;
-
   const addStudy = () => {
-    // const category = 1;
     dispatch({
       type: ADD_STUDY_REQUEST,
       data: { name, description, category },
@@ -56,11 +50,6 @@ const CreateStudy = () => {
     } else {
       clickLink();
     }
-  };
-
-  const moveThirdPage = () => {
-    addStudy();
-    setPage(thirdPage);
   };
 
   const components = {
@@ -85,14 +74,13 @@ const CreateStudy = () => {
         name={name}
         category={category}
         description={description}
-        moveThirdPage={moveThirdPage}
+        addStudy={addStudy}
       />
     ),
-    [thirdPage]: <StudyInvite link={link} />,
   };
 
   return (
-    // MakeStudy - ShowStudy - StudyInvite
+    // MakeStudy - ShowStudy
     <div>{components[page]}</div>
   );
 };

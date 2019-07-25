@@ -65,9 +65,22 @@ const studyDetail = ({ studyId, token }) => {
   return (
     <div>
       <Header />
-      <Link route={`/addSchedule/${studyId}`} href={`/addSchedule/${studyId}`}>
-        <a>일정 생성</a>
-      </Link>
+      <div>
+        <Link
+          route={`/studyInvite/${studyId}`}
+          href={`/studyInvite/${studyId}`}
+        >
+          <a>초대 링그 생성</a>
+        </Link>
+      </div>
+      <div>
+        <Link
+          route={`/addSchedule/${studyId}`}
+          href={`/addSchedule/${studyId}`}
+        >
+          <a>일정 생성</a>
+        </Link>
+      </div>
       <div>
         {recentSchedules && recentSchedules.length > 0 && (
           <div
