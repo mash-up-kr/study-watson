@@ -17,7 +17,9 @@ import { getCookie, getCookieServer } from '../common/cookie';
 
 const MyApp = ({ Component, store, pageProps }) => {
   useEffect(() => {
+    console.log(99, process.env.NODE_ENV, 22, 'serviceWorker' in navigator);
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+      console.log(88, process.env.NODE_ENV);
       navigator.serviceWorker
         .register('/service-worker.js')
         .then(result => {
