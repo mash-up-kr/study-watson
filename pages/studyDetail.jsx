@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Axios from 'axios';
 import { Link } from '../routes';
 import Header from '../containers/Header';
 import {
@@ -13,7 +14,7 @@ import {
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 
-const studyDetail = ({ studyId, token }) => {
+const studyDetail = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { pk: memberId, role } = useSelector(state => state.study.memberships);
 
@@ -62,6 +63,29 @@ const studyDetail = ({ studyId, token }) => {
     }
   };
 
+  const onClickVote = async event => {
+    try {
+      await Axios.patch(
+        `https://study-watson.lhy.kr/api/v1/study/attendances/${
+          event.target.dataset.pk
+        }/`,
+        {
+          user,
+          vote: event.target.dataset.vote,
+        },
+      );
+      dispatch({
+        type: LOAD_SCHEDULES_REQUEST,
+        data: {
+          studyId,
+          token,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -102,6 +126,35 @@ const studyDetail = ({ studyId, token }) => {
             </div>
             <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
               [삭제]
+            </div>
+            <div>
+              <hr />
+              <div>투표</div>
+              <hr />
+              <div>
+                <div
+                  onClick={onClickVote}
+                  data-vote="attend"
+                  data-pk={recentSchedules[0].selfAttendance.pk}
+                >
+                  참석
+                </div>
+                <div
+                  onClick={onClickVote}
+                  data-vote="absent"
+                  data-pk={recentSchedules[0].selfAttendance.pk}
+                >
+                  불참
+                </div>
+                <div
+                  onClick={onClickVote}
+                  data-vote="late"
+                  data-pk={recentSchedules[0].selfAttendance.pk}
+                >
+                  지각
+                </div>
+              </div>
+              <hr />
             </div>
             {(role === 'manager' || role === 'sub_manager') && (
               <Link
@@ -173,12 +226,14 @@ studyDetail.getInitialProps = ({ ctx, token, pk }) => {
   return {
     studyId,
     token,
+    pk,
   };
 };
 
 studyDetail.propTypes = {
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  pk: PropTypes.string.isRequired,
 };
 
 export default studyDetail;
