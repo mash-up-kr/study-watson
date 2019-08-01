@@ -1,5 +1,6 @@
 const routes = require('next-routes');
 
+// routes.add(name, pattern = /name, page = name)
 const router = routes()
   .add('join', '/join/:id', 'join')
   .add('studyDetail', '/studyDetail/:studyId', 'studyDetail')
@@ -7,6 +8,7 @@ const router = routes()
   .add('afterStudy', '/studyDetail/:studyId/afterStudy', 'afterStudy')
   .add('addSchedule', '/addSchedule/:studyId', 'addSchedule')
   .add('scheduleDetail', '/schedule/:scheduleId', 'scheduleDetail')
+  .add('editSchedule', '/editSchedule/:scheduleId', 'editSchedule') //
   .add('studyMembers', '/studyMembers/:studyId', 'studyMembers')
   .add('studyMembersInfo', '/studyMembersInfo/:studyId', 'studyMembersInfo')
   .add('manager', '/manager/:studyId', 'manager')
