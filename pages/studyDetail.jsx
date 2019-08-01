@@ -47,10 +47,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     }
   };
 
-  const modifySchedule = pk => async () => {
-    console.log('temp:', pk);
-  };
-
   const onClickWithdrawStudy = () => {
     if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
       dispatch({
@@ -121,9 +117,16 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             <div>{recentSchedules[0].startAt}</div>
             <div>스터디 시간</div>
             <div>{recentSchedules[0].studyingTime}</div>
-            <div data-pk={recentSchedules[0].pk} onClick={modifySchedule}>
-              [수정]
-            </div>
+
+            <Link
+              route={`/editSchedule/${recentSchedules[0].pk}`}
+              href={`/editSchedule/${recentSchedules[0].pk}`}
+            >
+              <a>
+                <div data-pk={recentSchedules[0].pk}>[수정]</div>
+              </a>
+            </Link>
+
             <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
               [삭제]
             </div>
