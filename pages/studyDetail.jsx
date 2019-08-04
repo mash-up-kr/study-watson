@@ -90,7 +90,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           route={`/studyInvite/${studyId}`}
           href={`/studyInvite/${studyId}`}
         >
-          <a>초대 링그 생성</a>
+          <a>초대 링크 생성</a>
         </Link>
       </div>
       <div>
@@ -99,6 +99,11 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           href={`/addSchedule/${studyId}`}
         >
           <a>일정 생성</a>
+        </Link>
+      </div>
+      <div>
+        <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
+          <a>스터디 수정</a>
         </Link>
       </div>
       <div>
