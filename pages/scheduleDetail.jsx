@@ -40,6 +40,7 @@ const ScheduleDetail = () => {
   }
 
   const onClickAttendance = async event => {
+    console.log('scheduleDetail');
     const { pk, user, attendance: att } = event.target.dataset;
     try {
       await Axios.patch(

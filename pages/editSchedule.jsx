@@ -1,26 +1,80 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+// import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Header from '../containers/Header';
 import { useInput } from '../common/useInput';
 import Input from '../components/Input';
+import { LOAD_SCHEDULE_REQUEST } from '../reducers/schedule';
 
-const editSchedule = ({ scheduleId }) => {
-  const [subject, setSubject] = useInput('');
-  const [location, setLocation] = useInput('');
-  const [description, setDescription] = useInput('');
-  const [voteEndAt, setvoteEndAt] = useInput('');
-  const [startAt, setStartAt] = useInput('');
-  const [studyingTime, setStudyTime] = useInput('');
+const editSchedule = () => {
+  const { schedule } = useSelector(state => state.schedule);
 
-  //   const dispatch = useDispatch();
+  const [subject, setSubject] = useInput(schedule.subject);
+  const [location, setLocation] = useInput(schedule.location);
+  const [description, setDescription] = useInput(schedule.description);
+  const [voteEndAt, setvoteEndAt] = useInput(schedule.voteEndAt.slice(0, 19));
+  const [startAt, setStartAt] = useInput(schedule.startAt.slice(0, 19));
+  const [studyingTime, setStudyTime] = useInput(schedule.studyingTime);
 
-  const onSumit = async event => {};
+  // useEffect(() => {
+  //   const s = {
+  //     target: {
+  //       value: schedule.subject,
+  //     },
+  //   };
+  //   setSubject(s);
+  //   const l = {
+  //     target: {
+  //       value: schedule.location,
+  //     },
+  //   };
+  //   setLocation(l);
+  //   const d = {
+  //     target: {
+  //       value: schedule.description,
+  //     },
+  //   };
+  //   setDescription(d);
+  //   const v = {
+  //     target: {
+  //       value: schedule.voteEndAt.slice(0, 19),
+  //     },
+  //   };
+  //   setvoteEndAt(v);
+  //   const sa = {
+  //     target: {
+  //       value: schedule.startAt.slice(0, 19),
+  //     },
+  //   };
+  //   setStartAt(sa);
+  //   const st = {
+  //     target: {
+  //       value: schedule.studyingTime,
+  //     },
+  //   };
+  //   setStudyTime(st);
+  // }, [schedule]);
 
-  useEffect(() => {
-    console.log('asdf');
-  }, []);
+  const onSumit = event => {
+    event.preventDefault();
+    // const voteEndAtToISOString = new Date(voteEndAt).toISOString();
+    const startAtToISOString = new Date(startAt).toISOString();
+    console.log(111, startAt, schedule.startAt, startAtToISOString);
+
+    // dispatch({
+    //   type: ADD_SCHEDULE_REQUEST,
+    //   data: {
+    //     study: studyId,
+    //     subject,
+    //     location,
+    //     description,
+    //     voteEndAt: voteEndAtToISOString,
+    //     startAt: startAtToISOString,
+    //     studyingTime: `${studyingTime}:00`,
+    //   },
+    // });
+  };
 
   return (
     <>
@@ -88,8 +142,15 @@ editSchedule.getInitialProps = ({ ctx, token }) => {
   };
 };
 
-editSchedule.propTypes = {
-  scheduleId: PropTypes.string.isRequired,
+editSchedule.getInitialProps = ({ ctx, token }) => {
+  const { scheduleId } = ctx.query;
+  ctx.store.dispatch({
+    type: LOAD_SCHEDULE_REQUEST,
+    data: {
+      scheduleId,
+      token,
+    },
+  });
 };
 
 export default editSchedule;
