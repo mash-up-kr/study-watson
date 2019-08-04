@@ -87,9 +87,14 @@ const afterStudy = ({ studyId, token }) => {
                 <div>{schedule.startAt}</div>
                 <div>스터디 시간</div>
                 <div>{schedule.studyingTime}</div>
-                <div data-pk={schedule.pk} onClick={modifySchedule}>
-                  [수정]
-                </div>
+                <Link
+                  route={`/editSchedule/${schedule.pk}`}
+                  href={`/editSchedule/${schedule.pk}`}
+                >
+                  <a>
+                    <div data-pk={schedule.pk}>[수정]</div>
+                  </a>
+                </Link>
                 <div data-pk={schedule.pk} onClick={deleteSchedule}>
                   [삭제]
                 </div>

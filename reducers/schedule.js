@@ -15,12 +15,17 @@ export const LOAD_SCHEDULE_REQUEST = 'LOAD_SCHEDULE_REQUEST';
 export const LOAD_SCHEDULE_SUCCESS = 'LOAD_SCHEDULE_SUCCESS';
 export const LOAD_SCHEDULE_FAILURE = 'LOAD_SCHEDULE_FAILURE';
 
+export const UPDATE_SCHEDULE_REQUEST = 'UPDATE_SCHEDULE_REQUEST';
+export const UPDATE_SCHEDULE_SUCCESS = 'UPDATE_SCHEDULE_SUCCESS';
+export const UPDATE_SCHEDULE_FAILURE = 'UPDATE_SCHEDULE_FAILURE';
+
 export const DELETE_SCHEDULE_REQUEST = 'DELETE_SCHEDULE_REQUEST';
 export const DELETE_SCHEDULE_SUCCESS = 'DELETE_SCHEDULE_SUCCESS';
 export const DELETE_SCHEDULE_FAILURE = 'DELETE_SCHEDULE_FAILURE';
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // Add schedule
     case ADD_SCHEDULE_REQUEST:
       return {
         ...state,
@@ -36,6 +41,7 @@ export default (state = initialState, action) => {
         ...state,
       };
 
+    // Load schedules
     case LOAD_SCHEDULES_REQUEST:
       return {
         ...state,
@@ -52,6 +58,7 @@ export default (state = initialState, action) => {
         ...state,
       };
 
+    // Load schedule
     case LOAD_SCHEDULE_REQUEST:
       return {
         ...state,
@@ -68,6 +75,22 @@ export default (state = initialState, action) => {
         ...state,
       };
 
+    // Update schedule
+    case UPDATE_SCHEDULE_REQUEST:
+      return {
+        ...state,
+      };
+    case UPDATE_SCHEDULE_SUCCESS:
+      return {
+        ...state,
+      };
+
+    case UPDATE_SCHEDULE_FAILURE:
+      return {
+        ...state,
+      };
+
+    // Delete schedule
     case DELETE_SCHEDULE_REQUEST:
       return {
         ...state,

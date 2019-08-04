@@ -15,6 +15,9 @@ import {
   LOAD_SCHEDULE_REQUEST,
   LOAD_SCHEDULE_SUCCESS,
   LOAD_SCHEDULE_FAILURE,
+  UPDATE_SCHEDULE_REQUEST,
+  UPDATE_SCHEDULE_SUCCESS,
+  UPDATE_SCHEDULE_FAILURE,
   DELETE_SCHEDULE_REQUEST,
   DELETE_SCHEDULE_SUCCESS,
   DELETE_SCHEDULE_FAILURE,
@@ -129,7 +132,60 @@ function* watchLoadSchedule() {
   yield takeEvery(LOAD_SCHEDULE_REQUEST, loadSchedule);
 }
 
-// DELETE_SCHEDULES
+// UPDATE_SCHEDULE
+function updateScheduleAPI({
+  id,
+  study,
+  location,
+  description,
+  voteEndAt,
+  startAt,
+  studyingTime,
+}) {
+  const data = cleanNullArgs({
+    study,
+    location,
+    description,
+    voteEndAt,
+    startAt,
+    studyingTime,
+  });
+  const token = getCookie('token');
+  return axios.patch(
+    `https://study-watson.lhy.kr/api/v1/study/schedules/${id}/`,
+    {
+      ...data,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* updateSchedule(action) {
+  try {
+    yield call(updateScheduleAPI, action.data);
+    yield put({
+      type: UPDATE_SCHEDULE_SUCCESS,
+    });
+    Router.pushRoute(`/studyDetail/${action.data.study}`);
+  } catch (error) {
+    console.log(error.response.data);
+    alert('스케줄 업데이트에 실패했습니다');
+    yield put({
+      type: UPDATE_SCHEDULE_FAILURE,
+    });
+  }
+}
+
+function* watchUpdateSchedule() {
+  yield takeEvery(UPDATE_SCHEDULE_REQUEST, updateSchedule);
+}
+
+// DELETE_SCHEDULE
 function deleteScheduleAPI({ token, pk }) {
   return axios.delete(
     `https://study-watson.lhy.kr/api/v1/study/schedules/${pk}/`,
@@ -168,6 +224,7 @@ export default function* ScheduleSaga() {
     fork(watchAddSchedule),
     fork(watchLoadSchedules),
     fork(watchLoadSchedule),
+    fork(watchUpdateSchedule),
     fork(watchDeleteSchedule),
   ]);
 }
