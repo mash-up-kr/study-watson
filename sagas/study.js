@@ -9,6 +9,9 @@ import {
   ADD_STUDY_REQUEST,
   ADD_STUDY_SUCCESS,
   ADD_STUDY_FAILURE,
+  UPDATE_STUDY_REQUEST,
+  UPDATE_STUDY_SUCCESS,
+  UPDATE_STUDY_FAILURE,
   LOAD_STUDIES_REQUEST,
   LOAD_STUDIES_SUCCESS,
   LOAD_STUDIES_FAILURE,
@@ -62,6 +65,47 @@ function* addStudy(action) {
 
 function* watchAdd() {
   yield takeEvery(ADD_STUDY_REQUEST, addStudy);
+}
+
+// UPDATE_STUDY
+function updateStudyAPI({ id, category, name, description }) {
+  const data = cleanNullArgs({ category, name, description });
+  const token = getCookie('token');
+  return axios.patch(
+    `https://study-watson.lhy.kr/api/v1/study/${id}/`,
+    {
+      ...data,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    },
+  );
+}
+
+function* updateStudy(action) {
+  try {
+    const result = yield call(updateStudyAPI, action.data);
+    const { data } = result;
+    yield put({
+      type: UPDATE_STUDY_SUCCESS,
+      data,
+    });
+    Router.pushRoute(`/studyDetail/${data.pk}`);
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    console.error(e);
+    alert('스터디 업데이트에 실패했습니다');
+    yield put({
+      type: UPDATE_STUDY_FAILURE,
+    });
+  }
+}
+
+function* watchUpdateStudy() {
+  yield takeEvery(UPDATE_STUDY_REQUEST, updateStudy);
 }
 
 // LOAD_STUDIES
@@ -203,6 +247,7 @@ function* watchWithdrawStudy() {
 export default function* StudySaga() {
   yield all([
     fork(watchAdd),
+    fork(watchUpdateStudy),
     fork(watchLoadStudies),
     fork(watchWithdrawStudy),
     fork(watchLoadStudy),
