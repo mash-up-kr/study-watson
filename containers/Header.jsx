@@ -7,7 +7,7 @@ import Menu from '../components/Menu';
 
 const StyledHeader = styled.div`
   width: 100%;
-  height: 60px;
+  height: 56px;
   border-bottom: 1px solid #ededed;
   display: flex;
   flex-direction: row;

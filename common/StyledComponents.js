@@ -3,13 +3,23 @@ import styled, { createGlobalStyle } from 'styled-components';
 const StyledButton = styled.input`
   width: 100%;
   padding: 1rem 0;
-  background-color: #0077ff;
+  background-color: #4B2BFF;
   font-size: 1rem;
   color: #fff;
   position: fixed;
   bottom: 0;
   left: 0;
   border: none;
+`;
+
+const StyledActionButton = styled.input`
+  font-size: 1rem;
+  color: #fff;
+  background-color: #4B2BFF;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.1);
 `;
 
 const StyledForm = styled.form`
@@ -27,8 +37,11 @@ const StyledInput = styled.input`
   padding: 1rem;
   font-size: 1rem;
   margin: 0.5rem 0 0.5rem 0;
+  background-color: transparent;
+  border-radius: 8px;
   :focus {
-    border: 1px solid #0077ff;
+    outline: none;
+    box-shadow: 0 0 0 1px #4B2BFF;
   }
 `;
 
@@ -43,8 +56,19 @@ const StyledScreen = styled.div`
 
 const StyledTitle = styled.h1`
   width: 100%;
-  font-size: 2rem;
-  padding: 2rem 0;
+  font-size: 1.5rem;
+  padding: 1.5rem 0;
+  color: #4D5256;
+`;
+
+const StyledImageText = styled.div`
+  width: 100%;
+  text-align: center;
+  line-height: 1.3;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4D5256;
+  margin-bottom: 1rem;
 `;
 
 export const GlobalStyle = createGlobalStyle`
@@ -185,6 +209,10 @@ table {
 a {
   text-decoration: none;
 }
+
+body { 
+  background-color: #F8FAFB;
+}
 `;
 
 export {
@@ -194,4 +222,6 @@ export {
   StyledScreen,
   StyledTitle,
   StyledForm,
+  StyledActionButton,
+  StyledImageText,
 };
