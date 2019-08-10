@@ -30,9 +30,7 @@ const ShowStudy = ({ name, description, addStudy, category }) => {
   return (
     <StyledScreen>
       <StyledTitle>
-        작성하신 내용을
-        <br />
-        확인해주세요
+        작성하신 내용을 확인해주세요
       </StyledTitle>
       <StyledSubtitle>스터디 이름</StyledSubtitle>
       <StyledText>{name}</StyledText>
