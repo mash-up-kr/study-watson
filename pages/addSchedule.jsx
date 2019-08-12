@@ -5,15 +5,17 @@ import { useDispatch } from 'react-redux';
 import { ADD_SCHEDULE_REQUEST } from '../reducers/schedule';
 import { useInput } from '../common/useInput';
 import Header from '../containers/Header';
-import Input from '../components/Input';
+import Input, { StyledInputContainer } from '../components/Input';
+import { StyledLabel, StyledInput } from '../common/StyledComponents';
 
 const addSchedule = ({ studyId }) => {
+  const date = new Date().toISOString().slice(0, 16);
   const [subject, setSubject] = useInput('');
   const [location, setLocation] = useInput('');
   const [description, setDescription] = useInput('');
-  const [voteEndAt, setvoteEndAt] = useInput('');
-  const [startAt, setStartAt] = useInput('');
-  const [studyingTime, setStudyTime] = useInput('');
+  const [voteEndAt, setvoteEndAt] = useInput(date);
+  const [startAt, setStartAt] = useInput(date);
+  const [studyingTime, setStudyTime] = useInput('01:00');
 
   const dispatch = useDispatch();
 
@@ -78,14 +80,18 @@ const addSchedule = ({ studyId }) => {
           onChange={setStartAt}
           onClickReset={() => setStartAt('')}
         />
-        <Input
-          label="스터디 시간"
-          id="studyingTime"
-          type="time"
-          value={studyingTime}
-          onChange={setStudyTime}
-          onClickReset={() => setStudyTime('')}
-        />
+        <StyledInputContainer>
+          <StyledLabel htmlFor="studyingTime">스터디 시간</StyledLabel>
+          <StyledInput
+            style={{ textIndent: '-12px' }}
+            type="time"
+            id="studyingTime"
+            value={studyingTime}
+            onChange={setStudyTime}
+            min="00:00"
+            max="12:00"
+          />
+        </StyledInputContainer>
         <input type="submit" value="생성" />
       </form>
     </>
