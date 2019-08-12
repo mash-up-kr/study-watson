@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { StyledLabel, StyledInput } from '../common/StyledComponents';
 
-const StyledInputContainer = styled.div`
+export const StyledInputContainer = styled.div`
   margin-bottom: 2rem;
 `;
 
