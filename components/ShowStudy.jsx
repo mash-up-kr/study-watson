@@ -26,17 +26,17 @@ const StyledText = styled.div`
   margin: 0.5rem 0 1.5rem 0;
 `;
 
-const ShowStudy = ({ name, description, addStudy, category }) => {
+const ShowStudy = ({ name, description, addStudy, category, icon }) => {
   return (
     <StyledScreen>
-      <StyledTitle>
-        작성하신 내용을 확인해주세요
-      </StyledTitle>
+      <StyledTitle>작성하신 내용을 확인해주세요</StyledTitle>
       <StyledSubtitle>스터디 이름</StyledSubtitle>
       <StyledText>{name}</StyledText>
       <StyledSubtitle>설명</StyledSubtitle>
       <StyledText>{description}</StyledText>
       <StyledSubtitle>카테고리</StyledSubtitle>
+      <StyledSubtitle>아이콘</StyledSubtitle>
+      <img src={icon.image} alt="img" />
       <StyledText>{category === '3' ? 'Develop' : 'Design'}</StyledText>
       <StyledButton
         type="button"
@@ -52,6 +52,7 @@ ShowStudy.propTypes = {
   name: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
   addStudy: PropTypes.func.isRequired,
 };
 

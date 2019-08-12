@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import Axios from 'axios';
 
 import ShowStudy from '../components/ShowStudy';
 import MakeStudy from '../components/MakeStudy';
@@ -26,6 +27,8 @@ const CreateStudy = () => {
   const [page, setPage] = useState(firstPage);
   const [name, setName] = useInput('');
   const [description, setDescription] = useInput('');
+  const [icons, setIcons] = useState([]);
+  const [icon, setIcon] = useState({});
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
@@ -52,6 +55,17 @@ const CreateStudy = () => {
     }
   };
 
+  const getIcon = async () => {
+    const result = await Axios.get(
+      'https://study-watson.lhy.kr/api/v1/study/icons/',
+    );
+    setIcons(result.data);
+    setIcon(result.data[0]);
+  };
+  useEffect(() => {
+    getIcon();
+  }, []);
+
   const components = {
     [firstPage]: (
       <>
@@ -63,6 +77,9 @@ const CreateStudy = () => {
           description={description}
           category={category}
           setCategory={setCategory}
+          icon={icon}
+          setIcon={setIcon}
+          icons={icons}
         />
         {show && (
           <StyledToast>제목과 내용은 2자 이상 작성해주세요!</StyledToast>
@@ -74,6 +91,7 @@ const CreateStudy = () => {
         name={name}
         category={category}
         description={description}
+        icon={icon}
         addStudy={addStudy}
       />
     ),

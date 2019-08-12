@@ -27,6 +27,9 @@ const MakeStudy = ({
   setCategory,
   description,
   setDescription,
+  icon,
+  icons,
+  setIcon,
 }) => {
   return (
     <StyledScreen>
@@ -45,6 +48,22 @@ const MakeStudy = ({
           <option value="3">Develop</option>
           <option value="4">Design</option>
         </select>
+        {icons.map(i => {
+          return (
+            <div key={i.pk}>
+              <label>
+                <input
+                  type="radio"
+                  name="test"
+                  value="small"
+                  checked={icon.pk === i.pk}
+                  onChange={() => setIcon(i)}
+                />
+                <img src={i.image} alt="img" style={{ width: '50px' }} />
+              </label>
+            </div>
+          );
+        })}
         <StyledButton type="submit" value="다음" />
       </StyledForm>
     </StyledScreen>
@@ -59,6 +78,9 @@ MakeStudy.propTypes = {
   setCategory: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   setDescription: PropTypes.func.isRequired,
+  icon: PropTypes.object.isRequired,
+  setIcon: PropTypes.func.isRequired,
+  icons: PropTypes.array.isRequired,
 };
 
 export default MakeStudy;
