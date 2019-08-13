@@ -29,8 +29,4 @@ Index.getInitialProps = ({ ctx, token, pk }) => {
   }
 };
 
-// Index.propTypes = {
-//   token: PropTypes.string.isRequired,
-// };
-
 export default Index;
