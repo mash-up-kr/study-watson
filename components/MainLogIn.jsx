@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { StyledActionButton, StyledImageText } from '../common/StyledComponents';
+import {
+  StyledActionButton,
+  StyledImageText,
+} from '../common/StyledComponents';
 import { Link } from '../routes';
-
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -27,13 +29,13 @@ const StyledCard = styled.div`
 const StyledTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #4D5256;
+  color: #4d5256;
   font-weight: 900;
 `;
 
 const StyledText = styled.div`
   font-size: 0.9rem;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const MainLogIn = () => {
@@ -67,6 +69,13 @@ const MainLogIn = () => {
                         {study && study.study && study.study.description}
                       </StyledText>
                       <br />
+                      {!!study && !!study.study && !!study.study.icon && (
+                        <img
+                          src={study.study.icon.image}
+                          alt="img"
+                          style={{ width: '80px' }}
+                        />
+                      )}
                     </StyledCard>
                   </a>
                 </Link>
@@ -75,23 +84,23 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-              <img
-                src="/static/image_main.svg"
-                alt="main illust"
-                style={{ marginBottom: '2rem' }}
-              />
-              <StyledImageText>
-                진행중인 스터디가 없습니다.
-                <br />
-                스터디를 만들고 관리해보세요!
-              </StyledImageText>
-              <Link route="/addStudy" href="/addStudy">
-                <a>
-                  <StyledActionButton type="button" value="스터디 만들기" />
-                </a>
-              </Link>
-            </StyledContainer>
-          )}
+            <img
+              src="/static/image_main.svg"
+              alt="main illust"
+              style={{ marginBottom: '2rem' }}
+            />
+            <StyledImageText>
+              진행중인 스터디가 없습니다.
+              <br />
+              스터디를 만들고 관리해보세요!
+            </StyledImageText>
+            <Link route="/addStudy" href="/addStudy">
+              <a>
+                <StyledActionButton type="button" value="스터디 만들기" />
+              </a>
+            </Link>
+          </StyledContainer>
+        )}
       </div>
     </div>
   );

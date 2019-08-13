@@ -27,8 +27,8 @@ import {
 } from '../reducers/study';
 
 // ADD_STUDY
-function addStudyAPI({ category, name, description }) {
-  const data = cleanNullArgs({ category, name, description });
+function addStudyAPI({ category, name, description, icon }) {
+  const data = cleanNullArgs({ category, name, description, icon });
   const token = getCookie('token');
   return axios.post(
     `https://study-watson.lhy.kr/api/v1/study/`,
