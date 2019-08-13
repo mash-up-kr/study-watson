@@ -50,6 +50,7 @@ const MainLogIn = () => {
         {filterStudies.length > 0 ? (
           <>
             {filterStudies.map((study, idx) => {
+              console.log(11, study);
               return (
                 <Link
                   key={idx}
@@ -69,6 +70,7 @@ const MainLogIn = () => {
                         {study && study.study && study.study.description}
                       </StyledText>
                       <br />
+                      <div>{study.study.category.name}</div>
                       {!!study && !!study.study && !!study.study.icon && (
                         <img
                           src={study.study.icon.image}
