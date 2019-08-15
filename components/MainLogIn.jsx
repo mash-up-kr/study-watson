@@ -9,6 +9,7 @@ import {
 import { Link } from '../routes';
 import CategoryDesign from './CategoryDesign';
 import CategoryDevelop from './CategoryDevelop';
+import MakeStudyFAB from './MakeStudyFAB';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -27,6 +28,10 @@ const StyledCard = styled.div`
   margin-top: 1rem;
   background-color: #fff;
   position: relative;
+`;
+
+const StyledCardContainer = styled.div`
+  padding-bottom: 2rem;
 `;
 
 const StyledTitle = styled.h2`
@@ -58,40 +63,43 @@ const MainLogIn = () => {
       <div>
         {filterStudies.length > 0 ? (
           <>
-            {filterStudies.map((study, idx) => {
+            <StyledCardContainer>
+              {filterStudies.map((study, idx) => {
+                return (
 
-              return (
-                <Link
-                  key={idx}
-                  route={`/studyDetail/${study &&
-                    study.study &&
-                    study.study.pk}`}
-                  href={`/studyDetail/${study &&
-                    study.study &&
-                    study.study.pk}`}
-                >
-                  <a>
-                    <StyledCard>
-                      <div>{study.study.category.name === 'Develop' ? <CategoryDevelop /> : <CategoryDesign />}</div>
-                      <StyledTitle>
-                        {study && study.study && study.study.name}
-                      </StyledTitle>
-                      <StyledText>
-                        {study && study.study && study.study.description}
-                      </StyledText>
-                      <br />
-                      {!!study && !!study.study && !!study.study.icon && (
-                        <StyledIcon
-                          src={study.study.icon.image}
-                          alt="img"
-                          style={{ width: '40px' }}
-                        />
-                      )}
-                    </StyledCard>
-                  </a>
-                </Link>
-              );
-            })}
+                  <Link
+                    key={idx}
+                    route={`/studyDetail/${study &&
+                      study.study &&
+                      study.study.pk}`}
+                    href={`/studyDetail/${study &&
+                      study.study &&
+                      study.study.pk}`}
+                  >
+                    <a>
+                      <StyledCard>
+                        <div>{study.study.category.name === 'Develop' ? <CategoryDevelop /> : <CategoryDesign />}</div>
+                        <StyledTitle>
+                          {study && study.study && study.study.name}
+                        </StyledTitle>
+                        <StyledText>
+                          {study && study.study && study.study.description}
+                        </StyledText>
+                        <br />
+                        {!!study && !!study.study && !!study.study.icon && (
+                          <StyledIcon
+                            src={study.study.icon.image}
+                            alt="img"
+                            style={{ width: '40px' }}
+                          />
+                        )}
+                      </StyledCard>
+                    </a>
+                  </Link>
+                );
+              })}
+            </StyledCardContainer>
+            <MakeStudyFAB />
           </>
         ) : (
           <StyledContainer>

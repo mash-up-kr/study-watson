@@ -13,6 +13,7 @@ const StyledHeader = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
 `;
 
 const StyledButton = styled.div`
