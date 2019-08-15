@@ -63,6 +63,7 @@ const MainLogIn = () => {
                 >
                   <a>
                     <StyledCard>
+                      <div>{study.study.category.name}</div>
                       <StyledTitle>
                         {study && study.study && study.study.name}
                       </StyledTitle>
@@ -70,12 +71,11 @@ const MainLogIn = () => {
                         {study && study.study && study.study.description}
                       </StyledText>
                       <br />
-                      <div>{study.study.category.name}</div>
                       {!!study && !!study.study && !!study.study.icon && (
                         <img
                           src={study.study.icon.image}
                           alt="img"
-                          style={{ width: '80px' }}
+                          style={{ width: '40px' }}
                         />
                       )}
                     </StyledCard>

@@ -9,6 +9,8 @@ import {
   StyledTitle,
   StyledForm,
 } from '../common/StyledComponents';
+import CategoryDevelop from './CategoryDevelop';
+import CategoryDesign from './CategoryDesign';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -17,6 +19,17 @@ const StyledScreen = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const StyledRadio = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem 0;
+  padding: 1rem 0;
+`;
+
+const StyledInputContainer = styled.div`
+  margin-bottom: 2rem;
 `;
 
 const MakeStudy = ({
@@ -33,37 +46,70 @@ const MakeStudy = ({
 }) => {
   return (
     <StyledScreen>
-      <StyledTitle>스터디 만들기</StyledTitle>
+      <StyledTitle>새로운 스터디</StyledTitle>
       <StyledForm onSubmit={e => onSubmitForm(e, 1)}>
-        <StyledLabel htmlFor="name">스터디 이름</StyledLabel>
-        <StyledInput type="text" id="name" value={name} onChange={setName} />
-        <StyledLabel htmlFor="description">스터디 설명</StyledLabel>
-        <StyledInput
-          type="text"
-          value={description}
-          onChange={setDescription}
-        />
-        <StyledLabel htmlFor="category">카테고리</StyledLabel>
-        <select id="category" onChange={setCategory} value={category}>
-          <option value="3">Develop</option>
-          <option value="4">Design</option>
-        </select>
-        {icons.map(i => {
-          return (
-            <div key={i.pk}>
+        <StyledInputContainer>
+          <StyledLabel htmlFor="category">카테고리</StyledLabel>
+          <StyledRadio>
+            <div>
               <label>
                 <input
                   type="radio"
-                  name="test"
-                  value="small"
-                  checked={icon.pk === i.pk}
-                  onChange={() => setIcon(i)}
+                  name="Develop"
+                  id="develop"
+                  value="3"
+                  checked={category === '3'}
+                  onChange={setCategory}
                 />
-                <img src={i.image} alt="img" style={{ width: '50px' }} />
+                <CategoryDevelop />
               </label>
             </div>
-          );
-        })}
+            <div style={{ marginLeft: '1rem' }}>
+              <label>
+                <input
+                  type="radio"
+                  name="Design"
+                  id="design"
+                  value="4"
+                  checked={category === '4'}
+                  onChange={setCategory}
+                />
+                <CategoryDesign />
+              </label>
+            </div>
+          </StyledRadio>
+        </StyledInputContainer>
+        <StyledInputContainer>
+          <StyledLabel htmlFor="name">스터디 이름</StyledLabel>
+          <StyledInput type="text" id="name" value={name} onChange={setName} />
+        </StyledInputContainer>
+        <StyledInputContainer>
+          <StyledLabel htmlFor="description">스터디 설명</StyledLabel>
+          <StyledInput
+            type="text"
+            value={description}
+            onChange={setDescription}
+          />
+        </StyledInputContainer>
+        <StyledInputContainer>
+          <StyledLabel htmlFor="icon">대표 아이콘</StyledLabel>
+          {icons.map(i => {
+            return (
+              <div key={i.pk}>
+                <label>
+                  <input
+                    type="radio"
+                    name="test"
+                    value="small"
+                    checked={icon.pk === i.pk}
+                    onChange={() => setIcon(i)}
+                  />
+                  <img src={i.image} alt="img" style={{ width: '50px' }} />
+                </label>
+              </div>
+            );
+          })}
+        </StyledInputContainer>
         <StyledButton type="submit" value="다음" />
       </StyledForm>
     </StyledScreen>
