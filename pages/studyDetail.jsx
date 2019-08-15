@@ -331,6 +331,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyDetail/${studyId}/beforeStudy`}
               href={`/studyDetail/${studyId}/beforeStudy`}
             >
+
               <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-paststudy.svg"
