@@ -50,7 +50,7 @@ const MainLogIn = () => {
         {filterStudies.length > 0 ? (
           <>
             {filterStudies.map((study, idx) => {
-              console.log(11, study);
+
               return (
                 <Link
                   key={idx}
@@ -86,22 +86,40 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-            <img
-              src="/static/image_main.svg"
-              alt="main illust"
-              style={{ marginBottom: '2rem' }}
-            />
-            <StyledImageText>
-              진행중인 스터디가 없습니다.
-              <br />
-              스터디를 만들고 관리해보세요!
-            </StyledImageText>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledActionButton type="button" value="스터디 만들기" />
-              </a>
-            </Link>
-          </StyledContainer>
+              <img
+                src="/static/image_main.svg"
+                alt="main illust"
+                style={{ marginBottom: '2rem' }}
+              />
+              <StyledImageText>
+                진행중인 스터디가 없습니다.
+                <br />
+                스터디를 만들고 관리해보세요!
+              </StyledImageText>
+              <Link route="/addStudy" href="/addStudy">
+                <a>
+                  <StyledActionButton type="button" value="스터디 만들기" />
+                </a>
+              </Link>
+            </StyledContainer>
+          )}
+        <StyledContainer>
+          <img
+            src="/static/image_main.svg"
+            alt="main illust"
+            style={{ marginBottom: '2rem' }}
+          />
+          <StyledImageText>
+            진행중인 스터디가 없습니다.
+            <br />
+            스터디를 만들고 관리해보세요!
+          </StyledImageText>
+          <Link route="/addStudy" href="/addStudy">
+            <a>
+              <StyledActionButton type="button" value="스터디 만들기" />
+            </a>
+          </Link>
+        </StyledContainer>
         )}
       </div>
     </div>
