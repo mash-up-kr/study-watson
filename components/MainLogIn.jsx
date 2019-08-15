@@ -7,6 +7,8 @@ import {
   StyledImageText,
 } from '../common/StyledComponents';
 import { Link } from '../routes';
+import CategoryDesign from './CategoryDesign';
+import CategoryDevelop from './CategoryDevelop';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -24,11 +26,12 @@ const StyledCard = styled.div`
   padding: 1.5rem;
   margin-top: 1rem;
   background-color: #fff;
+  position: relative;
 `;
 
 const StyledTitle = styled.h2`
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0 0.55rem 0;
   color: #4d5256;
   font-weight: 900;
 `;
@@ -36,6 +39,12 @@ const StyledTitle = styled.h2`
 const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
+`;
+
+const StyledIcon = styled.img`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
 `;
 
 const MainLogIn = () => {
@@ -63,7 +72,7 @@ const MainLogIn = () => {
                 >
                   <a>
                     <StyledCard>
-                      <div>{study.study.category.name}</div>
+                      <div>{study.study.category.name === 'Develop' ? <CategoryDevelop /> : <CategoryDesign />}</div>
                       <StyledTitle>
                         {study && study.study && study.study.name}
                       </StyledTitle>
@@ -72,7 +81,7 @@ const MainLogIn = () => {
                       </StyledText>
                       <br />
                       {!!study && !!study.study && !!study.study.icon && (
-                        <img
+                        <StyledIcon
                           src={study.study.icon.image}
                           alt="img"
                           style={{ width: '40px' }}
