@@ -121,8 +121,14 @@ const StyledCardBtn = styled.div`
   background-color: #fff;
   box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 1.5rem;
   margin-bottom: 1rem;
+`;
+
+const StyledCardBtnWrapper = styled.a`
+  display: inline-block;
+  padding: 1.5rem;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledCardSubTitle = styled.h3`
@@ -309,7 +315,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyDetail/${studyId}/afterStudy`}
               href={`/studyDetail/${studyId}/afterStudy`}
             >
-              <a>
+              <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-nextstudy.svg"
                   alt="next study icon"
@@ -317,7 +323,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 />
                 <StyledCardTitle>다가올 스터디</StyledCardTitle>
                 <StyledCardSubTitle>Next Studies</StyledCardSubTitle>
-              </a>
+              </StyledCardBtnWrapper>
             </Link>
           </StyledCardBtn>
           <StyledCardBtn>
@@ -325,7 +331,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyDetail/${studyId}/beforeStudy`}
               href={`/studyDetail/${studyId}/beforeStudy`}
             >
-              <a>
+              <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-paststudy.svg"
                   alt="past study icon"
@@ -333,7 +339,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 />
                 <StyledCardTitle>이전 스터디</StyledCardTitle>
                 <StyledCardSubTitle>Past Studies</StyledCardSubTitle>
-              </a>
+              </StyledCardBtnWrapper>
             </Link>
           </StyledCardBtn>
           <StyledCardBtn>
@@ -341,7 +347,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyMembers/${studyId}`}
               href={`/studyMembers/${studyId}`}
             >
-              <a>
+              <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-attendance.svg"
                   alt="attendance icon"
@@ -349,7 +355,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 />
                 <StyledCardTitle>출석부</StyledCardTitle>
                 <StyledCardSubTitle>Attendance</StyledCardSubTitle>
-              </a>
+              </StyledCardBtnWrapper>
             </Link>
           </StyledCardBtn>
           <StyledCardBtn>
@@ -357,7 +363,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyMembersInfo/${studyId}`}
               href={`/studyMembersInfo/${studyId}`}
             >
-              <a>
+              <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-member.svg"
                   alt="member icon"
@@ -365,7 +371,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 />
                 <StyledCardTitle>스터디 멤버</StyledCardTitle>
                 <StyledCardSubTitle>Members</StyledCardSubTitle>
-              </a>
+              </StyledCardBtnWrapper>
             </Link>
           </StyledCardBtn>
         </StyledCardBtnContainer>
