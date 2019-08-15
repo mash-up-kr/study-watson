@@ -68,7 +68,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   placeholder: '',
-  onClickInput: () => {},
+  onClickInput: () => { },
   isValid: false,
   focus: '',
   acceptableText: '',

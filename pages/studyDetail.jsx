@@ -17,7 +17,6 @@ import {
 const studyDetail = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { pk: memberId, role } = useSelector(state => state.study.memberships);
-
   const filterSchedules =
     schedules &&
     schedules.filter(schedule => {
@@ -63,7 +62,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     try {
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-          event.target.dataset.pk
+        event.target.dataset.pk
         }/`,
         {
           user,
