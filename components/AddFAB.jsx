@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Link } from '../routes';
-
 const StyledFAB = styled.div`
   position: fixed;
   right: 20px;
@@ -17,14 +15,12 @@ const StyledFAB = styled.div`
   box-shadow: 4px 4px 8px 0 rgba(0,0,0,0.15);
 `;
 
-const MakeStudyFAB = () => {
+const AddFAB = () => {
   return (
-    <Link route="/addStudy" href="/addStudy">
-      <StyledFAB>
-        <img src="/static/icon-add.svg" alt="add icon" />
-      </StyledFAB>
-    </Link>
+    <StyledFAB>
+      <img src="/static/icon-add.svg" alt="add icon" />
+    </StyledFAB>
   );
 };
 
-export default MakeStudyFAB;
+export default AddFAB;

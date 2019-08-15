@@ -28,6 +28,7 @@ function addScheduleAPI({
   // eslint-disable-next-line camelcase
   study,
   location,
+  subject,
   description,
   voteEndAt,
   startAt,
@@ -36,6 +37,7 @@ function addScheduleAPI({
   const data = cleanNullArgs({
     study,
     location,
+    subject,
     description,
     voteEndAt,
     startAt,
@@ -137,6 +139,7 @@ function updateScheduleAPI({
   id,
   study,
   location,
+  subject,
   description,
   voteEndAt,
   startAt,
@@ -145,6 +148,7 @@ function updateScheduleAPI({
   const data = cleanNullArgs({
     study,
     location,
+    subject,
     description,
     voteEndAt,
     startAt,
