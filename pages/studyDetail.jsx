@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 import Axios from 'axios';
 import { Link } from '../routes';
@@ -14,7 +15,102 @@ import {
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 
+
+
+const StyledScreen = styled.div`
+  width: calc(100% - 2rem);
+  margin: auto;
+`;
+
+const StyledScheduleCard = styled.div`
+  position: relative;
+  width: 100%;
+  height: 196px;
+  box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #fff;
+`;
+
+const StyledCardTitle = styled.h2`
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #4d5256;
+  font-weight: 900;
+`;
+
+const StyledCardText = styled.div`
+  font-size: 0.8rem;
+  color: #878D91;
+  margin-bottom: 0.5rem;
+`;
+
+const StyledCardBtnContainer = styled.div`
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledCardBtn = styled.button`
+  font-size: 0.8rem;
+  color: #878D91;
+  background-color: #EDEDED;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border: none;
+  margin-left: 0.5rem;
+`;
+
+const StyledDetailBtn = styled.button`
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  outline: none;
+`;
+
+const StyledDetailMenu = styled.div`
+  position: absolute;
+  z-index: 2;
+  top: 2.5rem;
+  right: 1rem;
+  width: 150px;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  display: ${props => (props.show ? 'block' : 'none')};
+`;
+
+const StyledBackground = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: ${props => (props.show ? 'block' : 'none')};
+`;
+
+const StyledDetailItem = styled.div`
+  width: 100%;
+  padding: 0.5rem 0;
+`;
+
+const StyledSubTitle = styled.div`
+  font-size: 0.9rem;
+  color: #878D91;
+  margin: 2rem 0 0.7rem 0;
+`;
+
 const studyDetail = ({ studyId, token, pk: user }) => {
+  const [click, setClick] = useState(false);
+
   const { schedules } = useSelector(state => state.schedule);
   const { pk: memberId, role } = useSelector(state => state.study.memberships);
   const filterSchedules =
@@ -81,134 +177,165 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     }
   };
 
+  const onClickDetailBtn = () => {
+    setClick(!click);
+  }
+
   return (
     <div>
       <Header />
-      <div>
-        <Link
-          route={`/studyInvite/${studyId}`}
-          href={`/studyInvite/${studyId}`}
-        >
-          <a>초대 링크 생성</a>
-        </Link>
-      </div>
-      <div>
-        <Link
-          route={`/addSchedule/${studyId}`}
-          href={`/addSchedule/${studyId}`}
-        >
-          <a>일정 생성</a>
-        </Link>
-      </div>
-      <div>
-        <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
-          <a>스터디 수정</a>
-        </Link>
-      </div>
-      <div>
-        {recentSchedules && recentSchedules.length > 0 && (
-          <div
-            key={recentSchedules[0].pk}
-            style={{ border: '1px solid', margin: '30px 0' }}
-          >
-            <div>location</div>
-            <div>{recentSchedules[0].location}</div>
-            <div>description</div>
-            <div>{recentSchedules[0].description}</div>
-            <div>투표 만료 시간</div>
-            <div>{recentSchedules[0].voteEndAt}</div>
-            <div>스터디 시작 시간</div>
-            <div>{recentSchedules[0].startAt}</div>
-            <div>스터디 시간</div>
-            <div>{recentSchedules[0].studyingTime}</div>
-
-            <Link
-              route={`/editSchedule/${recentSchedules[0].pk}`}
-              href={`/editSchedule/${recentSchedules[0].pk}`}
+      <StyledScreen>
+        <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
+        <StyledScheduleCard>
+          {recentSchedules && recentSchedules.length > 0 && (
+            <div
+              key={recentSchedules[0].pk}
             >
-              <a>
-                <div data-pk={recentSchedules[0].pk}>[수정]</div>
-              </a>
-            </Link>
+              <StyledCardTitle>{recentSchedules[0].subject}</StyledCardTitle>
+              <StyledCardText>
+                <img
+                  src="/static/icon-calendar.svg"
+                  alt="calendar icon"
+                  style={{ marginRight: '0.5rem' }}
+                />
+                {recentSchedules[0].startAt}
+              </StyledCardText>
+              <StyledCardText>
+                <img
+                  src="/static/icon-location.svg"
+                  alt="calendar icon"
+                  style={{ marginRight: '0.5rem' }}
+                />
+                {recentSchedules[0].location}
+              </StyledCardText>
+              <StyledCardText>
+                <img
+                  src="/static/icon-check.svg"
+                  alt="calendar icon"
+                  style={{ marginRight: '0.5rem' }}
+                />
+                {recentSchedules[0].voteEndAt}
+              </StyledCardText>
 
-            <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
-              [삭제]
-            </div>
-            <div>
-              <hr />
-              <div>투표</div>
-              <hr />
-              <div>
-                <div
+              <StyledCardBtnContainer>
+                <StyledCardBtn
                   onClick={onClickVote}
                   data-vote="attend"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   참석
-                </div>
-                <div
+                </StyledCardBtn>
+                <StyledCardBtn
                   onClick={onClickVote}
                   data-vote="absent"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   불참
-                </div>
-                <div
+                </StyledCardBtn>
+                <StyledCardBtn
                   onClick={onClickVote}
                   data-vote="late"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   지각
-                </div>
-              </div>
-              <hr />
+                </StyledCardBtn>
+              </StyledCardBtnContainer>
+
+              <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
+                <img src="/static/icon-detail.svg" alt="detail icon" />
+              </StyledDetailBtn>
+
+              <StyledDetailMenu show={click}>
+                <StyledDetailItem>
+                  <Link
+                    route={`/editSchedule/${recentSchedules[0].pk}`}
+                    href={`/editSchedule/${recentSchedules[0].pk}`}
+                  >
+                    <a>
+                      <div data-pk={recentSchedules[0].pk}>수정</div>
+                    </a>
+                  </Link>
+                </StyledDetailItem>
+                <StyledDetailItem>
+                  <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
+                    삭제
+                  </div>
+                </StyledDetailItem>
+                <StyledDetailItem>
+                  {(role === 'manager' || role === 'sub_manager') && (
+                    <Link
+                      route={`/schedule/${recentSchedules[0].pk}`}
+                      href={`/schedule/${recentSchedules[0].pk}`}
+                    >
+                      <a>
+                        <div>출결 관리</div>
+                      </a>
+                    </Link>
+                  )}
+                </StyledDetailItem>
+              </StyledDetailMenu>
+
             </div>
-            {(role === 'manager' || role === 'sub_manager') && (
-              <Link
-                route={`/schedule/${recentSchedules[0].pk}`}
-                href={`/schedule/${recentSchedules[0].pk}`}
-              >
-                <a>
-                  <div>[출결 관리]</div>
-                </a>
-              </Link>
-            )}
-          </div>
-        )}
-      </div>
-      <Link
-        route={`/studyMembers/${studyId}`}
-        href={`/studyMembers/${studyId}`}
-      >
-        <a>
-          <div>출석 관리</div>
-        </a>
-      </Link>
-      <Link
-        route={`/studyMembersInfo/${studyId}`}
-        href={`/studyMembersInfo/${studyId}`}
-      >
-        <a>
-          <div>멤버 정보</div>
-        </a>
-      </Link>
-      <Link
-        route={`/studyDetail/${studyId}/beforeStudy`}
-        href={`/studyDetail/${studyId}/beforeStudy`}
-      >
-        <a>
-          <div>이전 스터디</div>
-        </a>
-      </Link>
-      <Link
-        route={`/studyDetail/${studyId}/afterStudy`}
-        href={`/studyDetail/${studyId}/afterStudy`}
-      >
-        <a>
-          <div>이후 스터디</div>
-        </a>
-      </Link>
-      <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
+          )}
+        </StyledScheduleCard>
+        <StyledSubTitle>스터디 관리</StyledSubTitle>
+        <div>
+          <Link
+            route={`/studyInvite/${studyId}`}
+            href={`/studyInvite/${studyId}`}
+          >
+            <a>초대 링크 생성</a>
+          </Link>
+        </div>
+        <div>
+          <Link
+            route={`/addSchedule/${studyId}`}
+            href={`/addSchedule/${studyId}`}
+          >
+            <a>일정 생성</a>
+          </Link>
+        </div>
+        <div>
+          <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
+            <a>스터디 수정</a>
+          </Link>
+        </div>
+
+        <Link
+          route={`/studyMembers/${studyId}`}
+          href={`/studyMembers/${studyId}`}
+        >
+          <a>
+            <div>출석 관리</div>
+          </a>
+        </Link>
+        <Link
+          route={`/studyMembersInfo/${studyId}`}
+          href={`/studyMembersInfo/${studyId}`}
+        >
+          <a>
+            <div>멤버 정보</div>
+          </a>
+        </Link>
+        <Link
+          route={`/studyDetail/${studyId}/beforeStudy`}
+          href={`/studyDetail/${studyId}/beforeStudy`}
+        >
+          <a>
+            <div>이전 스터디</div>
+          </a>
+        </Link>
+        <Link
+          route={`/studyDetail/${studyId}/afterStudy`}
+          href={`/studyDetail/${studyId}/afterStudy`}
+        >
+          <a>
+            <div>이후 스터디</div>
+          </a>
+        </Link>
+        <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
+      </StyledScreen>
+      <StyledBackground show={click} />
     </div>
   );
 };

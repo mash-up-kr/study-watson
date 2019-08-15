@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>Icon / Check</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icon-/-Check" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checkbox" transform="translate(1.000000, 1.000000)">
+            <path d="M0.666666667,0 L9.33333333,0 C9.70152317,-1.15971247e-15 10,0.298476833 10,0.666666667 L10,9.33333333 C10,9.70152317 9.70152317,10 9.33333333,10 L0.666666667,10 C0.298476833,10 -6.21043565e-16,9.70152317 0,9.33333333 L0,0.666666667 C-1.56112553e-16,0.298476833 0.298476833,-5.9849844e-16 0.666666667,0 Z" id="Rectangle" fill="#A4A4A4" transform="translate(5.000000, 5.000000) rotate(90.000000) translate(-5.000000, -5.000000) "></path>
+            <polyline id="Path" stroke="#FFFFFF" stroke-linecap="square" points="2 5.18183058 3.87500281 7 8 3"></polyline>
+        </g>
+    </g>
+</svg>
