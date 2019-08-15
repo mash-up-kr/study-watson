@@ -17,7 +17,7 @@ const StyledScreen = styled.div`
 const StyledButton = styled.div`
   width: 100%;
   padding: 1rem 0;
-  background-color: #0077ff;
+  background-color: #4B2BFF;
   font-size: 1rem;
   color: #fff;
   position: fixed;
