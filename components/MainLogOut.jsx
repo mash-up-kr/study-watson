@@ -1,8 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import Start from './Start';
-import { StyledButton, StyledScreen } from '../common/StyledComponents';
-import { Link } from '../routes';
+
+const StyledScreen = styled.div`
+  height: calc(100vh - 56px);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const MainLogOut = () => {
   return (
@@ -10,11 +17,6 @@ const MainLogOut = () => {
       <StyledScreen>
         <Start />
       </StyledScreen>
-      <Link route="/signup" href="/signup">
-        <a>
-          <StyledButton type="button" value="회원가입" />
-        </a>
-      </Link>
     </>
   );
 };

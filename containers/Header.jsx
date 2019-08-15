@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import { Link } from '../routes';
 import Menu from '../components/Menu';
@@ -31,7 +31,7 @@ const Header = () => {
   const [link, setLink] = useState('');
   const [label, setLabel] = useState('');
 
-  const { isLogin } = useSelector(state => state.user);
+  // const { isLogin } = useSelector(state => state.user);
 
   const onClick = () => {
     setValue(!value);
@@ -44,15 +44,15 @@ const Header = () => {
         setLink('/profile-edit');
         setLabel('프로필 수정');
         break;
-      case '/':
-        if (!isLogin) {
-          setLink('/login');
-          setLabel('로그인');
-        } else {
-          setLink('');
-          setLabel('');
-        }
-        break;
+      // case '/':
+      //   if (!isLogin) {
+      //     setLink('/login');
+      //     setLabel('로그인');
+      //   } else {
+      //     setLink('');
+      //     setLabel('');
+      //   }
+      //   break;
       default:
         setLink('');
         setLabel('');
