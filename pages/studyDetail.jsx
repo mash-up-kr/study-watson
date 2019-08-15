@@ -14,6 +14,7 @@ import {
   WITHDRAW_STUDY_REQUEST,
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
+import AddFAB from '../components/AddFAB';
 
 
 
@@ -34,7 +35,6 @@ const StyledScheduleCard = styled.div`
 
 const StyledCardTitle = styled.h2`
   font-size: 1rem;
-  margin-bottom: 1rem;
   color: #4d5256;
   font-weight: 900;
 `;
@@ -45,7 +45,7 @@ const StyledCardText = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const StyledCardBtnContainer = styled.div`
+const StyledAttendBtnContainer = styled.div`
   position: absolute;
   right: 1rem;
   bottom: 1rem;
@@ -53,7 +53,7 @@ const StyledCardBtnContainer = styled.div`
   flex-direction: row;
 `;
 
-const StyledCardBtn = styled.button`
+const StyledAttendBtn = styled.button`
   font-size: 0.8rem;
   color: #878D91;
   background-color: #EDEDED;
@@ -106,6 +106,30 @@ const StyledSubTitle = styled.div`
   font-size: 0.9rem;
   color: #878D91;
   margin: 2rem 0 0.7rem 0;
+`;
+
+const StyledCardBtnContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
+const StyledCardBtn = styled.div`
+  width: calc((100vw - 3rem) / 2);
+  background-color: #fff;
+  box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+const StyledCardSubTitle = styled.h3`
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #878D91;
+  margin-top: 0.4rem;
 `;
 
 const studyDetail = ({ studyId, token, pk: user }) => {
@@ -191,7 +215,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             <div
               key={recentSchedules[0].pk}
             >
-              <StyledCardTitle>{recentSchedules[0].subject}</StyledCardTitle>
+              <StyledCardTitle style={{ marginBottom: '1rem' }}>{recentSchedules[0].subject}</StyledCardTitle>
               <StyledCardText>
                 <img
                   src="/static/icon-calendar.svg"
@@ -217,29 +241,29 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 {recentSchedules[0].voteEndAt}
               </StyledCardText>
 
-              <StyledCardBtnContainer>
-                <StyledCardBtn
+              <StyledAttendBtnContainer>
+                <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="attend"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   참석
-                </StyledCardBtn>
-                <StyledCardBtn
+                </StyledAttendBtn>
+                <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="absent"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   불참
-                </StyledCardBtn>
-                <StyledCardBtn
+                </StyledAttendBtn>
+                <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="late"
                   data-pk={recentSchedules[0].selfAttendance.pk}
                 >
                   지각
-                </StyledCardBtn>
-              </StyledCardBtnContainer>
+                </StyledAttendBtn>
+              </StyledAttendBtnContainer>
 
               <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
                 <img src="/static/icon-detail.svg" alt="detail icon" />
@@ -279,6 +303,78 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           )}
         </StyledScheduleCard>
         <StyledSubTitle>스터디 관리</StyledSubTitle>
+        <StyledCardBtnContainer>
+          <StyledCardBtn>
+            <Link
+              route={`/studyDetail/${studyId}/afterStudy`}
+              href={`/studyDetail/${studyId}/afterStudy`}
+            >
+              <a>
+                <img
+                  src="/static/icon-study-nextstudy.svg"
+                  alt="next study icon"
+                  style={{ marginBottom: '0.5rem' }}
+                />
+                <StyledCardTitle>다가올 스터디</StyledCardTitle>
+                <StyledCardSubTitle>Next Studies</StyledCardSubTitle>
+              </a>
+            </Link>
+          </StyledCardBtn>
+          <StyledCardBtn>
+            <Link
+              route={`/studyDetail/${studyId}/beforeStudy`}
+              href={`/studyDetail/${studyId}/beforeStudy`}
+            >
+              <a>
+                <img
+                  src="/static/icon-study-paststudy.svg"
+                  alt="past study icon"
+                  style={{ marginBottom: '0.5rem' }}
+                />
+                <StyledCardTitle>이전 스터디</StyledCardTitle>
+                <StyledCardSubTitle>Past Studies</StyledCardSubTitle>
+              </a>
+            </Link>
+          </StyledCardBtn>
+          <StyledCardBtn>
+            <Link
+              route={`/studyMembers/${studyId}`}
+              href={`/studyMembers/${studyId}`}
+            >
+              <a>
+                <img
+                  src="/static/icon-study-attendance.svg"
+                  alt="attendance icon"
+                  style={{ marginBottom: '0.5rem' }}
+                />
+                <StyledCardTitle>출석부</StyledCardTitle>
+                <StyledCardSubTitle>Attendance</StyledCardSubTitle>
+              </a>
+            </Link>
+          </StyledCardBtn>
+          <StyledCardBtn>
+            <Link
+              route={`/studyMembersInfo/${studyId}`}
+              href={`/studyMembersInfo/${studyId}`}
+            >
+              <a>
+                <img
+                  src="/static/icon-study-member.svg"
+                  alt="member icon"
+                  style={{ marginBottom: '0.5rem' }}
+                />
+                <StyledCardTitle>스터디 멤버</StyledCardTitle>
+                <StyledCardSubTitle>Members</StyledCardSubTitle>
+              </a>
+            </Link>
+          </StyledCardBtn>
+        </StyledCardBtnContainer>
+        <div>
+          <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
+            <a>스터디 수정</a>
+          </Link>
+        </div>
+
         <div>
           <Link
             route={`/studyInvite/${studyId}`}
@@ -287,53 +383,13 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             <a>초대 링크 생성</a>
           </Link>
         </div>
-        <div>
-          <Link
-            route={`/addSchedule/${studyId}`}
-            href={`/addSchedule/${studyId}`}
-          >
-            <a>일정 생성</a>
-          </Link>
-        </div>
-        <div>
-          <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
-            <a>스터디 수정</a>
-          </Link>
-        </div>
-
-        <Link
-          route={`/studyMembers/${studyId}`}
-          href={`/studyMembers/${studyId}`}
-        >
-          <a>
-            <div>출석 관리</div>
-          </a>
-        </Link>
-        <Link
-          route={`/studyMembersInfo/${studyId}`}
-          href={`/studyMembersInfo/${studyId}`}
-        >
-          <a>
-            <div>멤버 정보</div>
-          </a>
-        </Link>
-        <Link
-          route={`/studyDetail/${studyId}/beforeStudy`}
-          href={`/studyDetail/${studyId}/beforeStudy`}
-        >
-          <a>
-            <div>이전 스터디</div>
-          </a>
-        </Link>
-        <Link
-          route={`/studyDetail/${studyId}/afterStudy`}
-          href={`/studyDetail/${studyId}/afterStudy`}
-        >
-          <a>
-            <div>이후 스터디</div>
-          </a>
-        </Link>
         <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
+        <Link
+          route={`/addSchedule/${studyId}`}
+          href={`/addSchedule/${studyId}`}
+        >
+          <a><AddFAB /></a>
+        </Link>
       </StyledScreen>
       <StyledBackground show={click} />
     </div>

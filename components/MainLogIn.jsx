@@ -9,7 +9,7 @@ import {
 import { Link } from '../routes';
 import CategoryDesign from './CategoryDesign';
 import CategoryDevelop from './CategoryDevelop';
-import MakeStudyFAB from './MakeStudyFAB';
+import AddFAB from './AddFAB';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -99,7 +99,11 @@ const MainLogIn = () => {
                 );
               })}
             </StyledCardContainer>
-            <MakeStudyFAB />
+            <Link route="/addStudy" href="/addStudy">
+              <a>
+                <AddFAB />
+              </a>
+            </Link>
           </>
         ) : (
           <StyledContainer>
