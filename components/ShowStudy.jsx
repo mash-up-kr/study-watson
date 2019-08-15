@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { StyledButton, StyledTitle } from '../common/StyledComponents';
+import CategoryDesign from './CategoryDesign';
+import CategoryDevelop from './CategoryDevelop';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -30,14 +32,14 @@ const ShowStudy = ({ name, description, addStudy, category, icon }) => {
   return (
     <StyledScreen>
       <StyledTitle>작성하신 내용을 확인해주세요</StyledTitle>
+      <StyledSubtitle>카테고리</StyledSubtitle>
+      <StyledText>{category === '3' ? <CategoryDevelop /> : <CategoryDesign />}</StyledText>
       <StyledSubtitle>스터디 이름</StyledSubtitle>
       <StyledText>{name}</StyledText>
-      <StyledSubtitle>설명</StyledSubtitle>
+      <StyledSubtitle>스터디 설명</StyledSubtitle>
       <StyledText>{description}</StyledText>
-      <StyledSubtitle>카테고리</StyledSubtitle>
-      <StyledSubtitle>아이콘</StyledSubtitle>
-      <img src={icon.image} alt="img" />
-      <StyledText>{category === '3' ? 'Develop' : 'Design'}</StyledText>
+      <StyledSubtitle>대표 아이콘</StyledSubtitle>
+      <StyledText><img src={icon.image} alt="img" style={{ width: '40px' }} /></StyledText>
       <StyledButton
         type="button"
         name="next"
