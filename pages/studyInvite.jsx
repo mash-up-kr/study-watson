@@ -3,7 +3,11 @@ import Axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { StyledButton } from '../common/StyledComponents';
+import {
+  StyledButton,
+  StyledImageText,
+  StyledActionButton,
+} from '../common/StyledComponents';
 import { Link } from '../routes';
 import Header from '../containers/Header';
 
@@ -17,31 +21,17 @@ const StyledContainer = styled.div`
   flex-direction: column;
 `;
 
-const StyledLink = styled.textarea`
-  // border: 1px solid #ededed;
-  // width: 100%;
-  // padding: 1rem;
-  // font-size: 1rem;
-  // margin: 0.5rem 0 1.5rem 0;
+const StyledLink = styled.input`
+  border: 1px solid #ededed;
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-radius: 8px;
+  color: #4D5256;
 `;
 
-const StyledSmallButton = styled.button`
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border: 1px solid #0077ff;
-  color: #0077ff;
-  background-color: #fff;
-
-  :active {
-    border: 1px solid #0077ff;
-    background-color: #0077ff;
-    color: #fff;
-  }
-
-  :focus {
-    outline: none;
-  }
-`;
 
 const StyledToast = styled.div`
   width: 100%;
@@ -56,7 +46,7 @@ const StyledToast = styled.div`
 
 const StudyInvite = ({ studyId, token }) => {
   const [show, setShow] = useState(false);
-  const [url, setUrl] = useState('링크를 생성해 주세요 !!');
+  const [url, setUrl] = useState('링크를 생성해주세요');
 
   const getUrl = async () => {
     const result = await Axios.post(
@@ -93,11 +83,15 @@ const StudyInvite = ({ studyId, token }) => {
       <Header />
       <StyledContainer>
         <img
-          src="/static/icon-send.svg"
-          alt="send icon"
+          src="/static/image_invite.svg"
+          alt="invite illustration"
           style={{ marginBottom: '1rem' }}
         />
-        <div>링크를 공유해서 스터디원을 초대해보세요!</div>
+        <StyledImageText>
+          링크를 공유해서
+          <br />
+          스터디원을 초대해보세요!
+        </StyledImageText>
         <StyledLink
           type="text"
           value={url}
@@ -107,9 +101,7 @@ const StudyInvite = ({ studyId, token }) => {
           }}
           readOnly
         />
-        <StyledSmallButton onClick={clickLink} name="make" type="button">
-          링크 생성
-        </StyledSmallButton>
+        <StyledActionButton onClick={clickLink} name="make" type="button" value="링크 생성" />
         {show && <StyledToast>링크가 복사되었습니다!</StyledToast>}
         <br />
         <Link route="/" href="/">
