@@ -10,6 +10,7 @@ const StyledPhoto = styled.img`
   height: 64px;
   border-radius: 50%;
   background-color: #595959;
+  margin-top: 50px;
 `;
 
 const StyledName = styled.div`
@@ -27,7 +28,8 @@ const StyledItem = styled.div`
 `;
 
 const StyledProfile = styled.div`
-  width: 100vw;
+  width: calc(100vw - 2rem);
+  margin: auto;
   height: 100vh;
 `;
 
