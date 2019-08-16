@@ -231,6 +231,9 @@ const studyDetail = ({ studyId, token, pk: user }) => {
       isAm = false;
     }
 
+    // 2019-08-17T22:00:00+09:00
+    // 2019. 07. 20 SAT 2:00 PM
+
     const date = `${matches[0].replace(/-/g, '. ')} ${
       weekday[day]
     } ${hour}:${minute} ${isAm ? 'AM' : 'PM'}`;
