@@ -13,13 +13,16 @@ const Normal = ({ studyId, token }) => {
   const mount = useRef(null);
   if (!mount.current) {
     mount.current = true;
-    const filterMemberList = membershipSet.filter(membership => {
-      return (
-        membership.isWithdraw !== true &&
-        membership.role !== 'manager' &&
-        membership.role !== 'normal'
-      );
-    });
+    const filterMemberList =
+      membershipSet &&
+      membershipSet.length > 1 &&
+      membershipSet.filter(membership => {
+        return (
+          membership.isWithdraw !== true &&
+          membership.role !== 'manager' &&
+          membership.role !== 'normal'
+        );
+      });
     setMemberList(filterMemberList);
   }
   const onClick = async event => {

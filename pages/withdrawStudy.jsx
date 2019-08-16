@@ -13,9 +13,12 @@ const WithdrawStudy = ({ studyId, token }) => {
   const mount = useRef(null);
   if (!mount.current) {
     mount.current = true;
-    const filterMemberList = membershipSet.filter(membership => {
-      return membership.isWithdraw !== true && membership.role !== 'manager';
-    });
+    const filterMemberList =
+      membershipSet &&
+      membershipSet.length > 0 &&
+      membershipSet.filter(membership => {
+        return membership.isWithdraw !== true && membership.role !== 'manager';
+      });
     setMemberList(filterMemberList);
   }
   const onClick = async event => {
