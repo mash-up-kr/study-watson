@@ -142,9 +142,11 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   const [click, setClick] = useState(false);
 
   const { schedules } = useSelector(state => state.schedule);
+  const { study } = useSelector(state => state.study.memberships);
   const { pk: memberId, role, failure } = useSelector(
     state => state.study.memberships,
   );
+
   const filterSchedules =
     schedules &&
     schedules.filter(schedule => {
@@ -223,6 +225,10 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     <div>
       <Header />
       <StyledScreen>
+        <h1>{study.category.name}</h1>
+        <h2>{study.name}</h2>
+        <h2>{study.description}</h2>
+        {study.icon && <img src={study.icon.image} alt="img" />}
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
         <StyledScheduleCard>
           {recentSchedules && recentSchedules.length > 0 && (
