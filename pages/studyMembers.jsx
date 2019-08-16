@@ -6,8 +6,6 @@ import Header from '../containers/Header';
 
 const StudyMembers = () => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const { study } = useSelector(state => state.study);
-  console.log(111, study);
   return (
     <div>
       <Header />

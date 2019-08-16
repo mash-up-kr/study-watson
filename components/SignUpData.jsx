@@ -94,7 +94,7 @@ const SignUpData = () => {
     event.preventDefault();
     try {
       const result = await axios.post(
-        'https://study-watson.lhy.kr/api/v1/memberships/available/',
+        'https://study-watson.lhy.kr/api/v1/members/available/',
         {
           attributeName: 'email',
           value: email,
@@ -105,7 +105,7 @@ const SignUpData = () => {
         return;
       }
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
       alert('이미 사용중인 이메일 입니다.');
       return;
     }

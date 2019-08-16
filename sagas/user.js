@@ -170,7 +170,7 @@ function signUpAPI({
   phoneNumber,
   nickname,
 }) {
-  return axios.post('https://study-watson.lhy.kr/api/v1/memberships/', {
+  return axios.post('https://study-watson.lhy.kr/api/v1/members/', {
     username,
     password1,
     password2,
@@ -199,8 +199,8 @@ function* signUp(action) {
     document.cookie = `token=${token}; path=/`;
     document.cookie = `pk=${pk}; path=/`;
     Router.pushRoute('/');
-  } catch (e) {
-    console.log(JSON.stringify(e));
+  } catch (error) {
+    console.log(error.response.data);
     alert('회원가입에 실패하였습니다.');
     yield put({
       type: SIGN_UP_FAILURE,
