@@ -84,6 +84,7 @@ export default (state = initialState, action) => {
     case LOAD_STUDY_MEMBERSHIPS_FAILURE:
       return {
         ...state,
+        memberships: { failure: action.data },
       };
 
     case WITHDRAW_STUDY_REQUEST:
