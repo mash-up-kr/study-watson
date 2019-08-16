@@ -12,9 +12,12 @@ const studyMembersInfo = ({ studyId }) => {
   const mount = useRef(null);
   if (!mount.current) {
     mount.current = true;
-    const filterMemberList = membershipSet.filter(membership => {
-      return membership.isWithdraw !== true;
-    });
+    const filterMemberList =
+      membershipSet &&
+      membershipSet.length > 0 &&
+      membershipSet.filter(membership => {
+        return membership.isWithdraw !== true;
+      });
     setMemberList(filterMemberList);
   }
   return (
