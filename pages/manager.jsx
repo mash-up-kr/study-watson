@@ -10,12 +10,18 @@ import { Link } from '../routes';
 
 const Manager = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const manager = membershipSet.filter(membership => {
-    return membership.role === 'manager';
-  });
-  const memberList = membershipSet.filter(membership => {
-    return membership.isWithdraw !== true && membership.role !== 'manager';
-  });
+  const manager =
+    membershipSet &&
+    membershipSet.length > 0 &&
+    membershipSet.filter(membership => {
+      return membership.role === 'manager';
+    });
+  const memberList =
+    membershipSet &&
+    membershipSet.length > 0 &&
+    membershipSet.filter(membership => {
+      return membership.isWithdraw !== true && membership.role !== 'manager';
+    });
   const onClick = async event => {
     try {
       await Axios.patch(
