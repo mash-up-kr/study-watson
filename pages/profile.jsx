@@ -43,7 +43,7 @@ const StyledLabel = styled.span`
 const StyledProfile = styled.div`
   width: calc(100vw - 2rem);
   margin: auto;
-  height: 100vh;
+  height: calc(100vh - 56px);
 `;
 
 const StyledContainer = styled.ul`
@@ -63,64 +63,66 @@ const Profile = () => {
   };
 
   return (
-    <StyledProfile>
+    <>
       <Header />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <StyledPhoto src={imgProfile} alt="" />
-        <StyledName>{nickname}</StyledName>
-        <StyledText>{email}</StyledText>
-        <StyledText>{phoneNumber}</StyledText>
-        <StyledContainer>
-          <StyledItem>
-            <Link route="/profile-edit" href="/profile-edit">
-              <a>
+      <StyledProfile>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <StyledPhoto src={imgProfile} alt="" />
+          <StyledName>{nickname}</StyledName>
+          <StyledText>{email}</StyledText>
+          <StyledText>{phoneNumber}</StyledText>
+          <StyledContainer>
+            <StyledItem>
+              <Link route="/profile-edit" href="/profile-edit">
+                <a>
+                  <StyledLabel>
+                    <img
+                      src="/static/icon-edit.svg"
+                      alt="edit icon"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    프로필 수정
+                  </StyledLabel>
+                </a>
+              </Link>
+            </StyledItem>
+            <StyledItem>
+              <div onClick={onClick}>
                 <StyledLabel>
                   <img
-                    src="/static/icon-edit.svg"
-                    alt="edit icon"
+                    src="/static/icon-logout.svg"
+                    alt="logout icon"
                     style={{ marginRight: '0.5rem' }}
                   />
-                  프로필 수정
+                  로그아웃
                 </StyledLabel>
-              </a>
-            </Link>
-          </StyledItem>
-          <StyledItem>
-            <div onClick={onClick}>
-              <StyledLabel>
-                <img
-                  src="/static/icon-logout.svg"
-                  alt="logout icon"
-                  style={{ marginRight: '0.5rem' }}
-                />
-                로그아웃
-              </StyledLabel>
-            </div>
-          </StyledItem>
-          <StyledItem>
-            <Link route="/withdraw" href="/withdraw">
-              <a>
-                <StyledLabel>
-                  <img
-                    src="/static/icon-withdraw.svg"
-                    alt="withdraw icon"
-                    style={{ marginRight: '0.5rem' }}
-                  />
-                  회원탈퇴
-                </StyledLabel>
-              </a>
-            </Link>
-          </StyledItem>
-        </StyledContainer>
-      </div>
-    </StyledProfile>
+              </div>
+            </StyledItem>
+            <StyledItem>
+              <Link route="/withdraw" href="/withdraw">
+                <a>
+                  <StyledLabel>
+                    <img
+                      src="/static/icon-withdraw.svg"
+                      alt="withdraw icon"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    회원탈퇴
+                  </StyledLabel>
+                </a>
+              </Link>
+            </StyledItem>
+          </StyledContainer>
+        </div>
+      </StyledProfile>
+    </>
   );
 };
 

@@ -39,6 +39,7 @@ const StyledInput = styled.input`
   margin: 0.5rem 0 0.5rem 0;
   background-color: transparent;
   border-radius: 8px;
+  color: #4D5256;
   :focus {
     outline: none;
     box-shadow: 0 0 0 1px #4B2BFF;
@@ -69,6 +70,10 @@ const StyledImageText = styled.div`
   font-weight: bold;
   color: #4D5256;
   margin-bottom: 1rem;
+`;
+
+const StyledInputContainer = styled.div`
+  margin-bottom: 2rem;
 `;
 
 export const GlobalStyle = createGlobalStyle`
@@ -224,4 +229,5 @@ export {
   StyledForm,
   StyledActionButton,
   StyledImageText,
+  StyledInputContainer,
 };
