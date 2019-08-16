@@ -16,6 +16,7 @@ import {
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 import AddFAB from '../components/AddFAB';
+import { changeFormat } from '../common/changeFormat';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -235,7 +236,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                   alt="calendar icon"
                   style={{ marginRight: '0.5rem' }}
                 />
-                {recentSchedules[0].startAt}
+                {changeFormat(recentSchedules[0].startAt)}
               </StyledCardText>
               <StyledCardText>
                 <img
@@ -251,7 +252,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                   alt="calendar icon"
                   style={{ marginRight: '0.5rem' }}
                 />
-                {recentSchedules[0].voteEndAt}
+                {changeFormat(recentSchedules[0].voteEndAt)}
               </StyledCardText>
 
               <StyledAttendBtnContainer>
