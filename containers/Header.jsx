@@ -41,10 +41,10 @@ const Header = () => {
   useEffect(() => {
     const path = window.location.pathname;
     switch (path) {
-      case '/profile':
-        setLink('/profile-edit');
-        setLabel('프로필 수정');
-        break;
+      // case '/profile':
+      //   setLink('/profile-edit');
+      //   setLabel('프로필 수정');
+      //   break;
       // case '/':
       //   if (!isLogin) {
       //     setLink('/login');
