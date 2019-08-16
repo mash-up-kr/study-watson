@@ -154,14 +154,12 @@ function loadStudyAPI({ token, studyId }) {
 function* loadStudy(action) {
   try {
     const result = yield call(loadStudyAPI, action.data);
-    console.log(3333, result.data);
-    // const { category, name, description } = result.data;
     yield put({
       type: LOAD_STUDY_SUCCESS,
       data: result.data,
     });
-  } catch (e) {
-    console.log(JSON.stringify(e));
+  } catch (error) {
+    console.log(error.response.data);
     yield put({
       type: LOAD_STUDY_FAILURE,
     });
@@ -198,8 +196,8 @@ function* loadStudyMemverships(action) {
         data: result.data[0],
       });
     }
-  } catch (e) {
-    console.log(JSON.stringify(e));
+  } catch (error) {
+    console.log(error.response.data);
     yield put({
       type: LOAD_STUDY_MEMBERSHIPS_FAILURE,
       data: 'No Member',
