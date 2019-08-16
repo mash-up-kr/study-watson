@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInput } from '../common/useInput';
 import { UPDATE_STUDY_REQUEST } from '../reducers/study';
