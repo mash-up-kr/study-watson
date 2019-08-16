@@ -35,9 +35,13 @@ const addSchedule = ({ studyId }) => {
   const dispatch = useDispatch();
 
   const onSubmit = async event => {
+    console.log('voteBefore', voteEndAt);
+
     event.preventDefault();
     const voteEndAtToISOString = new Date(voteEndAt).toISOString();
     const startAtToISOString = new Date(startAt).toISOString();
+    console.log('voteAfter', voteEndAtToISOString);
+
     dispatch({
       type: ADD_SCHEDULE_REQUEST,
       data: {

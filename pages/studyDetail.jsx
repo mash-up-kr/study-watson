@@ -218,6 +218,26 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     }
   }, []);
 
+  const changeFormat = given => {
+    const day = new Date(given).getDay();
+    const weekday = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const matches = given.split(/(T)|(\+)/g);
+    let hour = matches[3].split(':')[0];
+    const minute = matches[3].split(':')[1];
+    let isAm = true;
+
+    if (hour > 12) {
+      hour -= 12;
+      isAm = false;
+    }
+
+    const date = `${matches[0].replace(/-/g, '. ')} ${
+      weekday[day]
+    } ${hour}:${minute} ${isAm ? 'AM' : 'PM'}`;
+
+    return date;
+  };
+
   return (
     <div>
       <Header />
@@ -235,7 +255,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                   alt="calendar icon"
                   style={{ marginRight: '0.5rem' }}
                 />
-                {recentSchedules[0].startAt}
+                {changeFormat(recentSchedules[0].startAt)}
               </StyledCardText>
               <StyledCardText>
                 <img
@@ -251,7 +271,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                   alt="calendar icon"
                   style={{ marginRight: '0.5rem' }}
                 />
-                {recentSchedules[0].voteEndAt}
+                {changeFormat(recentSchedules[0].voteEndAt)}
               </StyledCardText>
 
               <StyledAttendBtnContainer>
