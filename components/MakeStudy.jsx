@@ -8,6 +8,7 @@ import {
   StyledInput,
   StyledTitle,
   StyledForm,
+  StyledInputContainer,
 } from '../common/StyledComponents';
 import CategoryDevelop from './CategoryDevelop';
 import CategoryDesign from './CategoryDesign';
@@ -26,10 +27,6 @@ const StyledRadio = styled.div`
   flex-direction: row;
   margin: 0.5rem 0;
   padding: 1rem 0;
-`;
-
-const StyledInputContainer = styled.div`
-  margin-bottom: 2rem;
 `;
 
 const MakeStudy = ({

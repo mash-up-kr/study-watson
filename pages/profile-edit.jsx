@@ -5,11 +5,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import Header from '../containers/Header';
 import { useInput } from '../common/useInput';
 import { EDIT_USER_REQUEST } from '../reducers/user';
-import { StyledButton, StyledInput } from '../common/StyledComponents';
+import {
+  StyledButton,
+  StyledInput,
+  StyledLabel,
+  StyledInputContainer,
+  StyledForm,
+} from '../common/StyledComponents';
 
 const StyledProfileEdit = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 107px);
+  margin: auto;
 `;
 
 const StyledPhoto = styled.img`
@@ -17,6 +24,7 @@ const StyledPhoto = styled.img`
   height: 64px;
   border-radius: 50%;
   background-color: #595959;
+  margin: 1.5rem 0 1.5rem 0;
 `;
 
 const profileEdit = () => {
@@ -74,38 +82,56 @@ const profileEdit = () => {
   };
 
   return (
-    <StyledProfileEdit>
+    <>
       <Header />
-      <div>
-        <StyledPhoto src={inputImgProfile || imgProfile} alt="" />
-        <form onSubmit={onSubmit}>
-          <label htmlFor="image">image</label>
-          <StyledInput type="file" id="image" onChange={onChangeFile} />
-          <label htmlFor="nickname">nickname</label>
-          <StyledInput
-            type="text"
-            id="nickname"
-            value={inputNickname}
-            onChange={setInputNickname}
-          />
-          <label htmlFor="email">이메일</label>
-          <StyledInput
-            type="text"
-            id="email"
-            value={inputEmail}
-            onChange={setInputEmail}
-          />
-          <label htmlFor="phone">전화번호</label>
-          <StyledInput
-            type="text"
-            id="phone"
-            value={inputPhone}
-            onChange={setInputPhone}
-          />
-          <StyledButton type="submit" value="저장" />
-        </form>
-      </div>
-    </StyledProfileEdit>
+      <StyledProfileEdit>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <StyledPhoto src={inputImgProfile || imgProfile} alt="" />
+          <StyledForm onSubmit={onSubmit}>
+            <StyledInputContainer>
+              <StyledLabel htmlFor="image">프로필 이미지</StyledLabel>
+              <StyledInput type="file" id="image" onChange={onChangeFile} />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <StyledLabel htmlFor="nickname">이름</StyledLabel>
+              <StyledInput
+                type="text"
+                id="nickname"
+                value={inputNickname}
+                onChange={setInputNickname}
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <StyledLabel htmlFor="email">이메일</StyledLabel>
+              <StyledInput
+                type="text"
+                id="email"
+                value={inputEmail}
+                onChange={setInputEmail}
+              />
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <StyledLabel htmlFor="phone">전화번호</StyledLabel>
+              <StyledInput
+                type="text"
+                id="phone"
+                value={inputPhone}
+                onChange={setInputPhone}
+              />
+            </StyledInputContainer>
+            <StyledButton type="submit" value="저장" />
+          </StyledForm>
+        </div>
+      </StyledProfileEdit>
+    </>
   );
 };
 
