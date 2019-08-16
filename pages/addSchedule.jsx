@@ -35,12 +35,9 @@ const addSchedule = ({ studyId }) => {
   const dispatch = useDispatch();
 
   const onSubmit = async event => {
-    console.log('voteBefore', voteEndAt);
-
     event.preventDefault();
     const voteEndAtToISOString = new Date(voteEndAt).toISOString();
     const startAtToISOString = new Date(startAt).toISOString();
-    console.log('voteAfter', voteEndAtToISOString);
 
     dispatch({
       type: ADD_SCHEDULE_REQUEST,
@@ -92,6 +89,7 @@ const addSchedule = ({ studyId }) => {
             value={voteEndAt}
             onChange={setvoteEndAt}
             onClickReset={() => setvoteEndAt('')}
+            // 2019. 07. 20 SAT 2:00 PM
           />
           <Input
             label="스터디 시작 일시"
