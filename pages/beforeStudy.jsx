@@ -12,6 +12,7 @@ import {
   WITHDRAW_STUDY_REQUEST,
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
+import { changeFormat } from '../common/changeFormat';
 
 const beforeStudy = ({ studyId, token }) => {
   const { schedules } = useSelector(state => state.schedule);
@@ -82,9 +83,9 @@ const beforeStudy = ({ studyId, token }) => {
                 <div>description</div>
                 <div>{schedule.description}</div>
                 <div>투표 만료 시간</div>
-                <div>{schedule.voteEndAt}</div>
+                <div>{changeFormat(schedule.voteEndAt)}</div>
                 <div>스터디 시작 시간</div>
-                <div>{schedule.startAt}</div>
+                <div>{changeFormat(schedule.startAt)}</div>
                 <div>스터디 시간</div>
                 <div>{schedule.studyingTime}</div>
                 {/* <div data-pk={schedule.pk} onClick={modifySchedule}>
