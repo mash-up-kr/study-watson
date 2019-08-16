@@ -10,6 +10,7 @@ import { Link } from '../routes';
 import CategoryDesign from './CategoryDesign';
 import CategoryDevelop from './CategoryDevelop';
 import AddFAB from './AddFAB';
+import { changeFormat } from '../common/changeFormat';
 
 const StyledContainer = styled.div`
   height: calc(100vh - 110px);
@@ -54,11 +55,32 @@ const StyledIcon = styled.img`
 
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
+
   const filterStudies =
     studies.length > 0 &&
     studies.filter(study => {
       return study.isWithdraw === false;
     });
+
+  const getNearestScheduleStartAt = schedules => {
+    const filterSchedules =
+      schedules &&
+      schedules.filter(schedule => {
+        return schedule.startAt > new Date().toISOString();
+      });
+
+    const recentSchedules = [...filterSchedules];
+    recentSchedules.sort((a, b) => {
+      if (a.startAt > b.startAt) {
+        return 1;
+      }
+      return -1;
+    });
+
+    return recentSchedules.length > 0
+      ? changeFormat(recentSchedules[0].startAt)
+      : '다가올 스터디 정보가 없습니다';
+  };
 
   return (
     <div>
@@ -100,6 +122,8 @@ const MainLogIn = () => {
                             style={{ width: '40px' }}
                           />
                         )}
+
+                        <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
                       </StyledCard>
                     </a>
                   </Link>
