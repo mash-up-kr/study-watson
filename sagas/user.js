@@ -34,7 +34,7 @@ function editAPI({ pk, password, imgProfile, email, nickname }) {
   const data = cleanNullArgs({ password, imgProfile, email, nickname });
   const token = getCookie('token');
   return axios.patch(
-    `https://study-watson.lhy.kr/api/v1/memberships/${pk}/`,
+    `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
     {
       ...data,
     },
@@ -62,9 +62,9 @@ function* edit(action) {
       },
     });
     Router.pushRoute('/profile');
-  } catch (e) {
-    console.log(JSON.stringify(e));
-    console.error(e);
+  } catch (error) {
+    console.log(error.response);
+    console.error(error);
     alert('수정에 실패하였습니다.');
     yield put({
       type: EDIT_USER_FAILURE,
