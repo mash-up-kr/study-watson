@@ -187,15 +187,22 @@ function loadStudyMemvershipsAPI({ token, pk, studyId }) {
 function* loadStudyMemverships(action) {
   try {
     const result = yield call(loadStudyMemvershipsAPI, action.data);
-    // const { category, name, description } = result.data;
-    yield put({
-      type: LOAD_STUDY_MEMBERSHIPS_SUCCESS,
-      data: result.data[0],
-    });
+    if (result.data.length < 1) {
+      yield put({
+        type: LOAD_STUDY_MEMBERSHIPS_FAILURE,
+        data: 'No Member',
+      });
+    } else {
+      yield put({
+        type: LOAD_STUDY_MEMBERSHIPS_SUCCESS,
+        data: result.data[0],
+      });
+    }
   } catch (e) {
     console.log(JSON.stringify(e));
     yield put({
       type: LOAD_STUDY_MEMBERSHIPS_FAILURE,
+      data: 'No Member',
     });
   }
 }

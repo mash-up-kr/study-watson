@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import Router from 'next/router';
 
 import Axios from 'axios';
 import { Link } from '../routes';
@@ -15,8 +16,6 @@ import {
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 import AddFAB from '../components/AddFAB';
-
-
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -41,7 +40,7 @@ const StyledCardTitle = styled.h2`
 
 const StyledCardText = styled.div`
   font-size: 0.8rem;
-  color: #878D91;
+  color: #878d91;
   margin-bottom: 0.5rem;
 `;
 
@@ -55,8 +54,8 @@ const StyledAttendBtnContainer = styled.div`
 
 const StyledAttendBtn = styled.button`
   font-size: 0.8rem;
-  color: #878D91;
-  background-color: #EDEDED;
+  color: #878d91;
+  background-color: #ededed;
   border-radius: 4px;
   padding: 0.5rem 1rem;
   border: none;
@@ -104,7 +103,7 @@ const StyledDetailItem = styled.div`
 
 const StyledSubTitle = styled.div`
   font-size: 0.9rem;
-  color: #878D91;
+  color: #878d91;
   margin: 2rem 0 0.7rem 0;
 `;
 
@@ -134,7 +133,7 @@ const StyledCardBtnWrapper = styled.a`
 const StyledCardSubTitle = styled.h3`
   font-size: 0.8rem;
   font-weight: bold;
-  color: #878D91;
+  color: #878d91;
   margin-top: 0.4rem;
 `;
 
@@ -142,7 +141,9 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   const [click, setClick] = useState(false);
 
   const { schedules } = useSelector(state => state.schedule);
-  const { pk: memberId, role } = useSelector(state => state.study.memberships);
+  const { pk: memberId, role, failure } = useSelector(
+    state => state.study.memberships,
+  );
   const filterSchedules =
     schedules &&
     schedules.filter(schedule => {
@@ -188,7 +189,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     try {
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-        event.target.dataset.pk
+          event.target.dataset.pk
         }/`,
         {
           user,
@@ -209,7 +210,13 @@ const studyDetail = ({ studyId, token, pk: user }) => {
 
   const onClickDetailBtn = () => {
     setClick(!click);
-  }
+  };
+
+  useEffect(() => {
+    if (failure) {
+      Router.pushRoute('/');
+    }
+  }, []);
 
   return (
     <div>
@@ -218,10 +225,10 @@ const studyDetail = ({ studyId, token, pk: user }) => {
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
         <StyledScheduleCard>
           {recentSchedules && recentSchedules.length > 0 && (
-            <div
-              key={recentSchedules[0].pk}
-            >
-              <StyledCardTitle style={{ marginBottom: '1rem' }}>{recentSchedules[0].subject}</StyledCardTitle>
+            <div key={recentSchedules[0].pk}>
+              <StyledCardTitle style={{ marginBottom: '1rem' }}>
+                {recentSchedules[0].subject}
+              </StyledCardTitle>
               <StyledCardText>
                 <img
                   src="/static/icon-calendar.svg"
@@ -251,21 +258,30 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="attend"
-                  data-pk={recentSchedules[0].selfAttendance.pk}
+                  data-pk={
+                    recentSchedules[0].selfAttendance &&
+                    recentSchedules[0].selfAttendance.pk
+                  }
                 >
                   참석
                 </StyledAttendBtn>
                 <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="absent"
-                  data-pk={recentSchedules[0].selfAttendance.pk}
+                  data-pk={
+                    recentSchedules[0].selfAttendance &&
+                    recentSchedules[0].selfAttendance.pk
+                  }
                 >
                   불참
                 </StyledAttendBtn>
                 <StyledAttendBtn
                   onClick={onClickVote}
                   data-vote="late"
-                  data-pk={recentSchedules[0].selfAttendance.pk}
+                  data-pk={
+                    recentSchedules[0].selfAttendance &&
+                    recentSchedules[0].selfAttendance.pk
+                  }
                 >
                   지각
                 </StyledAttendBtn>
@@ -304,7 +320,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                   )}
                 </StyledDetailItem>
               </StyledDetailMenu>
-
             </div>
           )}
         </StyledScheduleCard>
@@ -331,7 +346,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               route={`/studyDetail/${studyId}/beforeStudy`}
               href={`/studyDetail/${studyId}/beforeStudy`}
             >
-
               <StyledCardBtnWrapper>
                 <img
                   src="/static/icon-study-paststudy.svg"
@@ -395,7 +409,9 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           route={`/addSchedule/${studyId}`}
           href={`/addSchedule/${studyId}`}
         >
-          <a><AddFAB /></a>
+          <a>
+            <AddFAB />
+          </a>
         </Link>
       </StyledScreen>
       <StyledBackground show={click} />
