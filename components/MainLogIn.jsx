@@ -62,7 +62,7 @@ const MainLogIn = () => {
       return study.isWithdraw === false;
     });
 
-  const getNearestSchedule = schedules => {
+  const getNearestScheduleStartAt = schedules => {
     const filterSchedules =
       schedules &&
       schedules.filter(schedule => {
@@ -123,7 +123,7 @@ const MainLogIn = () => {
                           />
                         )}
 
-                        <p>{getNearestSchedule(study.studySchedules)}</p>
+                        <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
                       </StyledCard>
                     </a>
                   </Link>
