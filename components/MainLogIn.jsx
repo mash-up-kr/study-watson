@@ -40,6 +40,9 @@ const StyledCardBottom = styled.div`
   bottom: 0;
   font-size: 0.8rem;
   color: #878d91;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
 `;
 
 const StyledCardContainer = styled.div`
@@ -62,6 +65,37 @@ const StyledIcon = styled.img`
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
+`;
+
+const StyledProfileContainer = styled.div`
+  margin-left: auto;
+  position: relative;
+`;
+
+const StyledProfileImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-left: -0.5rem;
+  box-sizing: content-box;
+`;
+
+const StyledProfileCount = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 24px;
+  box-sizing: content-box;
 `;
 
 const MainLogIn = () => {
@@ -117,7 +151,7 @@ const MainLogIn = () => {
                             <CategoryDevelop />
                           ) : (
                             <CategoryDesign />
-                          )}
+                            )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -140,28 +174,27 @@ const MainLogIn = () => {
                             style={{ marginRight: '0.5rem' }}
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
+                          <StyledProfileContainer>
+                            {study.studyMembers
+                              .slice(0, Math.min(3, study.studyMembers.length))
+                              .map(item => {
+                                return (
+                                  <StyledProfileImage
+                                    key={item.pk}
+                                    src={item.imgProfile}
+                                    alt="profile"
+                                  />
+                                );
+                              })}
+                            {study.studyMembers.length > 3 && (
+                              <StyledProfileCount>
+                                +
+                                {study.studyMembers.length - 3}
+                              </StyledProfileCount>
+                            )}
+                          </StyledProfileContainer>
                         </StyledCardBottom>
-                        <div>
-                          {study.studyMembers
-                            .slice(0, Math.min(3, study.studyMembers.length))
-                            .map(item => {
-                              return (
-                                <img
-                                  key={item.pk}
-                                  src={item.imgProfile}
-                                  height="30"
-                                  width="30"
-                                  alt="profile"
-                                />
-                              );
-                            })}
-                          {study.studyMembers.length > 3 && (
-                            <span>
-                              <span>+</span>
-                              {study.studyMembers.length - 3}
-                            </span>
-                          )}
-                        </div>
+
                       </StyledCard>
                     </a>
                   </Link>
@@ -176,23 +209,23 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-            <img
-              src="/static/image_main.svg"
-              alt="main illust"
-              style={{ marginBottom: '2rem' }}
-            />
-            <StyledImageText>
-              진행중인 스터디가 없습니다.
-              <br />
-              스터디를 만들고 관리해보세요!
-            </StyledImageText>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledActionButton type="button" value="스터디 만들기" />
-              </a>
-            </Link>
-          </StyledContainer>
-        )}
+              <img
+                src="/static/image_main.svg"
+                alt="main illust"
+                style={{ marginBottom: '2rem' }}
+              />
+              <StyledImageText>
+                진행중인 스터디가 없습니다.
+                <br />
+                스터디를 만들고 관리해보세요!
+              </StyledImageText>
+              <Link route="/addStudy" href="/addStudy">
+                <a>
+                  <StyledActionButton type="button" value="스터디 만들기" />
+                </a>
+              </Link>
+            </StyledContainer>
+          )}
       </div>
     </div>
   );
