@@ -146,7 +146,6 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
-                        <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
                         <p>{getParticipants(study)}</p>
                       </StyledCard>
                     </a>

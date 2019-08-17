@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Router from 'next/router';
 
@@ -10,12 +10,12 @@ import CategoryDesign from '../components/CategoryDesign';
 import CategoryDevelop from '../components/CategoryDevelop';
 import BlankScheduleCard from '../components/BlankScheduleCard';
 import ScheduleCard from '../components/ScheduleCard';
+import StudySettingBtn from '../components/StudySettingBtn';
 
 import {
   LOAD_SCHEDULES_REQUEST,
 } from '../reducers/schedule';
 import {
-  WITHDRAW_STUDY_REQUEST,
   LOAD_STUDY_MEMBERSHIPS_REQUEST,
 } from '../reducers/study';
 import AddFAB from '../components/AddFAB';
@@ -114,20 +114,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     return -1;
   });
 
-  const dispatch = useDispatch();
-
-  const onClickWithdrawStudy = () => {
-    if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
-      dispatch({
-        type: WITHDRAW_STUDY_REQUEST,
-        data: {
-          token,
-          memberId,
-        },
-      });
-    }
-  };
-
   useEffect(() => {
     if (failure) {
       Router.pushRoute('/');
@@ -137,6 +123,11 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   return (
     <div>
       <Header />
+      <StudySettingBtn
+        studyId={studyId}
+        token={token}
+        memberId={memberId}
+      />
       <StyledScreen>
         <StyledStudyInfo>
           {study.category.name === 'Develop' ? (
@@ -149,7 +140,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
         </StyledStudyInfo>
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
-
 
         {recentSchedules && recentSchedules.length > 0 ? (
           <ScheduleCard
@@ -230,24 +220,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </Link>
           </StyledCardBtn>
         </StyledCardBtnContainer>
-
-
-        <div>
-          <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
-            <a>스터디 수정</a>
-          </Link>
-        </div>
-
-        <div>
-          <Link
-            route={`/studyInvite/${studyId}`}
-            href={`/studyInvite/${studyId}`}
-          >
-            <a>초대 링크 생성</a>
-          </Link>
-        </div>
-        <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
-
 
         <Link
           route={`/addSchedule/${studyId}`}
