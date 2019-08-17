@@ -143,6 +143,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
 
         {recentSchedules && recentSchedules.length > 0 ? (
           <ScheduleCard
+            key={recentSchedules[0].pk}
+            schedules={recentSchedules[0]}
             studyId={studyId}
             token={token}
             user={user}
@@ -153,7 +155,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           )
         }
 
-        <StyledSubTitle>스터디 관리</StyledSubTitle>
+        <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
           <StyledCardBtn>
             <Link
