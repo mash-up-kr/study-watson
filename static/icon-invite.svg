@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>icon-invite</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-invite" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <path d="M2,18 C2,15.75 5,15.75 6.5,14.25 C7.25,13.5 5,13.5 5,9.75 C5,7.25025 5.99975,6 8,6 C10.00025,6 11,7.25025 11,9.75 C11,13.5 8.75,13.5 9.5,14.25 C11,15.75 14,15.75 14,18" id="Path" stroke="#A9AFB3" stroke-width="2"></path>
+        <path d="M22,11 L14,11" id="Path" stroke="#A9AFB3" stroke-width="2"></path>
+        <path d="M18,7 L18,15" id="Path" stroke="#A9AFB3" stroke-width="2"></path>
+    </g>
+</svg>

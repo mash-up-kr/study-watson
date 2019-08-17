@@ -29,7 +29,9 @@ const StyledText = styled.div`
 const StyledItem = styled.li`
   width: 100%;
   padding: 0.8rem 0;
-  border-bottom: 1px solid #d8d8d8;
+  & :last-child {
+    border-top: 1px solid #EDEDED;
+  }
 `;
 
 const StyledLabel = styled.span`
@@ -49,6 +51,10 @@ const StyledProfile = styled.div`
 const StyledContainer = styled.ul`
   width: 100%;
   margin-top: 2rem;
+`;
+
+const StyledIcon = styled.img`
+  margin-right: 1rem;
 `;
 
 const Profile = () => {
@@ -83,10 +89,9 @@ const Profile = () => {
               <Link route="/profile-edit" href="/profile-edit">
                 <a>
                   <StyledLabel>
-                    <img
+                    <StyledIcon
                       src="/static/icon-edit.svg"
                       alt="edit icon"
-                      style={{ marginRight: '0.5rem' }}
                     />
                     프로필 수정
                   </StyledLabel>
@@ -96,10 +101,9 @@ const Profile = () => {
             <StyledItem>
               <div onClick={onClick}>
                 <StyledLabel>
-                  <img
+                  <StyledIcon
                     src="/static/icon-logout.svg"
                     alt="logout icon"
-                    style={{ marginRight: '0.5rem' }}
                   />
                   로그아웃
                 </StyledLabel>
@@ -109,10 +113,9 @@ const Profile = () => {
               <Link route="/withdraw" href="/withdraw">
                 <a>
                   <StyledLabel>
-                    <img
+                    <StyledIcon
                       src="/static/icon-withdraw.svg"
                       alt="withdraw icon"
-                      style={{ marginRight: '0.5rem' }}
                     />
                     회원탈퇴
                   </StyledLabel>
