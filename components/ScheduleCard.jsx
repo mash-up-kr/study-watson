@@ -10,9 +10,6 @@ import {
   LOAD_SCHEDULES_REQUEST,
   DELETE_SCHEDULE_REQUEST,
 } from '../reducers/schedule';
-import {
-  LOAD_STUDY_MEMBERSHIPS_REQUEST,
-} from '../reducers/study';
 import { changeFormat } from '../common/changeFormat';
 
 const StyledScheduleCard = styled.div`
@@ -96,12 +93,10 @@ const StyledBackground = styled.div`
 `;
 
 
-const ScheduleCard = ({ studyId, token, pk: user }) => {
+const ScheduleCard = ({ studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
   const { schedules } = useSelector(state => state.schedule);
-  const { pk: role } = useSelector(
-    state => state.study.memberships,
-  );
+
   const dispatch = useDispatch();
 
   const filterSchedules =
@@ -264,34 +259,11 @@ const ScheduleCard = ({ studyId, token, pk: user }) => {
   );
 };
 
-ScheduleCard.getInitialProps = ({ ctx, token, pk }) => {
-  const { studyId = 0 } = ctx.query;
-  ctx.store.dispatch({
-    type: LOAD_SCHEDULES_REQUEST,
-    data: {
-      studyId,
-      token,
-    },
-  });
-  ctx.store.dispatch({
-    type: LOAD_STUDY_MEMBERSHIPS_REQUEST,
-    data: {
-      studyId,
-      pk,
-      token,
-    },
-  });
-  return {
-    studyId,
-    token,
-    pk,
-  };
-};
-
 ScheduleCard.propTypes = {
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  pk: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 export default ScheduleCard;
