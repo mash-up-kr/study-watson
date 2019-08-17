@@ -34,7 +34,7 @@ const StyledCard = styled.div`
 const StyledCardBottom = styled.div`
   width: calc(100vw - 5rem);
   padding: 1rem 0 1.5rem 0;
-  border-top: 1px solid #ECECEC;
+  border-top: 1px solid #ececec;
   position: absolute;
   margin: auto;
   bottom: 0;
@@ -63,7 +63,6 @@ const StyledIcon = styled.img`
   top: 1.5rem;
   right: 1.5rem;
 `;
-
 
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
@@ -122,7 +121,7 @@ const MainLogIn = () => {
                             <CategoryDevelop />
                           ) : (
                             <CategoryDesign />
-                            )}
+                          )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -162,23 +161,23 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-              <img
-                src="/static/image_main.svg"
-                alt="main illust"
-                style={{ marginBottom: '2rem' }}
-              />
-              <StyledImageText>
-                진행중인 스터디가 없습니다.
-                <br />
-                스터디를 만들고 관리해보세요!
-              </StyledImageText>
-              <Link route="/addStudy" href="/addStudy">
-                <a>
-                  <StyledActionButton type="button" value="스터디 만들기" />
-                </a>
-              </Link>
-            </StyledContainer>
-          )}
+            <img
+              src="/static/image_main.svg"
+              alt="main illust"
+              style={{ marginBottom: '2rem' }}
+            />
+            <StyledImageText>
+              진행중인 스터디가 없습니다.
+              <br />
+              스터디를 만들고 관리해보세요!
+            </StyledImageText>
+            <Link route="/addStudy" href="/addStudy">
+              <a>
+                <StyledActionButton type="button" value="스터디 만들기" />
+              </a>
+            </Link>
+          </StyledContainer>
+        )}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const Join = ({ id, token }) => {
           headers: { Authorization: `Token ${token}` },
         },
       );
-      // alert('성공적으로 가입되었습니다');
+      alert('성공적으로 가입되었습니다');
 
       Router.pushRoute(`/studyDetail/${result.data.study.pk}`);
     } catch (error) {
