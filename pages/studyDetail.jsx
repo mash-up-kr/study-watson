@@ -259,7 +259,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           {study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
-              <CategoryDesign />
+            <CategoryDesign />
             )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
@@ -369,7 +369,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </div>
           </StyledScheduleCard>
         ) : (
-            <BlankScheduleCard studyId={studyId} />
+          <BlankScheduleCard studyId={studyId} />
           )
         }
 
