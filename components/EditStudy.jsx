@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import Axios from 'axios';
+
 import { useInput } from '../common/useInput';
 import { UPDATE_STUDY_REQUEST } from '../reducers/study';
-
 import {
+  StyledInputContainer,
   StyledButton,
   StyledLabel,
   StyledInput,
@@ -25,16 +27,13 @@ const EditStudy = () => {
   const [name, setName] = useInput('');
   const [category, setCategory] = useInput('3');
   const [description, setDescription] = useInput('');
-
+  const [icons, setIcons] = useState([]);
+  const [icon, setIcon] = useState({});
   const dispatch = useDispatch();
 
-  //   const { study } = useSelector(state => state.study);
-  //   const a = useSelector(state => state.study.memberships.study);
-
   const { study } = useSelector(state => state.study.memberships);
-  console.log('study', study);
+  // console.log('study', study);
 
-  //
   useEffect(() => {
     const n = {
       target: {
@@ -58,6 +57,10 @@ const EditStudy = () => {
     setCategory(cat);
   }, [study]);
 
+  useEffect(() => {
+    setIcon(icon);
+  }, [icon]);
+
   const onSubmitForm = event => {
     event.preventDefault();
 
@@ -68,9 +71,21 @@ const EditStudy = () => {
         category,
         name,
         description,
+        icon: icon.pk,
       },
     });
   };
+
+  const getIcon = async () => {
+    const result = await Axios.get(
+      'https://study-watson.lhy.kr/api/v1/study/icons/',
+    );
+    setIcons(result.data);
+    setIcon(result.data[0]);
+  };
+  useEffect(() => {
+    getIcon();
+  }, []);
 
   return (
     <StyledScreen>
@@ -89,6 +104,26 @@ const EditStudy = () => {
           <option value="3">Develop</option>
           <option value="4">Design</option>
         </select>
+        <StyledInputContainer>
+          <StyledLabel htmlFor="icon">대표 아이콘</StyledLabel>
+          {icons.map(i => {
+            return (
+              <div key={i.pk}>
+                <label>
+                  <input
+                    type="radio"
+                    name="test"
+                    value="small"
+                    checked={icon.pk === i.pk}
+                    onChange={() => setIcon(i)}
+                  />
+                  <img src={i.image} alt="img" style={{ width: '50px' }} />
+                </label>
+              </div>
+            );
+          })}
+        </StyledInputContainer>
+
         <StyledButton type="submit" value="저장" />
       </StyledForm>
     </StyledScreen>

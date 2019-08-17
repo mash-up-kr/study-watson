@@ -82,6 +82,10 @@ const MainLogIn = () => {
       : '다가올 스터디 정보가 없습니다';
   };
 
+  const getParticipants = study => {
+    return `${study.studyMembers.length} 명`;
+  };
+
   return (
     <div>
       <div>
@@ -124,6 +128,7 @@ const MainLogIn = () => {
                         )}
 
                         <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
+                        <p>{getParticipants(study)}</p>
                       </StyledCard>
                     </a>
                   </Link>
