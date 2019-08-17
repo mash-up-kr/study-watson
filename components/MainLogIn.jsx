@@ -144,6 +144,7 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
+
                         <div>
                           {study.studyMembers.map(item => {
                             return item.imgProfile ? (
@@ -165,6 +166,8 @@ const MainLogIn = () => {
                             );
                           })}
                         </div>
+
+                        <p>{getParticipants(study)}</p>
                       </StyledCard>
                     </a>
                   </Link>
