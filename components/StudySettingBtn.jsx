@@ -10,7 +10,7 @@ import {
 
 const StyledSettingBtn = styled.button`
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   top: 1rem;
   right: 1rem;
   border: none;
@@ -21,19 +21,23 @@ const StyledSettingBtn = styled.button`
 
 const StyledSettingMenu = styled.div`
   position: fixed;
-  z-index: 2;
-  top: 3.5rem;
-  right: 1rem;
-  width: 150px;
-  padding: 1rem;
+  z-index: 4;
+  bottom: 0;
+  width: 100%;
+  padding: 0 1rem;
   background-color: #fff;
-  border-radius: 8px;
-  display: ${props => (props.show ? 'block' : 'none')};
+  border-radius: 8px 8px 0 0;
+  transform: ${props => (props.show ? 'translateY(0)' : 'translateY(100%)')};
+  transform-origin: bottom;
+  transition: all 0.3s ease-in-out;
 `;
 
 const StyledSettingItem = styled.div`
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
+  & :last-child {
+    border-top: 1px solid #EDEDED;
+  }
 `;
 
 const StyledBackground = styled.div`
@@ -42,9 +46,21 @@ const StyledBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 3;
   background-color: rgba(0, 0, 0, 0.6);
   display: ${props => (props.show ? 'block' : 'none')};
+`;
+
+const StyledLabel = styled.span`
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #4D5256;
+`;
+
+const StyledIcon = styled.img`
+  margin-right: 1rem;
 `;
 
 const StudySettingBtn = ({ studyId, token, memberId }) => {
@@ -55,6 +71,10 @@ const StudySettingBtn = ({ studyId, token, memberId }) => {
   const onClickSettingBtn = () => {
     setClick(!click);
   };
+
+  const closeMenu = () => {
+    setClick(!click);
+  }
 
   const onClickWithdrawStudy = () => {
     if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
@@ -79,7 +99,15 @@ const StudySettingBtn = ({ studyId, token, memberId }) => {
             route={`/studyInvite/${studyId}`}
             href={`/studyInvite/${studyId}`}
           >
-            <a>초대 링크 생성</a>
+            <a>
+              <StyledLabel>
+                <StyledIcon
+                  src="/static/icon-invite.svg"
+                  alt="invite icon"
+                />
+                스터디 멤버 초대하기
+              </StyledLabel>
+            </a>
           </Link>
         </StyledSettingItem>
         <StyledSettingItem>
@@ -87,14 +115,37 @@ const StudySettingBtn = ({ studyId, token, memberId }) => {
             route={`/editStudy/${studyId}`}
             href={`/editStudy/${studyId}`}
           >
-            <a>스터디 수정</a>
+            <a>
+              <StyledLabel>
+                <StyledIcon
+                  src="/static/icon-edit.svg"
+                  alt="edit icon"
+                />
+                스터디 정보 수정
+              </StyledLabel>
+            </a>
           </Link>
         </StyledSettingItem>
         <StyledSettingItem onClick={onClickWithdrawStudy}>
-          스터디 나가기
+          <StyledLabel>
+            <StyledIcon
+              src="/static/icon-logout.svg"
+              alt="logout icon"
+            />
+            스터디 나가기
+          </StyledLabel>
+        </StyledSettingItem>
+        <StyledSettingItem onClick={closeMenu}>
+          <StyledLabel>
+            <StyledIcon
+              src="/static/icon-close.svg"
+              alt="close icon"
+            />
+            취소
+          </StyledLabel>
         </StyledSettingItem>
       </StyledSettingMenu>
-      <StyledBackground show={click} />
+      <StyledBackground show={click} onClick={closeMenu} />
     </div>
   );
 };
