@@ -68,8 +68,8 @@ function* watchAdd() {
 }
 
 // UPDATE_STUDY
-function updateStudyAPI({ id, category, name, description }) {
-  const data = cleanNullArgs({ category, name, description });
+function updateStudyAPI({ id, category, name, description, icon }) {
+  const data = cleanNullArgs({ category, name, description, icon });
   const token = getCookie('token');
   return axios.patch(
     `https://study-watson.lhy.kr/api/v1/study/${id}/`,
