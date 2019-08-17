@@ -95,7 +95,7 @@ const StyledAttendBtn = styled.button`
 
 const StyledDetailBtn = styled.button`
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   top: 1rem;
   right: 1rem;
   border: none;
@@ -106,7 +106,7 @@ const StyledDetailBtn = styled.button`
 
 const StyledDetailMenu = styled.div`
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   top: 2.5rem;
   right: 1rem;
   width: 150px;
@@ -259,7 +259,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           {study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
-            <CategoryDesign />
+              <CategoryDesign />
             )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
@@ -369,7 +369,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </div>
           </StyledScheduleCard>
         ) : (
-          <BlankScheduleCard studyId={studyId} />
+            <BlankScheduleCard studyId={studyId} />
           )
         }
 
