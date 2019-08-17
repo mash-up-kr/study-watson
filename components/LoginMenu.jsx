@@ -12,7 +12,7 @@ const StyledBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: 3;
   background-color: rgba(0, 0, 0, 0.6);
   display: ${props => (props.show ? 'block' : 'none')};
 `;
@@ -21,7 +21,7 @@ const StyledMenu = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 4;
   width: 60vw;
   height: 100vh;
   padding: 2rem;

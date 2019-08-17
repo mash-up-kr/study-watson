@@ -31,6 +31,17 @@ const StyledCard = styled.div`
   position: relative;
 `;
 
+const StyledCardBottom = styled.div`
+  width: calc(100vw - 5rem);
+  padding: 1rem 0 1.5rem 0;
+  border-top: 1px solid #ECECEC;
+  position: absolute;
+  margin: auto;
+  bottom: 0;
+  font-size: 0.8rem;
+  color: #878d91;
+`;
+
 const StyledCardContainer = styled.div`
   padding-bottom: 2rem;
 `;
@@ -52,6 +63,7 @@ const StyledIcon = styled.img`
   top: 1.5rem;
   right: 1.5rem;
 `;
+
 
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
@@ -79,7 +91,7 @@ const MainLogIn = () => {
 
     return recentSchedules.length > 0
       ? changeFormat(recentSchedules[0].startAt)
-      : '다가올 스터디 정보가 없습니다';
+      : '다음 일정이 없습니다';
   };
 
   const getParticipants = study => {
@@ -110,7 +122,7 @@ const MainLogIn = () => {
                             <CategoryDevelop />
                           ) : (
                             <CategoryDesign />
-                          )}
+                            )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -126,7 +138,14 @@ const MainLogIn = () => {
                             style={{ width: '40px' }}
                           />
                         )}
-
+                        <StyledCardBottom>
+                          <img
+                            src="/static/icon-calendar.svg"
+                            alt="calendar icon"
+                            style={{ marginRight: '0.5rem' }}
+                          />
+                          {getNearestScheduleStartAt(study.studySchedules)}
+                        </StyledCardBottom>
                         <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
                         <p>{getParticipants(study)}</p>
                       </StyledCard>
@@ -143,23 +162,23 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-            <img
-              src="/static/image_main.svg"
-              alt="main illust"
-              style={{ marginBottom: '2rem' }}
-            />
-            <StyledImageText>
-              진행중인 스터디가 없습니다.
-              <br />
-              스터디를 만들고 관리해보세요!
-            </StyledImageText>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledActionButton type="button" value="스터디 만들기" />
-              </a>
-            </Link>
-          </StyledContainer>
-        )}
+              <img
+                src="/static/image_main.svg"
+                alt="main illust"
+                style={{ marginBottom: '2rem' }}
+              />
+              <StyledImageText>
+                진행중인 스터디가 없습니다.
+                <br />
+                스터디를 만들고 관리해보세요!
+              </StyledImageText>
+              <Link route="/addStudy" href="/addStudy">
+                <a>
+                  <StyledActionButton type="button" value="스터디 만들기" />
+                </a>
+              </Link>
+            </StyledContainer>
+          )}
       </div>
     </div>
   );
