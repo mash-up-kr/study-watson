@@ -9,6 +9,8 @@ import { Link } from '../routes';
 import Header from '../containers/Header';
 import CategoryDesign from '../components/CategoryDesign';
 import CategoryDevelop from '../components/CategoryDevelop';
+import BlankScheduleCard from '../components/BlankScheduleCard';
+
 import {
   LOAD_SCHEDULES_REQUEST,
   DELETE_SCHEDULE_REQUEST,
@@ -257,15 +259,17 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           {study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
-            <CategoryDesign />
+              <CategoryDesign />
             )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
           {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
         </StyledStudyInfo>
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
-        <StyledScheduleCard>
-          {recentSchedules && recentSchedules.length > 0 && (
+
+
+        {recentSchedules && recentSchedules.length > 0 ? (
+          <StyledScheduleCard>
             <div key={recentSchedules[0].pk}>
               <StyledCardTitle style={{ marginBottom: '1rem' }}>
                 {recentSchedules[0].subject}
@@ -289,10 +293,11 @@ const studyDetail = ({ studyId, token, pk: user }) => {
               <StyledCardText>
                 <img
                   src="/static/icon-check.svg"
-                  alt="calendar icon"
+                  alt="check icon"
                   style={{ marginRight: '0.5rem' }}
                 />
                 {changeFormat(recentSchedules[0].voteEndAt)}
+                &nbsp;까지
               </StyledCardText>
 
               <StyledAttendBtnContainer>
@@ -362,8 +367,12 @@ const studyDetail = ({ studyId, token, pk: user }) => {
                 </StyledDetailItem>
               </StyledDetailMenu>
             </div>
-          )}
-        </StyledScheduleCard>
+          </StyledScheduleCard>
+        ) : (
+            <BlankScheduleCard studyId={studyId} />
+          )
+        }
+
         <StyledSubTitle>스터디 관리</StyledSubTitle>
         <StyledCardBtnContainer>
           <StyledCardBtn>
