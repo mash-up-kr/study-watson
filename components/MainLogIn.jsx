@@ -94,6 +94,10 @@ const MainLogIn = () => {
       : '다음 일정이 없습니다';
   };
 
+  const getParticipants = study => {
+    return `${study.studyMembers.length} 명`;
+  };
+
   return (
     <div>
       <div>
@@ -142,7 +146,8 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
-
+                        <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
+                        <p>{getParticipants(study)}</p>
                       </StyledCard>
                     </a>
                   </Link>
