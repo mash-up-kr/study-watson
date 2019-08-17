@@ -10,6 +10,7 @@ import Header from '../containers/Header';
 import CategoryDesign from '../components/CategoryDesign';
 import CategoryDevelop from '../components/CategoryDevelop';
 import BlankScheduleCard from '../components/BlankScheduleCard';
+// import ScheduleCard from '../components/ScheduleCard';
 
 import {
   LOAD_SCHEDULES_REQUEST,
@@ -259,7 +260,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           {study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
-              <CategoryDesign />
+            <CategoryDesign />
             )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
@@ -269,6 +270,12 @@ const studyDetail = ({ studyId, token, pk: user }) => {
 
 
         {recentSchedules && recentSchedules.length > 0 ? (
+          // <ScheduleCard
+          //   role={role}
+          //   studyId={studyId}
+          //   token={token}
+          // />
+
           <StyledScheduleCard>
             <div key={recentSchedules[0].pk}>
               <StyledCardTitle style={{ marginBottom: '1rem' }}>
@@ -369,7 +376,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </div>
           </StyledScheduleCard>
         ) : (
-            <BlankScheduleCard studyId={studyId} />
+          <BlankScheduleCard studyId={studyId} />
           )
         }
 
@@ -440,6 +447,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </Link>
           </StyledCardBtn>
         </StyledCardBtnContainer>
+
+
         <div>
           <Link route={`/editStudy/${studyId}`} href={`/editStudy/${studyId}`}>
             <a>스터디 수정</a>
@@ -455,6 +464,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           </Link>
         </div>
         <div onClick={onClickWithdrawStudy}>스터디 나가기</div>
+
+
         <Link
           route={`/addSchedule/${studyId}`}
           href={`/addSchedule/${studyId}`}
