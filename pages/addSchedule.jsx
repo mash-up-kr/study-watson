@@ -89,7 +89,7 @@ const addSchedule = ({ studyId }) => {
             value={voteEndAt}
             onChange={setvoteEndAt}
             onClickReset={() => setvoteEndAt('')}
-            // 2019. 07. 20 SAT 2:00 PM
+          // 2019. 07. 20 SAT 2:00 PM
           />
           <Input
             label="스터디 시작 일시"
@@ -102,7 +102,7 @@ const addSchedule = ({ studyId }) => {
           <StyledInputContainer>
             <StyledLabel htmlFor="studyingTime">스터디 시간</StyledLabel>
             <StyledInput
-              style={{ textIndent: '-12px' }}
+              style={{ textIndent: '-16px' }}
               type="time"
               id="studyingTime"
               value={studyingTime}
