@@ -64,9 +64,6 @@ const StyledIcon = styled.img`
   right: 1.5rem;
 `;
 
-const emptyProfile =
-  'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
-
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
 
@@ -145,25 +142,25 @@ const MainLogIn = () => {
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
                         <div>
-                          {study.studyMembers.map(item => {
-                            return item.imgProfile ? (
-                              <img
-                                key={item.pk}
-                                src={item.imgProfile}
-                                height="30"
-                                width="30"
-                                alt="profile"
-                              />
-                            ) : (
-                              <img
-                                key={item.pk}
-                                src={emptyProfile}
-                                height="30"
-                                width="30"
-                                alt="profile"
-                              />
-                            );
-                          })}
+                          {study.studyMembers
+                            .slice(0, Math.min(3, study.studyMembers.length))
+                            .map(item => {
+                              return (
+                                <img
+                                  key={item.pk}
+                                  src={item.imgProfile}
+                                  height="30"
+                                  width="30"
+                                  alt="profile"
+                                />
+                              );
+                            })}
+                          {study.studyMembers.length > 3 && (
+                            <span>
+                              <span>+</span>
+                              {study.studyMembers.length - 3}
+                            </span>
+                          )}
                         </div>
                       </StyledCard>
                     </a>
