@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-// import ReactHtmlParser from 'react-html-parser';
 
 import {
   StyledActionButton,
@@ -65,6 +64,9 @@ const StyledIcon = styled.img`
   right: 1.5rem;
 `;
 
+const emptyProfile =
+  'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
+
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
 
@@ -92,19 +94,6 @@ const MainLogIn = () => {
     return recentSchedules.length > 0
       ? changeFormat(recentSchedules[0].startAt)
       : '다음 일정이 없습니다';
-  };
-
-  const getParticipants = study => {
-    // var name = React.findDOMNode(this.refs.cpDev1).value;
-    let images = '';
-    const noneImg =
-      'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
-    study.studyMembers.forEach(item => {
-      console.log(item.imgProfile);
-      images = images.concat(`item.imgProfile`);
-    });
-
-    return images;
   };
 
   return (
@@ -155,12 +144,11 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
-                        <p>{getNearestScheduleStartAt(study.studySchedules)}</p>
-                        {/* <div><img src=${{getParticipants(study)} width="50" height="50" />}</div> */}
                         <div>
                           {study.studyMembers.map(item => {
                             return item.imgProfile ? (
                               <img
+                                key={item.pk}
                                 src={item.imgProfile}
                                 height="30"
                                 width="30"
@@ -168,7 +156,8 @@ const MainLogIn = () => {
                               />
                             ) : (
                               <img
-                                src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                                key={item.pk}
+                                src={emptyProfile}
                                 height="30"
                                 width="30"
                                 alt="profile"
