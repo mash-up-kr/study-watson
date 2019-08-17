@@ -54,7 +54,7 @@ const StyledAttendBtn = styled.button`
 
 const StyledDetailBtn = styled.button`
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 1rem;
   right: 1rem;
   border: none;
@@ -64,21 +64,27 @@ const StyledDetailBtn = styled.button`
 `;
 
 const StyledDetailMenu = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 2.5rem;
-  right: 1rem;
-  width: 150px;
-  padding: 1rem;
+  position: fixed;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0 1rem;
   background-color: #fff;
-  border-radius: 8px;
-  display: ${props => (props.show ? 'block' : 'none')};
+  border-radius: 8px 8px 0 0;
+  transform: ${props => (props.show ? 'translateY(0)' : 'translateY(100%)')};
+  transform-origin: bottom;
+  transition: all 0.3s ease-in-out;
 `;
 
 
 const StyledDetailItem = styled.div`
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
+  & :last-child {
+    border-top: 1px solid #EDEDED;
+  }
 `;
 
 const StyledBackground = styled.div`
@@ -87,11 +93,22 @@ const StyledBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: 3;
   background-color: rgba(0, 0, 0, 0.6);
   display: ${props => (props.show ? 'block' : 'none')};
 `;
 
+const StyledLabel = styled.span`
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #4D5256;
+`;
+
+const StyledIcon = styled.img`
+  margin-right: 1rem;
+`;
 
 const ScheduleCard = ({ studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
@@ -152,6 +169,10 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
   const onClickDetailBtn = () => {
     setClick(!click);
   };
+
+  const closeMenu = () => {
+    setClick(!click);
+  }
 
   return (
     <>
@@ -218,43 +239,66 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
               지각
             </StyledAttendBtn>
           </StyledAttendBtnContainer>
-
-          <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
-            <img src="/static/icon-detail.svg" alt="detail icon" />
-          </StyledDetailBtn>
-
-          <StyledDetailMenu show={click}>
-            <StyledDetailItem>
-              <Link
-                route={`/editSchedule/${recentSchedules[0].pk}`}
-                href={`/editSchedule/${recentSchedules[0].pk}`}
-              >
-                <a>
-                  <div data-pk={recentSchedules[0].pk}>수정</div>
-                </a>
-              </Link>
-            </StyledDetailItem>
-            <StyledDetailItem>
-              <div data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
-                삭제
-              </div>
-            </StyledDetailItem>
-            <StyledDetailItem>
-              {(role === 'manager' || role === 'sub_manager') && (
-                <Link
-                  route={`/schedule/${recentSchedules[0].pk}`}
-                  href={`/schedule/${recentSchedules[0].pk}`}
-                >
-                  <a>
-                    <div>출결 관리</div>
-                  </a>
-                </Link>
-              )}
-            </StyledDetailItem>
-          </StyledDetailMenu>
+          {(role === 'manager' || role === 'sub_manager') && (
+            <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
+              <img src="/static/icon-detail.svg" alt="detail icon" />
+            </StyledDetailBtn>
+          )}
         </div>
       </StyledScheduleCard>
-      <StyledBackground show={click} />
+      <StyledDetailMenu show={click}>
+        <StyledDetailItem>
+          <Link
+            route={`/editSchedule/${recentSchedules[0].pk}`}
+            href={`/editSchedule/${recentSchedules[0].pk}`}
+          >
+            <a>
+              <StyledLabel data-pk={recentSchedules[0].pk}>
+                <StyledIcon
+                  src="/static/icon-edit.svg"
+                  alt="edit icon"
+                />
+                일정 수정
+              </StyledLabel>
+            </a>
+          </Link>
+        </StyledDetailItem>
+        <StyledDetailItem>
+          <StyledLabel data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
+            <StyledIcon
+              src="/static/icon-delete.svg"
+              alt="delete icon"
+            />
+            일정 삭제
+          </StyledLabel>
+        </StyledDetailItem>
+        <StyledDetailItem>
+          <Link
+            route={`/schedule/${recentSchedules[0].pk}`}
+            href={`/schedule/${recentSchedules[0].pk}`}
+          >
+            <a>
+              <StyledLabel>
+                <StyledIcon
+                  src="/static/icon-checkattend.svg"
+                  alt="checkattend icon"
+                />
+                출결 관리
+              </StyledLabel>
+            </a>
+          </Link>
+        </StyledDetailItem>
+        <StyledDetailItem onClick={closeMenu}>
+          <StyledLabel>
+            <StyledIcon
+              src="/static/icon-close.svg"
+              alt="close icon"
+            />
+            취소
+          </StyledLabel>
+        </StyledDetailItem>
+      </StyledDetailMenu>
+      <StyledBackground show={click} onClick={closeMenu} />
     </>
   );
 };
