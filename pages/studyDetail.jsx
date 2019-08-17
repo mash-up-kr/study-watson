@@ -7,6 +7,8 @@ import Router from 'next/router';
 import Axios from 'axios';
 import { Link } from '../routes';
 import Header from '../containers/Header';
+import CategoryDesign from '../components/CategoryDesign';
+import CategoryDevelop from '../components/CategoryDevelop';
 import {
   LOAD_SCHEDULES_REQUEST,
   DELETE_SCHEDULE_REQUEST,
@@ -21,6 +23,32 @@ import { changeFormat } from '../common/changeFormat';
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
   margin: auto;
+`;
+
+const StyledStudyInfo = styled.div`
+  width: calc(100vw - 3rem);
+  margin: auto;
+  position: relative;
+  margin-top: 1.5rem;
+`;
+
+const StyledTitle = styled.h2`
+  font-size: 1.5rem;
+  margin: 1rem 0 0.55rem 0rem;
+  color: #4d5256;
+  font-weight: 900;
+`;
+
+const StyledText = styled.div`
+  font-size: 0.9rem;
+  color: #4d5256;
+`;
+
+const StyledIcon = styled.img`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
 `;
 
 const StyledScheduleCard = styled.div`
@@ -105,7 +133,7 @@ const StyledDetailItem = styled.div`
 const StyledSubTitle = styled.div`
   font-size: 0.9rem;
   color: #878d91;
-  margin: 2rem 0 0.7rem 0;
+  margin: 2rem 0 0.7rem 0.5rem;
 `;
 
 const StyledCardBtnContainer = styled.div`
@@ -192,7 +220,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     try {
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-          event.target.dataset.pk
+        event.target.dataset.pk
         }/`,
         {
           user,
@@ -225,10 +253,16 @@ const studyDetail = ({ studyId, token, pk: user }) => {
     <div>
       <Header />
       <StyledScreen>
-        <h1>{study.category.name}</h1>
-        <h2>{study.name}</h2>
-        <h2>{study.description}</h2>
-        {study.icon && <img src={study.icon.image} alt="img" />}
+        <StyledStudyInfo>
+          {study.category.name === 'Develop' ? (
+            <CategoryDevelop />
+          ) : (
+            <CategoryDesign />
+            )}
+          <StyledTitle>{study.name}</StyledTitle>
+          <StyledText>{study.description}</StyledText>
+          {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
+        </StyledStudyInfo>
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
         <StyledScheduleCard>
           {recentSchedules && recentSchedules.length > 0 && (
