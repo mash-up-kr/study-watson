@@ -10,6 +10,7 @@ const Join = ({ id, token }) => {
   const user = useSelector(state => state.user);
 
   const join = async () => {
+    console.log('id', id);
     try {
       const result = await Axios.post(
         'https://study-watson.lhy.kr/api/v1/study/memberships/token/',
@@ -20,9 +21,13 @@ const Join = ({ id, token }) => {
           headers: { Authorization: `Token ${token}` },
         },
       );
+      // alert('성공적으로 가입되었습니다');
+
       Router.pushRoute(`/studyDetail/${result.data.study.pk}`);
     } catch (error) {
-      alert(error.response.data.detail);
+      if (error.response.data.detail) {
+        alert(error.response.data.detail);
+      }
     }
   };
 
@@ -35,7 +40,7 @@ const Join = ({ id, token }) => {
       alert('로그인이 필요합니다.');
       Router.pushRoute('/login');
     }
-    join();
+    // join();
   }, []);
 
   return (
