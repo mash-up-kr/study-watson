@@ -64,6 +64,9 @@ const StyledIcon = styled.img`
   right: 1.5rem;
 `;
 
+const emptyProfile =
+  'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
+
 const MainLogIn = () => {
   const { studies } = useSelector(state => state.study);
 
@@ -91,10 +94,6 @@ const MainLogIn = () => {
     return recentSchedules.length > 0
       ? changeFormat(recentSchedules[0].startAt)
       : '다음 일정이 없습니다';
-  };
-
-  const getParticipants = study => {
-    return `${study.studyMembers.length} 명`;
   };
 
   return (
@@ -145,7 +144,27 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                         </StyledCardBottom>
-                        <p>{getParticipants(study)}</p>
+                        <div>
+                          {study.studyMembers.map(item => {
+                            return item.imgProfile ? (
+                              <img
+                                key={item.pk}
+                                src={item.imgProfile}
+                                height="30"
+                                width="30"
+                                alt="profile"
+                              />
+                            ) : (
+                              <img
+                                key={item.pk}
+                                src={emptyProfile}
+                                height="30"
+                                width="30"
+                                alt="profile"
+                              />
+                            );
+                          })}
+                        </div>
                       </StyledCard>
                     </a>
                   </Link>
