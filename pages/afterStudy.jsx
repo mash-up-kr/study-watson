@@ -4,16 +4,10 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Header from '../containers/Header';
-import {
-  LOAD_SCHEDULES_REQUEST,
-} from '../reducers/schedule';
-import {
-  LOAD_STUDY_MEMBERSHIPS_REQUEST,
-} from '../reducers/study';
+import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
+import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
 import ScheduleCard from '../components/ScheduleCard';
-import {
-  StyledTitle
-} from '../common/StyledComponents';
+import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -26,7 +20,7 @@ const ScheduleCardContainer = styled.div`
 
 const afterStudy = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
-  const { pk: role } = useSelector(state => state.study.memberships);
+  const { role } = useSelector(state => state.study.memberships);
 
   const filterSchedules =
     schedules &&
@@ -87,6 +81,7 @@ afterStudy.getInitialProps = ({ ctx, token, pk }) => {
   return {
     studyId,
     token,
+    pk,
   };
 };
 
