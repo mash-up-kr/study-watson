@@ -1,26 +1,40 @@
 import React, { useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 import Header from '../containers/Header';
 import { useInput } from '../common/useInput';
-import Input from '../components/Input';
+import Input, { StyledInputContainer } from '../components/Input';
 import {
   LOAD_SCHEDULE_REQUEST,
   UPDATE_SCHEDULE_REQUEST,
 } from '../reducers/schedule';
+import {
+  StyledLabel,
+  StyledInput,
+  StyledTitle,
+  StyledButton,
+} from '../common/StyledComponents';
+
+const StyledScreen = styled.div`
+  width: calc(100% - 2rem);
+  margin: auto;
+`;
+
+const StyledForm = styled.form`
+  padding-bottom: 3rem;
+`;
 
 const editSchedule = () => {
   const { schedule } = useSelector(state => state.schedule);
 
   // const [subject, setSubject] = useInput(schedule.subject);
-  const [location, setLocation] = useInput(schedule.location);
-  const [description, setDescription] = useInput(schedule.description);
-  const [voteEndAt, setvoteEndAt] = useInput(schedule.voteEndAt.slice(0, 19));
-  const [startAt, setStartAt] = useInput(schedule.startAt.slice(0, 19));
-  const [studyingTime, setStudyTime] = useInput(
-    schedule.studyingTime.slice(0, 5),
-  );
+  const [location, setLocation] = useInput('');
+  const [description, setDescription] = useInput('');
+  const [voteEndAt, setvoteEndAt] = useInput('');
+  const [startAt, setStartAt] = useInput('');
+  const [studyingTime, setStudyTime] = useInput('');
 
   useEffect(() => {
     // const s = {
@@ -31,31 +45,31 @@ const editSchedule = () => {
     // setSubject(s);
     const l = {
       target: {
-        value: schedule.location,
+        value: schedule.location ? schedule.location : '',
       },
     };
     setLocation(l);
     const d = {
       target: {
-        value: schedule.description,
+        value: schedule.description ? schedule.description : '',
       },
     };
     setDescription(d);
     const v = {
       target: {
-        value: schedule.voteEndAt.slice(0, 19),
+        value: schedule.voteEndAt ? schedule.voteEndAt.slice(0, 19) : '',
       },
     };
     setvoteEndAt(v);
     const sa = {
       target: {
-        value: schedule.startAt.slice(0, 19),
+        value: schedule.startAt ? schedule.startAt.slice(0, 19) : '',
       },
     };
     setStartAt(sa);
     const st = {
       target: {
-        value: schedule.studyingTime.slice(0, 5),
+        value: schedule.studyingTime ? schedule.studyingTime.slice(0, 5) : '',
       },
     };
     setStudyTime(st);
@@ -86,57 +100,64 @@ const editSchedule = () => {
   return (
     <>
       <Header />
-      <form onSubmit={onSumit}>
-        {/* <Input
-          label="주제"
-          id="subject"
-          type="text"
-          value={subject}
-          onChange={setSubject}
-          onClickReset={() => setSubject('')}
-        /> */}
-        <Input
-          label="장소"
-          id="location"
-          type="text"
-          value={location}
-          onChange={setLocation}
-          onClickReset={() => setLocation('')}
-        />
-        <Input
-          label="내용"
-          id="description"
-          type="text"
-          value={description}
-          onChange={setDescription}
-          onClickReset={() => setDescription('')}
-        />
-        <Input
-          label="투표 종류 일시"
-          id="voteEndAt"
-          type="datetime-local"
-          value={voteEndAt}
-          onChange={setvoteEndAt}
-          onClickReset={() => setvoteEndAt('')}
-        />
-        <Input
-          label="스터디 시작 일시"
-          id="startAt"
-          type="datetime-local"
-          value={startAt}
-          onChange={setStartAt}
-          onClickReset={() => setStartAt('')}
-        />
-        <Input
-          label="스터디 시간"
-          id="studyingTime"
-          type="time"
-          value={studyingTime}
-          onChange={setStudyTime}
-          onClickReset={() => setStudyTime('')}
-        />
-        <input type="submit" value="저장" />
-      </form>
+      <StyledScreen>
+        <StyledTitle>일정 수정</StyledTitle>
+        <StyledForm onSubmit={onSumit}>
+          {/* <Input
+            label="주제"
+            id="subject"
+            type="text"
+            value={subject}
+            onChange={setSubject}
+            onClickReset={() => setSubject('')}
+          /> */}
+          <Input
+            label="장소"
+            id="location"
+            type="text"
+            value={location}
+            onChange={setLocation}
+            onClickReset={() => setLocation('')}
+          />
+          <Input
+            label="내용"
+            id="description"
+            type="text"
+            value={description}
+            onChange={setDescription}
+            onClickReset={() => setDescription('')}
+          />
+          <Input
+            label="투표 종류 일시"
+            id="voteEndAt"
+            type="datetime-local"
+            value={voteEndAt}
+            onChange={setvoteEndAt}
+            onClickReset={() => setvoteEndAt('')}
+          />
+          <Input
+            label="스터디 시작 일시"
+            id="startAt"
+            type="datetime-local"
+            value={startAt}
+            onChange={setStartAt}
+            onClickReset={() => setStartAt('')}
+          />
+          <StyledInputContainer>
+            <StyledLabel htmlFor="studyingTime">스터디 시간</StyledLabel>
+            <StyledInput
+              style={{ textIndent: '-16px' }}
+              type="time"
+              id="studyingTime"
+              value={studyingTime}
+              onChange={setStudyTime}
+              min="00:00"
+              max="12:00"
+            />
+          </StyledInputContainer>
+          <StyledButton type="submit" value="수정" />
+        </StyledForm>
+      </StyledScreen>
     </>
   );
 };
