@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -78,12 +78,11 @@ const StyledDetailMenu = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-
 const StyledDetailItem = styled.div`
   width: 100%;
   padding: 0.8rem 0;
   & :last-child {
-    border-top: 1px solid #EDEDED;
+    border-top: 1px solid #ededed;
   }
 `;
 
@@ -103,7 +102,7 @@ const StyledLabel = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledIcon = styled.img`
@@ -143,17 +142,25 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
     }
   };
 
+  const getVote = async id => {
+    const { data } = await Axios.get(
+      `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
+    );
+    console.log('get', data);
+  };
+
   const onClickVote = async event => {
     try {
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-        event.target.dataset.pk
+          event.target.dataset.pk
         }/`,
         {
           user,
           vote: event.target.dataset.vote,
         },
       );
+
       dispatch({
         type: LOAD_SCHEDULES_REQUEST,
         data: {
@@ -172,7 +179,7 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
 
   const closeMenu = () => {
     setClick(!click);
-  }
+  };
 
   return (
     <>
@@ -254,10 +261,7 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
           >
             <a>
               <StyledLabel data-pk={recentSchedules[0].pk}>
-                <StyledIcon
-                  src="/static/icon-edit.svg"
-                  alt="edit icon"
-                />
+                <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
                 일정 수정
               </StyledLabel>
             </a>
@@ -265,10 +269,7 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
         </StyledDetailItem>
         <StyledDetailItem>
           <StyledLabel data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
-            <StyledIcon
-              src="/static/icon-delete.svg"
-              alt="delete icon"
-            />
+            <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
             일정 삭제
           </StyledLabel>
         </StyledDetailItem>
@@ -290,10 +291,7 @@ const ScheduleCard = ({ studyId, token, user, role }) => {
         </StyledDetailItem>
         <StyledDetailItem onClick={closeMenu}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-close.svg"
-              alt="close icon"
-            />
+            <StyledIcon src="/static/icon-close.svg" alt="close icon" />
             취소
           </StyledLabel>
         </StyledDetailItem>

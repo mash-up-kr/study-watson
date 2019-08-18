@@ -12,12 +12,8 @@ import BlankScheduleCard from '../components/BlankScheduleCard';
 import ScheduleCard from '../components/ScheduleCard';
 import StudySettingBtn from '../components/StudySettingBtn';
 
-import {
-  LOAD_SCHEDULES_REQUEST,
-} from '../reducers/schedule';
-import {
-  LOAD_STUDY_MEMBERSHIPS_REQUEST,
-} from '../reducers/study';
+import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
+import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
 import AddFAB from '../components/AddFAB';
 
 const StyledScreen = styled.div`
@@ -123,18 +119,14 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   return (
     <div>
       <Header />
-      <StudySettingBtn
-        studyId={studyId}
-        token={token}
-        memberId={memberId}
-      />
+      <StudySettingBtn studyId={studyId} token={token} memberId={memberId} />
       <StyledScreen>
         <StyledStudyInfo>
           {study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
             <CategoryDesign />
-            )}
+          )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
           {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
@@ -150,8 +142,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           />
         ) : (
           <BlankScheduleCard studyId={studyId} />
-          )
-        }
+        )}
 
         <StyledSubTitle>스터디 관리</StyledSubTitle>
         <StyledCardBtnContainer>
