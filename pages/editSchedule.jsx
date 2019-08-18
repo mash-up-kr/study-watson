@@ -30,13 +30,11 @@ const editSchedule = () => {
   const { schedule } = useSelector(state => state.schedule);
 
   // const [subject, setSubject] = useInput(schedule.subject);
-  const [location, setLocation] = useInput(schedule.location);
-  const [description, setDescription] = useInput(schedule.description);
-  const [voteEndAt, setvoteEndAt] = useInput(schedule.voteEndAt.slice(0, 19));
-  const [startAt, setStartAt] = useInput(schedule.startAt.slice(0, 19));
-  const [studyingTime, setStudyTime] = useInput(
-    schedule.studyingTime.slice(0, 5),
-  );
+  const [location, setLocation] = useInput('');
+  const [description, setDescription] = useInput('');
+  const [voteEndAt, setvoteEndAt] = useInput('');
+  const [startAt, setStartAt] = useInput('');
+  const [studyingTime, setStudyTime] = useInput('');
 
   useEffect(() => {
     // const s = {
@@ -47,31 +45,31 @@ const editSchedule = () => {
     // setSubject(s);
     const l = {
       target: {
-        value: schedule.location,
+        value: schedule.location ? schedule.location : '',
       },
     };
     setLocation(l);
     const d = {
       target: {
-        value: schedule.description,
+        value: schedule.description ? schedule.description : '',
       },
     };
     setDescription(d);
     const v = {
       target: {
-        value: schedule.voteEndAt.slice(0, 19),
+        value: schedule.voteEndAt ? schedule.voteEndAt.slice(0, 19) : '',
       },
     };
     setvoteEndAt(v);
     const sa = {
       target: {
-        value: schedule.startAt.slice(0, 19),
+        value: schedule.startAt ? schedule.startAt.slice(0, 19) : '',
       },
     };
     setStartAt(sa);
     const st = {
       target: {
-        value: schedule.studyingTime.slice(0, 5),
+        value: schedule.studyingTime ? schedule.studyingTime.slice(0, 5) : '',
       },
     };
     setStudyTime(st);

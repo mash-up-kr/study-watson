@@ -12,12 +12,8 @@ import BlankScheduleCard from '../components/BlankScheduleCard';
 import ScheduleCard from '../components/ScheduleCard';
 import StudySettingBtn from '../components/StudySettingBtn';
 
-import {
-  LOAD_SCHEDULES_REQUEST,
-} from '../reducers/schedule';
-import {
-  LOAD_STUDY_MEMBERSHIPS_REQUEST,
-} from '../reducers/study';
+import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
+import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
 import AddFAB from '../components/AddFAB';
 
 const StyledScreen = styled.div`
@@ -96,7 +92,7 @@ const StyledCardSubTitle = styled.h3`
 const studyDetail = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { study } = useSelector(state => state.study.memberships);
-  const { pk: memberId, role, failure } = useSelector(
+  const { pk: memberId = 0, role, failure } = useSelector(
     state => state.study.memberships,
   );
 
@@ -123,18 +119,17 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   return (
     <div>
       <Header />
-      <StudySettingBtn
-        studyId={studyId}
-        token={token}
-        memberId={memberId}
-      />
+      <StudySettingBtn studyId={studyId} token={token} memberId={memberId} />
       <StyledScreen>
         <StyledStudyInfo>
-          {study.category.name === 'Develop' ? (
+          {study &&
+          study.category &&
+          study.category.name.length > 0 &&
+          study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
             <CategoryDesign />
-            )}
+          )}
           <StyledTitle>{study.name}</StyledTitle>
           <StyledText>{study.description}</StyledText>
           {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
@@ -152,8 +147,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           />
         ) : (
           <BlankScheduleCard studyId={studyId} />
-          )
-        }
+        )}
 
         <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
