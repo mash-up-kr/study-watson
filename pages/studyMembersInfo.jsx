@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,9 +7,7 @@ import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import MemberListItem from '../components/MemberListItem';
 import { Link } from '../routes';
-import {
-  StyledTitle,
-} from '../common/StyledComponents';
+import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
   width: calc(100vw - 2rem);
@@ -20,37 +18,28 @@ const StyledScreen = styled.div`
 const studyMembersInfo = ({ studyId }) => {
   const { membershipSet } = useSelector(state => state.study.study);
   const [memberList, setMemberList] = useState([]);
-  const mount = useRef(null);
-  if (!mount.current) {
-    mount.current = true;
+  useEffect(() => {
     const filterMemberList =
-      membershipSet &&
+      !!membershipSet &&
       membershipSet.length > 0 &&
       membershipSet.filter(membership => {
         return membership.isWithdraw !== true;
       });
     setMemberList(filterMemberList);
-  }
+    // }
+  }, [membershipSet]);
 
-  const totalMember = memberList.length;
+  const totalMember = `총 ${memberList.length}명의 참여자`;
 
   return (
     <>
       <Header />
       <StyledScreen>
-        <StyledTitle>
-          총
-          {' '}
-          {totalMember}
-          명의 참여자
-        </StyledTitle>
+        <StyledTitle>{totalMember}</StyledTitle>
         {memberList &&
           memberList.map(membership => {
             return (
-              <MemberListItem
-                key={membership.pk}
-                membership={membership}
-              />
+              <MemberListItem key={membership.pk} membership={membership} />
             );
           })}
 
