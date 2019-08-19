@@ -92,7 +92,7 @@ const StyledCardSubTitle = styled.h3`
 const studyDetail = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { study } = useSelector(state => state.study.memberships);
-  const { pk: memberId = 0, role, failure } = useSelector(
+  const { pk: memberId = 0, role = 'normal', failure } = useSelector(
     state => state.study.memberships,
   );
 
