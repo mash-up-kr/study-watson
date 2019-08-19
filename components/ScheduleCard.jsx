@@ -111,8 +111,34 @@ const StyledIcon = styled.img`
 
 const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
+  const [isVoted, setIsVoted] = useState(false);
+  const [expectAtt, setExpectAtt] = useState('아직 투표하지 않았습니다');
 
   const dispatch = useDispatch();
+
+  const getVote = async id => {
+    const { data } = await Axios.get(
+      `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
+    );
+    if (data.vote.length < 1) {
+      setIsVoted(false);
+    } else {
+      setIsVoted(true);
+      switch (data.vote) {
+        case 'attend':
+          setExpectAtt('참석');
+          break;
+        case 'late':
+          setExpectAtt('지각');
+          break;
+        case 'absent':
+          setExpectAtt('결석');
+          break;
+        default:
+          break;
+      }
+    }
+  };
 
   const deleteSchedule = event => {
     if (window.confirm('스케쥴을 삭제 하시겠습니까?')) {
@@ -125,13 +151,6 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
         },
       });
     }
-  };
-
-  const getVote = async id => {
-    const { data } = await Axios.get(
-      `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
-    );
-    console.log('get', data);
   };
 
   const onClickVote = async event => {
@@ -153,6 +172,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           token,
         },
       });
+      getVote(schedules.selfAttendance.pk);
     } catch (error) {
       console.log(error);
     }
@@ -165,6 +185,15 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
   const closeMenu = () => {
     setClick(!click);
   };
+
+  const reVote = () => {
+    setIsVoted(false);
+  };
+
+  useEffect(() => {
+    // console.log('component did mount');
+    getVote(schedules.selfAttendance.pk);
+  }, []);
 
   return (
     <>
@@ -198,29 +227,42 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           &nbsp;까지
         </StyledCardText>
 
-        <StyledAttendBtnContainer>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="attend"
-            data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-          >
-            참석
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="absent"
-            data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-          >
-            불참
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="late"
-            data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-          >
-            지각
-          </StyledAttendBtn>
-        </StyledAttendBtnContainer>
+        {!isVoted ? (
+          <StyledAttendBtnContainer>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="attend"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              참석
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="absent"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              불참
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="late"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              지각
+            </StyledAttendBtn>
+          </StyledAttendBtnContainer>
+        ) : (
+          <div>
+            <p>
+              <span>{expectAtt}</span>
+              <span> 예정</span>
+            </p>
+            <button type="button" onClick={reVote}>
+              다시 투표하기
+            </button>
+          </div>
+        )}
+
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
             <img src="/static/icon-detail.svg" alt="detail icon" />
