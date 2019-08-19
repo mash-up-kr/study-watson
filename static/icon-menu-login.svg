@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>icon-menu-login</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-menu-login" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polyline id="Path" stroke="#A9AFB3" stroke-width="2" stroke-linecap="square" points="11.5 15 14.5 12 11.5 9"></polyline>
+        <path d="M2,12 L13.5,12" id="Path" stroke="#A9AFB3" stroke-width="2"></path>
+        <polyline id="Path" stroke="#A9AFB3" stroke-width="2" transform="translate(15.000000, 12.000000) rotate(-180.000000) translate(-15.000000, -12.000000) " points="21 16.0042431 21 21 9 21 9 3 21 3 21 8.02864517"></polyline>
+    </g>
+</svg>

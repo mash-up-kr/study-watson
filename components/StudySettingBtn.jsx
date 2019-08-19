@@ -9,7 +9,7 @@ import {
 } from '../reducers/study';
 
 const StyledSettingBtn = styled.button`
-  position: fixed;
+  position: absolute;
   z-index: 4;
   top: 1rem;
   right: 1rem;
@@ -63,7 +63,7 @@ const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const StudySettingBtn = ({ studyId, token, memberId }) => {
+const StudySettingBtn = ({ studyId, token, memberId, role }) => {
   const [click, setClick] = useState(false);
 
   const dispatch = useDispatch();
@@ -110,22 +110,24 @@ const StudySettingBtn = ({ studyId, token, memberId }) => {
             </a>
           </Link>
         </StyledSettingItem>
-        <StyledSettingItem>
-          <Link
-            route={`/editStudy/${studyId}`}
-            href={`/editStudy/${studyId}`}
-          >
-            <a>
-              <StyledLabel>
-                <StyledIcon
-                  src="/static/icon-edit.svg"
-                  alt="edit icon"
-                />
-                스터디 정보 수정
-              </StyledLabel>
-            </a>
-          </Link>
-        </StyledSettingItem>
+        {(role === 'manager' || role === 'sub_manager') && (
+          <StyledSettingItem>
+            <Link
+              route={`/editStudy/${studyId}`}
+              href={`/editStudy/${studyId}`}
+            >
+              <a>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-edit.svg"
+                    alt="edit icon"
+                  />
+                  스터디 정보 수정
+                </StyledLabel>
+              </a>
+            </Link>
+          </StyledSettingItem>
+        )}
         <StyledSettingItem onClick={onClickWithdrawStudy}>
           <StyledLabel>
             <StyledIcon
@@ -154,6 +156,7 @@ StudySettingBtn.propTypes = {
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   memberId: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
 }
 
 export default StudySettingBtn;

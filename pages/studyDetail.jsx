@@ -92,7 +92,7 @@ const StyledCardSubTitle = styled.h3`
 const studyDetail = ({ studyId, token, pk: user }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { study } = useSelector(state => state.study.memberships);
-  const { pk: memberId, role, failure } = useSelector(
+  const { pk: memberId = 0, role, failure } = useSelector(
     state => state.study.memberships,
   );
 
@@ -119,32 +119,47 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   return (
     <div>
       <Header />
-      <StudySettingBtn studyId={studyId} token={token} memberId={memberId} />
+      <StudySettingBtn
+        studyId={studyId}
+        token={token}
+        memberId={memberId}
+        role={role}
+      />
       <StyledScreen>
         <StyledStudyInfo>
-          {study.category.name === 'Develop' ? (
+          {study &&
+          study.category &&
+          study.category.name.length > 0 &&
+          study.category.name === 'Develop' ? (
             <CategoryDevelop />
           ) : (
             <CategoryDesign />
           )}
-          <StyledTitle>{study.name}</StyledTitle>
-          <StyledText>{study.description}</StyledText>
-          {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
+
+          <StyledTitle>{study && !!study.name && study.name}</StyledTitle>
+          <StyledText>
+            {study && !!study.description && study.description}
+          </StyledText>
+          {study && !!study.icon && !!study.icon.image && (
+            <StyledIcon src={study.icon.image} alt="img" />
+          )}
         </StyledStudyInfo>
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
 
         {recentSchedules && recentSchedules.length > 0 ? (
           <ScheduleCard
+            key={recentSchedules[0].pk}
+            schedules={recentSchedules[0]}
             studyId={studyId}
             token={token}
             user={user}
             role={role}
           />
         ) : (
-          <BlankScheduleCard studyId={studyId} />
+          <BlankScheduleCard studyId={studyId} role={role} />
         )}
 
-        <StyledSubTitle>스터디 관리</StyledSubTitle>
+        <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
           <StyledCardBtn>
             <Link
@@ -212,14 +227,16 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           </StyledCardBtn>
         </StyledCardBtnContainer>
 
-        <Link
-          route={`/addSchedule/${studyId}`}
-          href={`/addSchedule/${studyId}`}
-        >
-          <a>
-            <AddFAB />
-          </a>
-        </Link>
+        {(role === 'manager' || role === 'sub_manager') && (
+          <Link
+            route={`/addSchedule/${studyId}`}
+            href={`/addSchedule/${studyId}`}
+          >
+            <a>
+              <AddFAB />
+            </a>
+          </Link>
+        )}
       </StyledScreen>
     </div>
   );
