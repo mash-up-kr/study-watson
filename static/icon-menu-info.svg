@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>icon-menu-info</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-menu-info" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M12,12 L12,16" id="Path" stroke="#A9AFB3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12,9 L12,9" id="Path" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle id="Oval" fill="#A9AFB3" cx="12" cy="9" r="1"></circle>
+        <circle id="Oval" stroke="#A9AFB3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" cx="12" cy="12" r="10"></circle>
+    </g>
+</svg>

@@ -6,22 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from '../routes';
 import { LOG_OUT_REQUEST } from '../reducers/user';
 
-const StyledBackground = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: ${props => (props.show ? 'block' : 'none')};
-`;
-
 const StyledMenu = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 4;
+  z-index: 1001;
   width: 60vw;
   height: 100vh;
   padding: 2rem;
@@ -33,7 +22,21 @@ const StyledMenu = styled.div`
 const StyledItem = styled.div`
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid #d8d8d8;
+  & :last-child {
+    border-top: 1px solid #EDEDED;
+  }
+`;
+
+const StyledLabel = styled.span`
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #4D5256;
+`;
+
+const StyledIcon = styled.img`
+  margin-right: 1rem;
 `;
 
 const StyledProfile = styled.div`
@@ -58,11 +61,12 @@ const StyledName = styled.div`
   font-weight: bold;
 `;
 
-const LoginMenu = ({ value }) => {
+const LoginMenu = ({ value, show }) => {
   const { nickname, imgProfile } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const onClick = () => {
+  const onClickLogout = () => {
+    show();
     dispatch({
       type: LOG_OUT_REQUEST,
     });
@@ -76,41 +80,65 @@ const LoginMenu = ({ value }) => {
           <StyledName>{nickname}</StyledName>
         </StyledProfile>
         <ul>
-          <li>
-            <Link route="/profile" href="/profile">
-              <a>
-                <StyledItem>프로필 관리</StyledItem>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledItem>스터디 만들기</StyledItem>
-              </a>
-            </Link>
-          </li>
-          <li>
+          <StyledItem>
             <Link route="/" href="/">
               <a>
-                <StyledItem>내 스터디</StyledItem>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-menu-study.svg"
+                    alt="study icon"
+                  />
+                  내 스터디
+                </StyledLabel>
               </a>
             </Link>
-          </li>
-          <li>
-            <StyledItem>
-              <div onClick={onClick}>로그아웃</div>
-            </StyledItem>
-          </li>
+          </StyledItem>
+          <StyledItem>
+            <Link route="/addStudy" href="/addStudy">
+              <a>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-menu-add.svg"
+                    alt="add icon"
+                  />
+                  스터디 만들기
+                </StyledLabel>
+              </a>
+            </Link>
+          </StyledItem>
+          <StyledItem>
+            <Link route="/profile" href="/profile">
+              <a>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-menu-profile.svg"
+                    alt="profile icon"
+                  />
+                  프로필 관리
+                </StyledLabel>
+              </a>
+            </Link>
+          </StyledItem>
+          <StyledItem>
+            <div onClick={onClickLogout}>
+              <StyledLabel>
+                <StyledIcon
+                  src="/static/icon-logout.svg"
+                  alt="logout icon"
+                />
+                로그아웃
+              </StyledLabel>
+            </div>
+          </StyledItem>
         </ul>
       </StyledMenu>
-      <StyledBackground show={value} />
     </>
   );
 };
 
 LoginMenu.propTypes = {
   value: PropTypes.bool.isRequired,
+  show: PropTypes.func.isRequired,
 };
 
 export default LoginMenu;
