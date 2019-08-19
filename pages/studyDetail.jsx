@@ -130,9 +130,14 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           ) : (
             <CategoryDesign />
           )}
-          <StyledTitle>{study.name}</StyledTitle>
-          <StyledText>{study.description}</StyledText>
-          {study.icon && <StyledIcon src={study.icon.image} alt="img" />}
+
+          <StyledTitle>{study && !!study.name && study.name}</StyledTitle>
+          <StyledText>
+            {study && !!study.description && study.description}
+          </StyledText>
+          {study && !!study.icon && !!study.icon.image && (
+            <StyledIcon src={study.icon.image} alt="img" />
+          )}
         </StyledStudyInfo>
         <StyledSubTitle>다음 스터디 일정</StyledSubTitle>
 

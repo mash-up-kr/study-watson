@@ -5,9 +5,7 @@ import styled from 'styled-components';
 import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import MemberAttendanceItem from '../components/MemberAttendanceItem';
-import {
-  StyledTitle,
-} from '../common/StyledComponents';
+import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
   width: calc(100vw - 2rem);
@@ -17,18 +15,14 @@ const StyledScreen = styled.div`
 
 const StudyMembers = () => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const { scheduleSet } = useSelector(state => state.study.study)
-
+  const { scheduleSet } = useSelector(state => state.study.study);
+  const number = scheduleSet && scheduleSet.length > 0 ? scheduleSet.length : 0;
+  const title = `총 ${number}번의 스터디 모임`;
   return (
     <>
       <Header />
       <StyledScreen>
-        <StyledTitle>
-          총
-          {' '}
-          {scheduleSet.length}
-          번의 스터디 모임
-        </StyledTitle>
+        <StyledTitle>{title}</StyledTitle>
         {membershipSet &&
           membershipSet.map(membership => {
             return (

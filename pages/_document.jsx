@@ -31,6 +31,7 @@ export default class CustomDocument extends Document {
     return (
       <html lang="ko" dir="ltr" {...htmlAttrs}>
         <head>
+          <GlobalStyle />
           <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-143821755-1"
@@ -83,7 +84,6 @@ export default class CustomDocument extends Document {
           {Object.values(helmet).map(el => el.toComponent())}
           <link rel="manifest" href="/static/manifest.json" />
           <meta name="theme-color" content="black" />
-          <GlobalStyle />
         </head>
         <body {...bodyAttrs}>
           <noscript>
