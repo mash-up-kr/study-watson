@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -78,12 +78,11 @@ const StyledDetailMenu = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-
 const StyledDetailItem = styled.div`
   width: 100%;
   padding: 0.8rem 0;
   & :last-child {
-    border-top: 1px solid #EDEDED;
+    border-top: 1px solid #ededed;
   }
 `;
 
@@ -103,7 +102,7 @@ const StyledLabel = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledIcon = styled.img`
@@ -112,8 +111,34 @@ const StyledIcon = styled.img`
 
 const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
+  const [isVoted, setIsVoted] = useState(false);
+  const [expectAtt, setExpectAtt] = useState('아직 투표하지 않았습니다');
 
   const dispatch = useDispatch();
+
+  const getVote = async id => {
+    const { data } = await Axios.get(
+      `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
+    );
+    if (data.vote.length < 1) {
+      setIsVoted(false);
+    } else {
+      setIsVoted(true);
+      switch (data.vote) {
+        case 'attend':
+          setExpectAtt('참석');
+          break;
+        case 'late':
+          setExpectAtt('지각');
+          break;
+        case 'absent':
+          setExpectAtt('결석');
+          break;
+        default:
+          break;
+      }
+    }
+  };
 
   const deleteSchedule = event => {
     if (window.confirm('스케쥴을 삭제 하시겠습니까?')) {
@@ -132,13 +157,14 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
     try {
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-        event.target.dataset.pk
+          event.target.dataset.pk
         }/`,
         {
           user,
           vote: event.target.dataset.vote,
         },
       );
+
       dispatch({
         type: LOAD_SCHEDULES_REQUEST,
         data: {
@@ -146,6 +172,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           token,
         },
       });
+      getVote(schedules.selfAttendance.pk);
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +184,16 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
 
   const closeMenu = () => {
     setClick(!click);
-  }
+  };
+
+  const reVote = () => {
+    setIsVoted(false);
+  };
+
+  useEffect(() => {
+    // console.log('component did mount');
+    getVote(schedules.selfAttendance.pk);
+  }, []);
 
   return (
     <>
@@ -191,38 +227,42 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           &nbsp;까지
         </StyledCardText>
 
-        <StyledAttendBtnContainer>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="attend"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            참석
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="absent"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            불참
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="late"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            지각
-          </StyledAttendBtn>
-        </StyledAttendBtnContainer>
+        {!isVoted ? (
+          <StyledAttendBtnContainer>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="attend"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              참석
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="absent"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              불참
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="late"
+              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
+            >
+              지각
+            </StyledAttendBtn>
+          </StyledAttendBtnContainer>
+        ) : (
+          <div>
+            <p>
+              <span>{expectAtt}</span>
+              <span> 예정</span>
+            </p>
+            <button type="button" onClick={reVote}>
+              다시 투표하기
+            </button>
+          </div>
+        )}
+
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
             <img src="/static/icon-detail.svg" alt="detail icon" />
@@ -238,10 +278,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           >
             <a>
               <StyledLabel data-pk={schedules.pk}>
-                <StyledIcon
-                  src="/static/icon-edit.svg"
-                  alt="edit icon"
-                />
+                <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
                 일정 수정
               </StyledLabel>
             </a>
@@ -249,10 +286,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
         </StyledDetailItem>
         <StyledDetailItem>
           <StyledLabel data-pk={schedules.pk} onClick={deleteSchedule}>
-            <StyledIcon
-              src="/static/icon-delete.svg"
-              alt="delete icon"
-            />
+            <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
             일정 삭제
           </StyledLabel>
         </StyledDetailItem>
@@ -274,10 +308,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
         </StyledDetailItem>
         <StyledDetailItem onClick={closeMenu}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-close.svg"
-              alt="close icon"
-            />
+            <StyledIcon src="/static/icon-close.svg" alt="close icon" />
             취소
           </StyledLabel>
         </StyledDetailItem>
