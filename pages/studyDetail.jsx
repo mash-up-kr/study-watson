@@ -128,13 +128,13 @@ const studyDetail = ({ studyId, token, pk: user }) => {
       <StyledScreen>
         <StyledStudyInfo>
           {study &&
-            study.category &&
-            study.category.name.length > 0 &&
-            study.category.name === 'Develop' ? (
-              <CategoryDevelop />
-            ) : (
-              <CategoryDesign />
-            )}
+          study.category &&
+          study.category.name.length > 0 &&
+          study.category.name === 'Develop' ? (
+            <CategoryDevelop />
+          ) : (
+            <CategoryDesign />
+          )}
 
           <StyledTitle>{study && !!study.name && study.name}</StyledTitle>
           <StyledText>
@@ -156,11 +156,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             role={role}
           />
         ) : (
-          <BlankScheduleCard
-              studyId={studyId}
-              role={role}
-            />
-          )}
+          <BlankScheduleCard studyId={studyId} role={role} />
+        )}
 
         <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
@@ -240,7 +237,6 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             </a>
           </Link>
         )}
-
       </StyledScreen>
     </div>
   );

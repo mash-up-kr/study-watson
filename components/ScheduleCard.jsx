@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Axios from 'axios';
 
@@ -54,7 +54,7 @@ const StyledAttendBtn = styled.button`
 
 const StyledDetailBtn = styled.button`
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 1rem;
   right: 1rem;
   border: none;
@@ -78,12 +78,11 @@ const StyledDetailMenu = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-
 const StyledDetailItem = styled.div`
   width: 100%;
   padding: 0.8rem 0;
   & :last-child {
-    border-top: 1px solid #EDEDED;
+    border-top: 1px solid #ededed;
   }
 `;
 
@@ -103,17 +102,32 @@ const StyledLabel = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
+const ScheduleCard = ({ studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
+  const { schedules } = useSelector(state => state.schedule);
 
   const dispatch = useDispatch();
+
+  const filterSchedules =
+    schedules &&
+    schedules.filter(schedule => {
+      return schedule.startAt > new Date().toISOString();
+    });
+
+  const recentSchedules = [...filterSchedules];
+  recentSchedules.sort((a, b) => {
+    if (a.startAt > b.startAt) {
+      return 1;
+    }
+    return -1;
+  });
 
   const deleteSchedule = event => {
     if (window.confirm('스케쥴을 삭제 하시겠습니까?')) {
@@ -128,11 +142,20 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
     }
   };
 
+  const getVote = async id => {
+    const result = await Axios.get(
+      `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
+    );
+    console.log('get', result.data.schedule);
+  };
+
   const onClickVote = async event => {
     try {
+      getVote(event.target.dataset.pk);
+
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/attendances/${
-        event.target.dataset.pk
+          event.target.dataset.pk
         }/`,
         {
           user,
@@ -157,109 +180,104 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
 
   const closeMenu = () => {
     setClick(!click);
-  }
+  };
 
   return (
     <>
       <StyledScheduleCard>
-        <StyledCardTitle style={{ marginBottom: '1rem' }}>
-          {schedules.subject}
-        </StyledCardTitle>
-        <StyledCardText>
-          <img
-            src="/static/icon-calendar.svg"
-            alt="calendar icon"
-            style={{ marginRight: '0.5rem' }}
-          />
-          {changeFormat(schedules.startAt)}
-        </StyledCardText>
-        <StyledCardText>
-          <img
-            src="/static/icon-location.svg"
-            alt="calendar icon"
-            style={{ marginRight: '0.5rem' }}
-          />
-          {schedules.location}
-        </StyledCardText>
-        <StyledCardText>
-          <img
-            src="/static/icon-check.svg"
-            alt="check icon"
-            style={{ marginRight: '0.5rem' }}
-          />
-          {changeFormat(schedules.voteEndAt)}
-          &nbsp;까지
-        </StyledCardText>
+        <div key={recentSchedules[0].pk}>
+          <StyledCardTitle style={{ marginBottom: '1rem' }}>
+            {recentSchedules[0].subject}
+          </StyledCardTitle>
+          <StyledCardText>
+            <img
+              src="/static/icon-calendar.svg"
+              alt="calendar icon"
+              style={{ marginRight: '0.5rem' }}
+            />
+            {changeFormat(recentSchedules[0].startAt)}
+          </StyledCardText>
+          <StyledCardText>
+            <img
+              src="/static/icon-location.svg"
+              alt="calendar icon"
+              style={{ marginRight: '0.5rem' }}
+            />
+            {recentSchedules[0].location}
+          </StyledCardText>
+          <StyledCardText>
+            <img
+              src="/static/icon-check.svg"
+              alt="check icon"
+              style={{ marginRight: '0.5rem' }}
+            />
+            {changeFormat(recentSchedules[0].voteEndAt)}
+            &nbsp;까지
+          </StyledCardText>
 
-        <StyledAttendBtnContainer>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="attend"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            참석
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="absent"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            불참
-          </StyledAttendBtn>
-          <StyledAttendBtn
-            onClick={onClickVote}
-            data-vote="late"
-            data-pk={
-              schedules.selfAttendance &&
-              schedules.selfAttendance.pk
-            }
-          >
-            지각
-          </StyledAttendBtn>
-        </StyledAttendBtnContainer>
-        {(role === 'manager' || role === 'sub_manager') && (
-          <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
-            <img src="/static/icon-detail.svg" alt="detail icon" />
-          </StyledDetailBtn>
-        )}
+          <StyledAttendBtnContainer>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="attend"
+              data-pk={
+                recentSchedules[0].selfAttendance &&
+                recentSchedules[0].selfAttendance.pk
+              }
+            >
+              참석
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="absent"
+              data-pk={
+                recentSchedules[0].selfAttendance &&
+                recentSchedules[0].selfAttendance.pk
+              }
+            >
+              불참
+            </StyledAttendBtn>
+            <StyledAttendBtn
+              onClick={onClickVote}
+              data-vote="late"
+              data-pk={
+                recentSchedules[0].selfAttendance &&
+                recentSchedules[0].selfAttendance.pk
+              }
+            >
+              지각
+            </StyledAttendBtn>
+          </StyledAttendBtnContainer>
+          {(role === 'manager' || role === 'sub_manager') && (
+            <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
+              <img src="/static/icon-detail.svg" alt="detail icon" />
+            </StyledDetailBtn>
+          )}
+        </div>
       </StyledScheduleCard>
-
       <StyledDetailMenu show={click}>
         <StyledDetailItem>
           <Link
-            route={`/editSchedule/${schedules.pk}`}
-            href={`/editSchedule/${schedules.pk}`}
+            route={`/editSchedule/${recentSchedules[0].pk}`}
+            href={`/editSchedule/${recentSchedules[0].pk}`}
           >
             <a>
-              <StyledLabel data-pk={schedules.pk}>
-                <StyledIcon
-                  src="/static/icon-edit.svg"
-                  alt="edit icon"
-                />
+              <StyledLabel data-pk={recentSchedules[0].pk}>
+                <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
                 일정 수정
               </StyledLabel>
             </a>
           </Link>
         </StyledDetailItem>
         <StyledDetailItem>
-          <StyledLabel data-pk={schedules.pk} onClick={deleteSchedule}>
-            <StyledIcon
-              src="/static/icon-delete.svg"
-              alt="delete icon"
-            />
+          <StyledLabel data-pk={recentSchedules[0].pk} onClick={deleteSchedule}>
+            <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
             일정 삭제
           </StyledLabel>
         </StyledDetailItem>
         <StyledDetailItem>
           <Link
-            route={`/schedule/${schedules.pk}`}
-            href={`/schedule/${schedules.pk}`}
+            route={`/schedule/${recentSchedules[0].pk}`}
+            href={`/schedule/${recentSchedules[0].pk}`}
           >
             <a>
               <StyledLabel>
@@ -274,10 +292,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
         </StyledDetailItem>
         <StyledDetailItem onClick={closeMenu}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-close.svg"
-              alt="close icon"
-            />
+            <StyledIcon src="/static/icon-close.svg" alt="close icon" />
             취소
           </StyledLabel>
         </StyledDetailItem>
@@ -288,7 +303,6 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
 };
 
 ScheduleCard.propTypes = {
-  schedules: PropTypes.object.isRequired,
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired,
