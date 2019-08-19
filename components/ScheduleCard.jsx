@@ -124,19 +124,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
       setIsVoted(false);
     } else {
       setIsVoted(true);
-      switch (data.vote) {
-        case 'attend':
-          setExpectAtt('참석');
-          break;
-        case 'late':
-          setExpectAtt('지각');
-          break;
-        case 'absent':
-          setExpectAtt('결석');
-          break;
-        default:
-          break;
-      }
+      setExpectAtt(data.voteDisplay);
     }
   };
 
@@ -154,27 +142,31 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
   };
 
   const onClickVote = async event => {
-    try {
-      await Axios.patch(
-        `https://study-watson.lhy.kr/api/v1/study/attendances/${
-          event.target.dataset.pk
-        }/`,
-        {
-          user,
-          vote: event.target.dataset.vote,
-        },
-      );
+    if (!schedules.selfAttendance) {
+      console.log('이 일정이 만들어질 당시에는, 스터디에 가입하지 않았습니다');
+    } else {
+      try {
+        await Axios.patch(
+          `https://study-watson.lhy.kr/api/v1/study/attendances/${
+            event.target.dataset.pk
+          }/`,
+          {
+            user,
+            vote: event.target.dataset.vote,
+          },
+        );
 
-      dispatch({
-        type: LOAD_SCHEDULES_REQUEST,
-        data: {
-          studyId,
-          token,
-        },
-      });
-      getVote(schedules.selfAttendance.pk);
-    } catch (error) {
-      console.log(error);
+        dispatch({
+          type: LOAD_SCHEDULES_REQUEST,
+          data: {
+            studyId,
+            token,
+          },
+        });
+        getVote(schedules.selfAttendance.pk);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -192,7 +184,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
 
   useEffect(() => {
     // console.log('component did mount');
-    getVote(schedules.selfAttendance.pk);
+    if (schedules.selfAttendance) getVote(schedules.selfAttendance.pk);
   }, []);
 
   return (

@@ -111,7 +111,9 @@ const StyledIcon = styled.img`
 
 const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
-  const [attendance, setAttendance] = useState('데이터가 없습니다');
+  const [attendance, setAttendance] = useState(
+    '이 일정이 만들어질 당시에는, 스터디에 가입하지 않았습니다',
+  );
 
   const dispatch = useDispatch();
 
@@ -119,9 +121,8 @@ const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
     const { data } = await Axios.get(
       `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
     );
-    if (data.schedule.selfAttendance) {
-      if (data.att.length > 0) setAttendance(data.attDisplay);
-    }
+
+    setAttendance(data.attDisplay);
   };
 
   const deleteSchedule = event => {
