@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>icon-menu-profile</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-menu-profile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M5.57142857,19.1428571 C7.87912088,18.1375661 9.36263736,17.2998237 10.021978,16.6296296 C11.010989,15.6243386 8.04395604,15.6243386 8.04395604,10.5978836 C8.04395604,7.24691358 9.36263736,5.57142857 12,5.57142857 C14.6373627,5.57142857 15.956044,7.24691358 15.956044,10.5978836 C15.956044,15.6243386 12.989011,15.6243386 13.978022,16.6296296 C14.6373627,17.2998237 16.1208792,18.1375661 18.4285714,19.1428571" id="Path" stroke="#A9AFB3" stroke-width="2" stroke-linecap="round"></path>
+        <circle id="Oval" stroke="#A9AFB3" stroke-width="2" stroke-linecap="square" cx="12" cy="12" r="10"></circle>
+    </g>
+</svg>

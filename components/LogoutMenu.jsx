@@ -8,7 +8,7 @@ const StyledMenu = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 1001;
   width: 60vw;
   height: 100vh;
   padding: 2rem;
@@ -17,30 +17,25 @@ const StyledMenu = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-const StyledItem2 = styled.div`
-  width: 100%;
-  padding: 1rem 0;
-  border-bottom: 1px solid #d8d8d8;
-  &:first-child {
-    margin-top: 2rem;
-  }
-`;
-
 const StyledItem = styled.div`
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid #d8d8d8;
+  & :first-child {
+    margin-top: 2rem;
+    border-bottom: 1px solid #EDEDED;
+  }
 `;
 
-const StyledBackground = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: ${props => (props.show ? 'block' : 'none')};
+const StyledLabel = styled.span`
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #4D5256;
+`;
+
+const StyledIcon = styled.img`
+  margin-right: 1rem;
 `;
 
 const LogoutMenu = ({ value }) => {
@@ -48,30 +43,47 @@ const LogoutMenu = ({ value }) => {
     <>
       <StyledMenu show={value}>
         <ul>
-          <li>
+          <StyledItem>
             <Link route="/about" href="/about">
               <a>
-                <StyledItem2>알아보기</StyledItem2>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-menu-info.svg"
+                    alt="profile info"
+                  />
+                  알아보기
+                </StyledLabel>
               </a>
             </Link>
-          </li>
-          <li>
+          </StyledItem>
+          <StyledItem>
             <Link route="/signup" href="/signup">
               <a>
-                <StyledItem>회원가입</StyledItem>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-invite.svg"
+                    alt="signup icon"
+                  />
+                  회원가입
+                </StyledLabel>
               </a>
             </Link>
-          </li>
-          <li>
+          </StyledItem>
+          <StyledItem>
             <Link route="/login" href="/login">
               <a>
-                <StyledItem>로그인</StyledItem>
+                <StyledLabel>
+                  <StyledIcon
+                    src="/static/icon-menu-login.svg"
+                    alt="login icon"
+                  />
+                  로그인
+                </StyledLabel>
               </a>
             </Link>
-          </li>
+          </StyledItem>
         </ul>
       </StyledMenu>
-      <StyledBackground show={value} />
     </>
   );
 };

@@ -19,12 +19,23 @@ const StyledHeader = styled.div`
 const StyledButton = styled.div`
   position: absolute;
   left: 1rem;
-  z-index: 10;
+  z-index: 1002;
 `;
 
 const StyledRightButton = styled.div`
   position: absolute;
   right: 1rem;
+`;
+
+const StyledBackground = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: ${props => (props.value ? 'block' : 'none')};
 `;
 
 const Header = () => {
@@ -78,7 +89,8 @@ const Header = () => {
           </Link>
         </StyledRightButton>
       </StyledHeader>
-      <Menu value={value} />
+      <Menu value={value} show={onClick} />
+      <StyledBackground value={value} onClick={onClick} />
     </>
   );
 };
