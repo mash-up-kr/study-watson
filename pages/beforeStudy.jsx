@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Header from '../containers/Header';
 import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
 import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
-import ScheduleCard from '../components/ScheduleCard';
+import ScheduleCardBefore from '../components/ScheduleCardBefore';
 import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
@@ -14,7 +14,7 @@ const StyledScreen = styled.div`
   margin: auto;
 `;
 
-const ScheduleCardContainer = styled.div`
+const ScheduleCardBeforeContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -45,15 +45,15 @@ const beforeStudy = ({ studyId, token, pk: user }) => {
           recentSchedules.length > 0 &&
           recentSchedules.map(schedule => {
             return (
-              <ScheduleCardContainer key={schedule.pk}>
-                <ScheduleCard
+              <ScheduleCardBeforeContainer key={schedule.pk}>
+                <ScheduleCardBefore
                   schedules={schedule}
                   studyId={studyId}
                   token={token}
                   user={user}
                   role={role}
                 />
-              </ScheduleCardContainer>
+              </ScheduleCardBeforeContainer>
             );
           })}
       </StyledScreen>
