@@ -17,7 +17,7 @@ const StyledLabel = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
   padding: 1rem 0 0.5rem 0;
-  border-bottom: 1px solid #EDEDED;
+  border-bottom: 1px solid #ededed;
   margin-bottom: 1rem;
 `;
 
@@ -25,12 +25,12 @@ const StyledTitle = styled.h1`
   width: 100%;
   font-size: 1.5rem;
   padding: 1.5rem 0 0.5rem 0;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledSubTitle = styled.div`
   font-size: 0.9rem;
-  color: #878D91;
+  color: #878d91;
   margin-bottom: 1rem;
 `;
 
@@ -88,6 +88,9 @@ const ScheduleDetail = () => {
         }) ||
         absent.find(Element => {
           return JSON.parse(Element.pk) === JSON.parse(pk);
+        }) ||
+        none.find(Element => {
+          return JSON.parse(Element.pk) === JSON.parse(pk);
         });
       const filterAttend = attend.filter(Element => {
         return JSON.parse(Element.pk) !== JSON.parse(pk);
@@ -101,15 +104,25 @@ const ScheduleDetail = () => {
         return JSON.parse(Element.pk) !== JSON.parse(pk);
       });
       setAbsent(filterAbsent);
+      const filterNone = none.filter(Element => {
+        return JSON.parse(Element.pk) !== JSON.parse(pk);
+      });
+      setNone(filterNone);
       if (att === 'attend') {
-        // eslint-disable-next-line no-shadow
-        setAttend(attend => [...attend, attendance]);
+        if (!!attendance && !!attendance.pk) {
+          // eslint-disable-next-line no-shadow
+          setAttend(attend => [...attend, attendance]);
+        }
       } else if (att === 'late') {
-        // eslint-disable-next-line no-shadow
-        setLate(late => [...late, attendance]);
+        if (!!attendance && !!attendance.pk) {
+          // eslint-disable-next-line no-shadow
+          setLate(late => [...late, attendance]);
+        }
       } else if (att === 'absent') {
-        // eslint-disable-next-line no-shadow
-        setAbsent(absent => [...absent, attendance]);
+        if (!!attendance && !!attendance.pk) {
+          // eslint-disable-next-line no-shadow
+          setAbsent(absent => [...absent, attendance]);
+        }
       } else {
         console.log('???');
       }
@@ -117,76 +130,76 @@ const ScheduleDetail = () => {
       console.log(error);
     }
   };
-
+  const attendCount = `출석 ${attend.length}`;
+  const lateCount = `지각 ${late.length}`;
+  const absentCount = `결석 ${absent.length}`;
+  const noneCount = `미정 ${none.length}`;
+  console.log(none);
   return (
     <>
       <Header />
       <StyledScreen>
         <StyledTitle>{schedule.subject}</StyledTitle>
-        <StyledSubTitle>{changeFormat(schedule.startAt)}</StyledSubTitle>
+        <StyledSubTitle>
+          {!!schedule.startAt &&
+            schedule.startAt.length > 0 &&
+            changeFormat(schedule.startAt)}
+        </StyledSubTitle>
         <div>
-          <StyledLabel>
-            출석
-            {' '}
-            {attend.length}
-          </StyledLabel>
-          {attend.map(attendance => {
-            return (
-              <Attendance
-                key={attendance.pk}
-                attendance={attendance}
-                onClickAttendance={onClickAttendance}
-              />
-            );
-          })}
+          <StyledLabel>{attendCount}</StyledLabel>
+          {attend &&
+            attend.length > 0 &&
+            attend.map(attendance => {
+              return (
+                <Attendance
+                  key={attendance.pk}
+                  attendance={attendance}
+                  onClickAttendance={onClickAttendance}
+                />
+              );
+            })}
         </div>
         <div>
-          <StyledLabel>
-            지각
-            {' '}
-            {late.length}
-          </StyledLabel>
-          {late.map(attendance => {
-            return (
-              <Attendance
-                key={attendance.pk}
-                attendance={attendance}
-                onClickAttendance={onClickAttendance}
-              />
-            );
-          })}
+          <StyledLabel>{lateCount}</StyledLabel>
+          {late &&
+            late.length > 0 &&
+            late.map(attendance => {
+              return (
+                <Attendance
+                  key={attendance.pk}
+                  attendance={attendance}
+                  onClickAttendance={onClickAttendance}
+                />
+              );
+            })}
         </div>
         <div>
-          <StyledLabel>
-            결석
-            {' '}
-            {absent.length}
-          </StyledLabel>
-          {absent.map(attendance => {
-            return (
-              <Attendance
-                key={attendance.pk}
-                attendance={attendance}
-                onClickAttendance={onClickAttendance}
-              />
-            );
-          })}
+          <StyledLabel>{absentCount}</StyledLabel>
+          {absent &&
+            absent.length > 0 &&
+            absent.map(attendance => {
+              return (
+                <Attendance
+                  key={attendance.pk}
+                  attendance={attendance}
+                  onClickAttendance={onClickAttendance}
+                />
+              );
+            })}
         </div>
         <div>
-          <StyledLabel>
-            미정
-            {' '}
-            {none.length}
-          </StyledLabel>
-          {none.map(attendance => {
-            return (
-              <Attendance
-                key={attendance.pk}
-                attendance={attendance}
-                onClickAttendance={onClickAttendance}
-              />
-            );
-          })}
+          <StyledLabel>{noneCount}</StyledLabel>
+          {none &&
+            none.length > 0 &&
+            none.map(attendance => {
+              return (
+                <Attendance
+                  key={attendance.pk}
+                  attendance={attendance}
+                  onClickAttendance={onClickAttendance}
+                />
+              );
+            })}
         </div>
       </StyledScreen>
     </>

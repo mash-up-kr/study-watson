@@ -184,7 +184,9 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
 
   useEffect(() => {
     // console.log('component did mount');
-    if (schedules.selfAttendance) getVote(schedules.selfAttendance.pk);
+    if (!!schedules && !!schedules.selfAttendance) {
+      getVote(schedules.selfAttendance.pk);
+    }
   }, []);
 
   return (
@@ -219,7 +221,9 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           &nbsp;까지
         </StyledCardText>
 
-        {!isVoted ? (
+        {!isVoted &&
+        schedules.selfAttendance &&
+        !!schedules.selfAttendance.pk ? (
           <StyledAttendBtnContainer>
             <StyledAttendBtn
               onClick={onClickVote}
@@ -243,7 +247,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
               지각
             </StyledAttendBtn>
           </StyledAttendBtnContainer>
-        ) : (
+        ) : schedules.selfAttendance && !!schedules.selfAttendance.pk ? (
           <div>
             <p>
               <span>{expectAtt}</span>
@@ -253,8 +257,9 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
               다시 투표하기
             </button>
           </div>
+        ) : (
+          <div>투표에 참여 할 수 없습니다.</div>
         )}
-
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
             <img src="/static/icon-detail.svg" alt="detail icon" />
