@@ -34,28 +34,38 @@ const StyledBtn = styled.button`
   margin-top: 1rem;
 `;
 
-const BlankScheduleCard = ({ studyId }) => {
+const BlankScheduleCard = ({ studyId, role }) => {
   return (
-    <StyledCard>
-      <StyledText>
-        다음 스터디 일정이 없습니다.
-        <br />
-        일정을 만들고 스터디원과 공유해보세요!
-      </StyledText>
-      <Link
-        route={`/addSchedule/${studyId}`}
-        href={`/addSchedule/${studyId}`}
-      >
-        <a>
-          <StyledBtn>일정 만들기</StyledBtn>
-        </a>
-      </Link>
-    </StyledCard>
+    (role === 'manager' || role === 'sub_manager') ? (
+      <StyledCard>
+        <StyledText>
+          다음 스터디 일정이 없습니다.
+          <br />
+          일정을 만들고 스터디 멤버들과 공유해보세요!
+        </StyledText>
+        <Link
+          route={`/addSchedule/${studyId}`}
+          href={`/addSchedule/${studyId}`}
+        >
+          <a>
+            <StyledBtn>일정 만들기</StyledBtn>
+          </a>
+        </Link>
+      </StyledCard>
+    ) : (
+      <StyledCard>
+          <StyledText>
+            다음 스터디 일정이 없습니다.
+          </StyledText>
+        </StyledCard>
+      )
+
   );
 };
 
 BlankScheduleCard.propTypes = {
   studyId: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 export default BlankScheduleCard;
