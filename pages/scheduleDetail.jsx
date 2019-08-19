@@ -1,11 +1,38 @@
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
+import styled from 'styled-components';
 
 import Header from '../containers/Header';
 import Attendance from '../components/Attendance';
-import { Link } from '../routes';
 import { LOAD_SCHEDULE_REQUEST } from '../reducers/schedule';
+import { changeFormat } from '../common/changeFormat';
+
+const StyledScreen = styled.div`
+  width: calc(100% - 2rem);
+  margin: auto;
+`;
+
+const StyledLabel = styled.div`
+  font-size: 0.9rem;
+  color: #4d5256;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: 1px solid #EDEDED;
+  margin-bottom: 1rem;
+`;
+
+const StyledTitle = styled.h1`
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 1.5rem 0 0.5rem 0;
+  color: #4D5256;
+`;
+
+const StyledSubTitle = styled.div`
+  font-size: 0.9rem;
+  color: #878D91;
+  margin-bottom: 1rem;
+`;
 
 const ScheduleDetail = () => {
   const mount = useRef(null);
@@ -14,6 +41,7 @@ const ScheduleDetail = () => {
   const [late, setLate] = useState([]);
   const [absent, setAbsent] = useState([]);
   const [none, setNone] = useState([]);
+
   if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
     const attendList = [];
     const lateList = [];
@@ -91,63 +119,77 @@ const ScheduleDetail = () => {
   };
 
   return (
-    <div>
+    <>
       <Header />
-      <Link
-        route={`/studyDetail/${schedule.study}`}
-        href={`/studyDetail/${schedule.study}`}
-      >
-        <a>스터디로 가기</a>
-      </Link>
-      <div>
-        <div>1.미정</div>
-        {none.map(attendance => {
-          return (
-            <Attendance
-              key={attendance.pk}
-              attendance={attendance}
-              onClickAttendance={onClickAttendance}
-            />
-          );
-        })}
-      </div>
-      <div>
-        <div>2.출석</div>
-        {attend.map(attendance => {
-          return (
-            <Attendance
-              key={attendance.pk}
-              attendance={attendance}
-              onClickAttendance={onClickAttendance}
-            />
-          );
-        })}
-      </div>
-      <div>
-        <div>3.지각</div>
-        {late.map(attendance => {
-          return (
-            <Attendance
-              key={attendance.pk}
-              attendance={attendance}
-              onClickAttendance={onClickAttendance}
-            />
-          );
-        })}
-      </div>
-      <div>
-        <div>4.결석</div>
-        {absent.map(attendance => {
-          return (
-            <Attendance
-              key={attendance.pk}
-              attendance={attendance}
-              onClickAttendance={onClickAttendance}
-            />
-          );
-        })}
-      </div>
-    </div>
+      <StyledScreen>
+        <StyledTitle>{schedule.subject}</StyledTitle>
+        <StyledSubTitle>{changeFormat(schedule.startAt)}</StyledSubTitle>
+        <div>
+          <StyledLabel>
+            출석
+            {' '}
+            {attend.length}
+          </StyledLabel>
+          {attend.map(attendance => {
+            return (
+              <Attendance
+                key={attendance.pk}
+                attendance={attendance}
+                onClickAttendance={onClickAttendance}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <StyledLabel>
+            지각
+            {' '}
+            {late.length}
+          </StyledLabel>
+          {late.map(attendance => {
+            return (
+              <Attendance
+                key={attendance.pk}
+                attendance={attendance}
+                onClickAttendance={onClickAttendance}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <StyledLabel>
+            결석
+            {' '}
+            {absent.length}
+          </StyledLabel>
+          {absent.map(attendance => {
+            return (
+              <Attendance
+                key={attendance.pk}
+                attendance={attendance}
+                onClickAttendance={onClickAttendance}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <StyledLabel>
+            미정
+            {' '}
+            {none.length}
+          </StyledLabel>
+          {none.map(attendance => {
+            return (
+              <Attendance
+                key={attendance.pk}
+                attendance={attendance}
+                onClickAttendance={onClickAttendance}
+              />
+            );
+          })}
+        </div>
+      </StyledScreen>
+    </>
   );
 };
 
