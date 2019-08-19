@@ -109,7 +109,7 @@ const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
+const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
   const [click, setClick] = useState(false);
   const [attendance, setAttendance] = useState('데이터가 없습니다');
 
@@ -241,7 +241,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
   );
 };
 
-ScheduleCard.propTypes = {
+ScheduleCardBefore.propTypes = {
   schedules: PropTypes.object.isRequired,
   studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
@@ -249,4 +249,4 @@ ScheduleCard.propTypes = {
   role: PropTypes.string.isRequired,
 };
 
-export default ScheduleCard;
+export default ScheduleCardBefore;
