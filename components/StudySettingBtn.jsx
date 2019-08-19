@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from '../routes';
 
-import {
-  WITHDRAW_STUDY_REQUEST,
-} from '../reducers/study';
+import { WITHDRAW_STUDY_REQUEST } from '../reducers/study';
 
 const StyledSettingBtn = styled.button`
+  <<<<<<<HEAD
   position: absolute;
   z-index: 4;
+  =======position: fixed;
+  z-index: 3;
+  >>>>>>>temp
   top: 1rem;
   right: 1rem;
   border: none;
@@ -36,7 +38,7 @@ const StyledSettingItem = styled.div`
   width: 100%;
   padding: 0.8rem 0;
   & :last-child {
-    border-top: 1px solid #EDEDED;
+    border-top: 1px solid #ededed;
   }
 `;
 
@@ -56,7 +58,7 @@ const StyledLabel = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledIcon = styled.img`
@@ -74,7 +76,7 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
 
   const closeMenu = () => {
     setClick(!click);
-  }
+  };
 
   const onClickWithdrawStudy = () => {
     if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
@@ -101,10 +103,7 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
           >
             <a>
               <StyledLabel>
-                <StyledIcon
-                  src="/static/icon-invite.svg"
-                  alt="invite icon"
-                />
+                <StyledIcon src="/static/icon-invite.svg" alt="invite icon" />
                 스터디 멤버 초대하기
               </StyledLabel>
             </a>
@@ -118,10 +117,7 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
             >
               <a>
                 <StyledLabel>
-                  <StyledIcon
-                    src="/static/icon-edit.svg"
-                    alt="edit icon"
-                  />
+                  <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
                   스터디 정보 수정
                 </StyledLabel>
               </a>
@@ -130,19 +126,13 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
         )}
         <StyledSettingItem onClick={onClickWithdrawStudy}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-logout.svg"
-              alt="logout icon"
-            />
+            <StyledIcon src="/static/icon-logout.svg" alt="logout icon" />
             스터디 나가기
           </StyledLabel>
         </StyledSettingItem>
         <StyledSettingItem onClick={closeMenu}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-close.svg"
-              alt="close icon"
-            />
+            <StyledIcon src="/static/icon-close.svg" alt="close icon" />
             취소
           </StyledLabel>
         </StyledSettingItem>
@@ -157,6 +147,6 @@ StudySettingBtn.propTypes = {
   token: PropTypes.string.isRequired,
   memberId: PropTypes.number.isRequired,
   role: PropTypes.string.isRequired,
-}
+};
 
 export default StudySettingBtn;
