@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Header from '../containers/Header';
 import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
 import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
-import ScheduleCard from '../components/ScheduleCard';
+import ScheduleCardBefore from '../components/ScheduleCardBefore';
 import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
@@ -46,7 +46,7 @@ const beforeStudy = ({ studyId, token, pk: user }) => {
           recentSchedules.map(schedule => {
             return (
               <ScheduleCardContainer key={schedule.pk}>
-                <ScheduleCard
+                <ScheduleCardBefore
                   schedules={schedule}
                   studyId={studyId}
                   token={token}
