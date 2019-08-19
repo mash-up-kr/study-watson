@@ -14,7 +14,7 @@ const StyledScreen = styled.div`
   margin: auto;
 `;
 
-const ScheduleCardContainer = styled.div`
+const ScheduleCardBeforeContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -45,7 +45,7 @@ const beforeStudy = ({ studyId, token, pk: user }) => {
           recentSchedules.length > 0 &&
           recentSchedules.map(schedule => {
             return (
-              <ScheduleCardContainer key={schedule.pk}>
+              <ScheduleCardBeforeContainer key={schedule.pk}>
                 <ScheduleCardBefore
                   schedules={schedule}
                   studyId={studyId}
@@ -53,7 +53,7 @@ const beforeStudy = ({ studyId, token, pk: user }) => {
                   user={user}
                   role={role}
                 />
-              </ScheduleCardContainer>
+              </ScheduleCardBeforeContainer>
             );
           })}
       </StyledScreen>
