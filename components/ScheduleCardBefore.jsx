@@ -119,6 +119,7 @@ const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
     const { data } = await Axios.get(
       `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
     );
+    console.log('before', data);
     if (data.schedule.selfAttendance) {
       if (data.att.length > 0) setAttendance(data.attDisplay);
     }

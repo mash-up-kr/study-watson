@@ -120,23 +120,13 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
     const { data } = await Axios.get(
       `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
     );
-    if (data.vote.length < 1) {
-      setIsVoted(false);
-    } else {
+
+    if (data.vote.length > 0) {
       setIsVoted(true);
-      switch (data.vote) {
-        case 'attend':
-          setExpectAtt('참석');
-          break;
-        case 'late':
-          setExpectAtt('지각');
-          break;
-        case 'absent':
-          setExpectAtt('결석');
-          break;
-        default:
-          break;
-      }
+
+      setExpectAtt(data.voteDisplay);
+    } else {
+      setIsVoted(false);
     }
   };
 
