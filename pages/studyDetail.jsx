@@ -119,17 +119,22 @@ const studyDetail = ({ studyId, token, pk: user }) => {
   return (
     <div>
       <Header />
-      <StudySettingBtn studyId={studyId} token={token} memberId={memberId} />
+      <StudySettingBtn
+        studyId={studyId}
+        token={token}
+        memberId={memberId}
+        role={role}
+      />
       <StyledScreen>
         <StyledStudyInfo>
           {study &&
-          study.category &&
-          study.category.name.length > 0 &&
-          study.category.name === 'Develop' ? (
-            <CategoryDevelop />
-          ) : (
-            <CategoryDesign />
-          )}
+            study.category &&
+            study.category.name.length > 0 &&
+            study.category.name === 'Develop' ? (
+              <CategoryDevelop />
+            ) : (
+              <CategoryDesign />
+            )}
 
           <StyledTitle>{study && !!study.name && study.name}</StyledTitle>
           <StyledText>
@@ -151,8 +156,11 @@ const studyDetail = ({ studyId, token, pk: user }) => {
             role={role}
           />
         ) : (
-          <BlankScheduleCard studyId={studyId} />
-        )}
+          <BlankScheduleCard
+              studyId={studyId}
+              role={role}
+            />
+          )}
 
         <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
@@ -222,14 +230,17 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           </StyledCardBtn>
         </StyledCardBtnContainer>
 
-        <Link
-          route={`/addSchedule/${studyId}`}
-          href={`/addSchedule/${studyId}`}
-        >
-          <a>
-            <AddFAB />
-          </a>
-        </Link>
+        {(role === 'manager' || role === 'sub_manager') && (
+          <Link
+            route={`/addSchedule/${studyId}`}
+            href={`/addSchedule/${studyId}`}
+          >
+            <a>
+              <AddFAB />
+            </a>
+          </Link>
+        )}
+
       </StyledScreen>
     </div>
   );
