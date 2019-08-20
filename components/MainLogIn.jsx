@@ -22,7 +22,7 @@ const StyledContainer = styled.div`
 
 const StyledCard = styled.div`
   width: calc(100vw - 2rem);
-  height: 215px;
+  max-height: 250px;
   box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 1.5rem;
@@ -55,11 +55,17 @@ const StyledTitle = styled.h2`
   margin: 1rem 0 0.55rem 0;
   color: #4d5256;
   font-weight: 900;
+  width: 80%;
+  word-break: keep-all;
+  line-height: 1.2;
 `;
 
 const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
+  line-height: 1.4;
+  word-break: keep-all;
+  margin-bottom: 4.5rem;
 `;
 
 const StyledSmallIcon = styled.img`

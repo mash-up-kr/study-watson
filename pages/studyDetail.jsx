@@ -33,11 +33,16 @@ const StyledTitle = styled.h2`
   margin: 1rem 0 0.55rem 0rem;
   color: #4d5256;
   font-weight: 900;
+  width: 80%;
+  word-break: keep-all;
+  line-height: 1.2;
 `;
 
 const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
+  line-height: 1.4;
+  word-break: keep-all;
 `;
 
 const StyledIcon = styled.img`
@@ -128,13 +133,13 @@ const studyDetail = ({ studyId, token, pk: user }) => {
       <StyledScreen>
         <StyledStudyInfo>
           {study &&
-          study.category &&
-          study.category.name.length > 0 &&
-          study.category.name === 'Develop' ? (
-            <CategoryDevelop />
-          ) : (
-            <CategoryDesign />
-          )}
+            study.category &&
+            study.category.name.length > 0 &&
+            study.category.name === 'Develop' ? (
+              <CategoryDevelop />
+            ) : (
+              <CategoryDesign />
+            )}
 
           <StyledTitle>{study && !!study.name && study.name}</StyledTitle>
           <StyledText>
@@ -157,7 +162,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           />
         ) : (
           <BlankScheduleCard studyId={studyId} role={role} />
-        )}
+          )}
 
         <StyledSubTitle>스터디 정보</StyledSubTitle>
         <StyledCardBtnContainer>
