@@ -17,27 +17,44 @@ const StyledScreen = styled.div`
 
 const studyMembersInfo = ({ studyId }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const [memberList, setMemberList] = useState([]);
+  const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
+
   useEffect(() => {
-    const filterMemberList =
-      !!membershipSet &&
-      membershipSet.length > 0 &&
-      membershipSet.filter(membership => {
+    if (membershipSet.length > 0) {
+      const filterMemberList = membershipSet.filter(membership => {
         return membership.isWithdraw !== true;
       });
-    setMemberList(filterMemberList);
+      const sortMember = filterMemberList.sort((a, b) => {
+        return a.user.nickname > b.user.nickname;
+      });
+      const normalMemeber = sortMember.filter(member => {
+        return member.role === 'normal';
+      });
+      const subManagerMember = sortMember.filter(member => {
+        return member.role === 'sub_manager';
+      });
+      const managerMember = sortMember.filter(member => {
+        return member.role === 'manager';
+      });
+      const resultMember = [
+        ...managerMember,
+        ...subManagerMember,
+        ...normalMemeber,
+      ];
+      setSortMembershipSet(resultMember);
+    }
     // }
   }, [membershipSet]);
 
-  const totalMember = `총 ${memberList.length}명의 참여자`;
+  const totalMember = `총 ${sortMembershipSet.length}명의 참여자`;
 
   return (
     <>
       <Header />
       <StyledScreen>
         <StyledTitle>{totalMember}</StyledTitle>
-        {memberList &&
-          memberList.map(membership => {
+        {!!sortMembershipSet &&
+          sortMembershipSet.map(membership => {
             return (
               <MemberListItem key={membership.pk} membership={membership} />
             );
