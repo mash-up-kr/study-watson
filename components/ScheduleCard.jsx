@@ -201,7 +201,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
             alt="calendar icon"
             style={{ marginRight: '0.5rem' }}
           />
-          {changeFormat(schedules.startAt)}
+          {changeFormat(schedules.startAt, schedules.studyingTime)}
         </StyledCardText>
         <StyledCardText>
           <img
