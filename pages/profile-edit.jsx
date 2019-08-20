@@ -15,8 +15,8 @@ import {
 
 const StyledProfileEdit = styled.div`
   width: calc(100vw - 2rem);
-  height: calc(100vh - 107px);
   margin: auto;
+  padding-bottom: 2rem;
 `;
 
 const StyledPhoto = styled.img`
