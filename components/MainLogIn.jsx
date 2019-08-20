@@ -43,6 +43,7 @@ const StyledCardBottom = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  
 `;
 
 const StyledCardContainer = styled.div`
@@ -59,6 +60,10 @@ const StyledTitle = styled.h2`
 const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
+`;
+
+const StyledSmallIcon = styled.img`
+  margin: 0 0.3rem 0.1rem 0;
 `;
 
 const StyledIcon = styled.img`
@@ -172,10 +177,9 @@ const MainLogIn = () => {
                           />
                         )}
                         <StyledCardBottom>
-                          <img
+                          <StyledSmallIcon
                             src="/static/icon-calendar.svg"
                             alt="calendar icon"
-                            style={{ marginRight: '0.5rem' }}
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                           <StyledProfileContainer>

@@ -34,24 +34,6 @@ const StyledCardText = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const StyledAttendBtnContainer = styled.div`
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-`;
-
-const StyledAttendBtn = styled.button`
-  font-size: 0.8rem;
-  color: #878d91;
-  background-color: #ededed;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  border: none;
-  margin-left: 0.5rem;
-`;
-
 const StyledDetailBtn = styled.button`
   position: absolute;
   z-index: 2;
@@ -107,6 +89,16 @@ const StyledLabel = styled.span`
 
 const StyledIcon = styled.img`
   margin-right: 1rem;
+`;
+
+const StyledAttendText = styled.div`
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  font-size: 0.8rem;
+  span {
+    color: #878d91;
+  }
 `;
 
 const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
@@ -183,9 +175,9 @@ const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
           &nbsp;까지
         </StyledCardText>
 
-        <p>
+        <StyledAttendText>
           <span>{attendance}</span>
-        </p>
+        </StyledAttendText>
 
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
