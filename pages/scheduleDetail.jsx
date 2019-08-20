@@ -143,7 +143,7 @@ const ScheduleDetail = () => {
         <StyledSubTitle>
           {!!schedule.startAt &&
             schedule.startAt.length > 0 &&
-            changeFormat(schedule.startAt)}
+            changeFormat(schedule.startAt, schedule.studyingTime)}
         </StyledSubTitle>
         <div>
           <StyledLabel>{attendCount}</StyledLabel>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { changeFormat } from '../common/changeFormat'
+import { changeFormat } from '../common/changeFormat';
 
 const StyledMemberList = styled.div`
   width: 100%;
@@ -27,12 +27,12 @@ const StyledPhoto = styled.img`
 
 const StyledName = styled.div`
   font-weight: bold;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledText = styled.div`
   font-size: 0.8rem;
-  color: #878D91;
+  color: #878d91;
   margin-top: 0.5rem;
 `;
 
@@ -56,13 +56,12 @@ const StyledMoreList = styled.div`
 
 const StyeldDate = styled.div`
   font-size: 0.9rem;
-  color: #878D91;
+  color: #878d91;
 `;
 
 const StyleddAttendance = styled.div`
   font-size: 0.9rem;
-  color: #878D91;
-  
+  color: #878d91;
 `;
 
 const StyeldattendanceItem = styled.div`
@@ -78,7 +77,7 @@ const MemberAttendanceItem = ({ membership }) => {
 
   const onClickMoreBtn = () => {
     setClick(!click);
-  }
+  };
 
   let attend = 0;
   let late = 0;
@@ -92,48 +91,41 @@ const MemberAttendanceItem = ({ membership }) => {
       absent += 1;
     }
   });
+  const attendCount = `참석 ${attend} · 지각 ${late} · 결석 ${absent}`;
 
   return (
     <>
       <StyledMemberList>
-        <StyledPhoto
-          src={membership.user.imgProfile}
-          alt=""
-        />
+        <StyledPhoto src={membership.user.imgProfile} alt="" />
         <StyledContainer>
           <StyledName>
             {membership.user.nickname || membership.user.email}
           </StyledName>
-          <StyledText>
-            참석
-            {' '}
-            {attend}
-            {' '}
-            &middot; 지각
-            {' '}
-            {late}
-            {' '}
-            &middot; 결석
-            {' '}
-            {absent}
-          </StyledText>
+          <StyledText>{attendCount}</StyledText>
         </StyledContainer>
         <StyledMoreButton onClick={onClickMoreBtn}>
-          <StyledMoreIcon show={click} src="/static/icon-arrowdown.svg" alt="more icon" />
+          <StyledMoreIcon
+            show={click}
+            src="/static/icon-arrowdown.svg"
+            alt="more icon"
+          />
         </StyledMoreButton>
       </StyledMemberList>
       <StyledMoreList show={click}>
         {membership.attendanceSet &&
           membership.attendanceSet.length > 0 &&
           membership.attendanceSet.map(attendance => {
+            const date = changeFormat(
+              attendance.schedule.startAt,
+              attendance.schedule.studyingTime,
+            );
+            const dateText = `• ${date}`;
             return (
               <StyeldattendanceItem key={attendance.pk}>
-                <StyeldDate>
-                  &bull;
-                  {' '}
-                  {changeFormat(attendance.schedule.startAt)}
-                </StyeldDate>
-                <StyleddAttendance>{attendance.attDisplay || '미정'}</StyleddAttendance>
+                <StyeldDate>{dateText}</StyeldDate>
+                <StyleddAttendance>
+                  {attendance.attDisplay || '미정'}
+                </StyleddAttendance>
               </StyeldattendanceItem>
             );
           })}

@@ -114,7 +114,7 @@ export const getNearestScheduleStartAt = schedules => {
   });
 
   return recentSchedules.length > 0
-    ? changeFormat(recentSchedules[0].startAt)
+    ? changeFormat(recentSchedules[0].startAt, recentSchedules[0].studyingTime)
     : '다음 일정이 없습니다';
 };
 
