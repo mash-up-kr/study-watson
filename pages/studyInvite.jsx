@@ -39,8 +39,8 @@ const StyledToast = styled.div`
   background-color: #595959;
   color: #fff;
   position: fixed;
-  bottom: 60px;
-  font-size: 14px;
+  bottom: 3rem;
+  font-size: 0.9rem;
   text-align: center;
 `;
 

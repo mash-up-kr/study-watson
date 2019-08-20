@@ -13,12 +13,11 @@ import {
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
-  height: calc(100vh - 110px);
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 200px;
+  padding-bottom: 2rem;
 `;
 
 const SignUpData = () => {

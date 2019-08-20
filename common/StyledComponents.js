@@ -10,6 +10,8 @@ const StyledButton = styled.input`
   bottom: 0;
   left: 0;
   border: none;
+  margin: 0;
+  -webkit-border-radius: 0;
 `;
 
 const StyledActionButton = styled.input`
@@ -217,6 +219,10 @@ a {
 
 body { 
   background-color: #F8FAFB;
+}
+
+input, textarea {
+  -webkit-appearance: none;
 }
 `;
 
