@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
@@ -6,16 +7,38 @@ import Router from 'next/router';
 
 import Header from '../containers/Header';
 import {
-  StyledTitle,
-  StyledText,
-  StyledIcon,
-  StyledProfileContainer,
   StyledProfileImage,
   StyledProfileCount,
-  getNearestScheduleStartAt,
 } from '../components/MainLogIn';
-import CategoryDevelop from '../components/CategoryDevelop';
-import CategoryDesign from '../components/CategoryDesign';
+import { StyledActionButton } from '../common/StyledComponents';
+
+const StyledContainer = styled.div`
+  height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const StyledTitle = styled.h2`
+  font-size: 1.5rem;
+  margin: 1rem 0 0.55rem 0;
+  color: #4d5256;
+  font-weight: 900;
+`;
+
+const StyledText = styled.div`
+  font-size: 0.9rem;
+  color: #4d5256;
+`;
+
+const StyledIcon = styled.img`
+  width: 40px;
+`;
+
+const StyledProfileContainer = styled.div`
+  margin: 1rem 0 3rem 0;
+`;
 
 const Join = ({ id, token }) => {
   const user = useSelector(state => state.user);
@@ -77,37 +100,18 @@ const Join = ({ id, token }) => {
   return (
     <>
       <Header />
-      <div
-        onClick={() => {
-          join();
-        }}
-      >
-        참여하기
-      </div>
-      <StyledTitle>{study.name}</StyledTitle>
-      <StyledText>{study.description}</StyledText>
-      <div>
-        {!!study.category && study.category.name === 'Develop' ? (
-          <CategoryDevelop />
-        ) : (
-          <CategoryDesign />
-        )}
-      </div>
-      <div>
-        {!!study && !!study.icon && (
-          <StyledIcon
-            src={study.icon.image}
-            alt="img"
-            style={{ width: '40px' }}
-          />
-        )}
-      </div>
-      <div>
-        {!!study.scheduleSet &&
-          study.scheduleSet.length > 0 &&
-          getNearestScheduleStartAt(study.scheduleSet)}
-      </div>
-      <div>
+      <StyledContainer>
+        <div>
+          {!!study && !!study.icon && (
+            <StyledIcon
+              src={study.icon.image}
+              alt="img"
+            />
+          )}
+        </div>
+        <StyledTitle>{study.name}</StyledTitle>
+        <StyledText>{study.description}</StyledText>
+
         <StyledProfileContainer>
           {!!study.membershipSet &&
             study.membershipSet.length > 0 &&
@@ -129,7 +133,15 @@ const Join = ({ id, token }) => {
               <StyledProfileCount>{userProfileCount}</StyledProfileCount>
             )}
         </StyledProfileContainer>
-      </div>
+
+        <StyledActionButton
+          type="button"
+          value="참여하기"
+          onClick={() => {
+            join();
+          }}
+        />
+      </StyledContainer>
     </>
   );
 };
