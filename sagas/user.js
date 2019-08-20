@@ -239,7 +239,7 @@ function* watchLogOut() {
 // WITHDRAW
 function withDrawAPI({ pk }) {
   const token = getCookie('token');
-  return axios.delete(`https://study-watson.lhy.kr/api/v1/memberships/${pk}/`, {
+  return axios.delete(`https://study-watson.lhy.kr/api/v1/members/${pk}/`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
