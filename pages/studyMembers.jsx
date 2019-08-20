@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -18,13 +18,41 @@ const StudyMembers = () => {
   const { scheduleSet } = useSelector(state => state.study.study);
   const number = scheduleSet && scheduleSet.length > 0 ? scheduleSet.length : 0;
   const title = `총 ${number}번의 스터디 모임`;
+  const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
+
+  useEffect(() => {
+    if (!!membershipSet && membershipSet.length > 0) {
+      const filterMemberList = membershipSet.filter(membership => {
+        return membership.isWithdraw !== true;
+      });
+      const sortMember = filterMemberList.sort((a, b) => {
+        return a.user.nickname > b.user.nickname;
+      });
+      const normalMemeber = sortMember.filter(member => {
+        return member.role === 'normal';
+      });
+      const subManagerMember = sortMember.filter(member => {
+        return member.role === 'sub_manager';
+      });
+      const managerMember = sortMember.filter(member => {
+        return member.role === 'manager';
+      });
+      const resultMember = [
+        ...managerMember,
+        ...subManagerMember,
+        ...normalMemeber,
+      ];
+      setSortMembershipSet(resultMember);
+    }
+  }, [membershipSet]);
+
   return (
     <>
       <Header />
       <StyledScreen>
         <StyledTitle>{title}</StyledTitle>
-        {membershipSet &&
-          membershipSet.map(membership => {
+        {sortMembershipSet &&
+          sortMembershipSet.map(membership => {
             return (
               <MemberAttendanceItem
                 key={membership.pk}
