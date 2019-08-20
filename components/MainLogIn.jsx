@@ -49,25 +49,25 @@ const StyledCardContainer = styled.div`
   padding-bottom: 2rem;
 `;
 
-export const StyledTitle = styled.h2`
+const StyledTitle = styled.h2`
   font-size: 1.5rem;
   margin: 1rem 0 0.55rem 0;
   color: #4d5256;
   font-weight: 900;
 `;
 
-export const StyledText = styled.div`
+const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
 `;
 
-export const StyledIcon = styled.img`
+const StyledIcon = styled.img`
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
 `;
 
-export const StyledProfileContainer = styled.div`
+const StyledProfileContainer = styled.div`
   margin-left: auto;
   position: relative;
 `;
@@ -155,7 +155,7 @@ const MainLogIn = () => {
                             <CategoryDevelop />
                           ) : (
                             <CategoryDesign />
-                          )}
+                            )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -211,23 +211,23 @@ const MainLogIn = () => {
           </>
         ) : (
           <StyledContainer>
-            <img
-              src="/static/image_main.svg"
-              alt="main illust"
-              style={{ marginBottom: '2rem' }}
-            />
-            <StyledImageText>
-              진행중인 스터디가 없습니다.
-              <br />
-              스터디를 만들고 관리해보세요!
-            </StyledImageText>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledActionButton type="button" value="스터디 만들기" />
-              </a>
-            </Link>
-          </StyledContainer>
-        )}
+              <img
+                src="/static/image_main.svg"
+                alt="main illust"
+                style={{ marginBottom: '2rem' }}
+              />
+              <StyledImageText>
+                진행중인 스터디가 없습니다.
+                <br />
+                스터디를 만들고 관리해보세요!
+              </StyledImageText>
+              <Link route="/addStudy" href="/addStudy">
+                <a>
+                  <StyledActionButton type="button" value="스터디 만들기" />
+                </a>
+              </Link>
+            </StyledContainer>
+          )}
       </div>
     </div>
   );
