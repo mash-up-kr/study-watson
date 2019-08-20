@@ -13,16 +13,16 @@ export const changeFormat = (startAt, studyingTime) => {
 
   let date = `${matches[0].replace(/-/g, '. ')} ${
     weekday[day]
-  } ${hour}:${minute}`;
+    } ${hour}:${minute}`;
 
   if (studyingTime) {
     const endTime = studyingTime.split(':');
     const endHour = parseInt(hour, 10) + parseInt(endTime[0], 10);
     const endMinute = parseInt(minute, 10) + parseInt(endTime[1], 10);
 
-    date += ` ~ ${endHour < 10 ? `0${endHour}` : endHour}:${
+    date += ` ~ ${endHour < 10 ? `${endHour}` : endHour}:${
       endMinute < 10 ? `0${endMinute}` : endMinute
-    }`;
+      }`;
   }
 
   date += ` ${isAm ? 'AM' : 'PM'}`;
