@@ -20,7 +20,7 @@ const studyMembersInfo = ({ studyId }) => {
   const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
 
   useEffect(() => {
-    if (membershipSet.length > 0) {
+    if (!!membershipSet && membershipSet.length > 0) {
       const filterMemberList = membershipSet.filter(membership => {
         return membership.isWithdraw !== true;
       });
@@ -46,7 +46,8 @@ const studyMembersInfo = ({ studyId }) => {
     // }
   }, [membershipSet]);
 
-  const totalMember = `총 ${sortMembershipSet.length}명의 참여자`;
+  const totalMember = `총 ${!!sortMembershipSet &&
+    sortMembershipSet.length}명의 참여자`;
 
   return (
     <>
