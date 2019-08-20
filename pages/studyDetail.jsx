@@ -70,6 +70,7 @@ const StyledCardBtnContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledCardBtn = styled.div`

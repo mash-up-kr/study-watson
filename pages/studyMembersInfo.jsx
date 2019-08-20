@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { LOAD_STUDY_REQUEST } from '../reducers/study';
+import { LOAD_STUDY_REQUEST, LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
+import MemberSettingBtn from '../components/MemberSettingBtn';
 import MemberListItem from '../components/MemberListItem';
-import { Link } from '../routes';
 import { StyledTitle } from '../common/StyledComponents';
 
 const StyledScreen = styled.div`
@@ -17,6 +17,9 @@ const StyledScreen = styled.div`
 
 const studyMembersInfo = ({ studyId }) => {
   const { membershipSet } = useSelector(state => state.study.study);
+  const { role } = useSelector(
+    state => state.study.memberships,
+  );
   const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
 
   useEffect(() => {
@@ -61,48 +64,33 @@ const studyMembersInfo = ({ studyId }) => {
             );
           })}
 
-        <div>
-          <div>
-            <div>
-              <Link route={`/manager/${studyId}`} href={`/manager/${studyId}`}>
-                <a>리더 임명</a>
-              </Link>
-            </div>
-            <div>
-              <Link
-                route={`/subManager/${studyId}`}
-                href={`/subManager/${studyId}`}
-              >
-                <a>임시 리더 임명</a>
-              </Link>
-            </div>
-            <div>
-              <Link route={`/normal/${studyId}`} href={`/normal/${studyId}`}>
-                <a>일반 유저</a>
-              </Link>
-            </div>
-            <div>
-              <Link
-                route={`/withdrawStudy/${studyId}`}
-                href={`/withdrawStudy/${studyId}`}
-              >
-                <a>제명</a>
-              </Link>
-            </div>
-          </div>
-        </div>
+        {(role === 'manager' || role === 'sub_manager') && (
+          <MemberSettingBtn studyId={studyId} />
+        )}
       </StyledScreen>
     </>
   );
 };
 
-studyMembersInfo.getInitialProps = ({ ctx, token }) => {
+studyMembersInfo.getInitialProps = ({ ctx, token, pk }) => {
   const { studyId } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_STUDY_REQUEST,
     data: { token, studyId },
   });
-  return { studyId };
+  ctx.store.dispatch({
+    type: LOAD_STUDY_MEMBERSHIPS_REQUEST,
+    data: {
+      studyId,
+      pk,
+      token,
+    },
+  });
+  return {
+    studyId,
+    token,
+    pk,
+  };
 };
 
 studyMembersInfo.propTypes = {
