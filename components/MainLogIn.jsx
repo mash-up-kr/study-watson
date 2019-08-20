@@ -47,7 +47,7 @@ const StyledCardBottom = styled.div`
 `;
 
 const StyledCardContainer = styled.div`
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
 `;
 
 const StyledTitle = styled.h2`
