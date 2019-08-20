@@ -24,7 +24,8 @@ const StyledForm = styled.form`
 `;
 
 const addSchedule = ({ studyId }) => {
-  const date = new Date().toISOString().slice(0, 16);
+  const utcDate = new Date().getTime() + 10 * 60 * 60 * 1000;
+  const date = `${new Date(utcDate).toISOString().slice(0, 14)}00`;
   const [subject, setSubject] = useInput('');
   const [location, setLocation] = useInput('');
   const [description, setDescription] = useInput('');
@@ -89,7 +90,7 @@ const addSchedule = ({ studyId }) => {
             value={voteEndAt}
             onChange={setvoteEndAt}
             onClickReset={() => setvoteEndAt('')}
-          // 2019. 07. 20 SAT 2:00 PM
+            // 2019. 07. 20 SAT 2:00 PM
           />
           <Input
             label="스터디 시작 일시"
