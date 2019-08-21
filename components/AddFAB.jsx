@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledFAB = styled.div`
@@ -16,9 +16,31 @@ const StyledFAB = styled.div`
 `;
 
 const AddFAB = () => {
+  const [icon, setIcon] = useState('');
+  useEffect(() => {
+    const path = window.location.pathname.replace(/[1-9]/g, "");
+    console.log(path);
+    switch (path) {
+      case '/':
+        setIcon('icon-add');
+        break;
+      case '/studyDetail/':
+        setIcon('icon-calendar-white');
+        break;
+      default:
+        setIcon('icon-add');
+        break;
+    }
+  });
+
   return (
     <StyledFAB>
-      <img src="/static/icon-add.svg" alt="add icon" />
+      {(icon === 'icon-add') && (
+        <img src="/static/icon-add.svg" alt="add icon" />
+      )}
+      {(icon === 'icon-calendar-white') && (
+        <img src="/static/icon-calendar-white.svg" alt="add icon" />
+      )}
     </StyledFAB>
   );
 };
