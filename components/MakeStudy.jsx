@@ -25,8 +25,13 @@ const StyledScreen = styled.div`
 const StyledRadio = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   padding: 1rem 0;
+`;
+
+const StyledRadioButton = styled.input`
+  -webkit-appearance: radio;
+  margin-right: 0.5rem;
 `;
 
 const StyledIconContainer = styled.div`
@@ -111,7 +116,7 @@ const MakeStudy = ({
           <StyledRadio>
             <div>
               <label>
-                <input
+                <StyledRadioButton
                   type="radio"
                   name="Develop"
                   id="develop"
@@ -124,7 +129,7 @@ const MakeStudy = ({
             </div>
             <div style={{ marginLeft: '1rem' }}>
               <label>
-                <input
+                <StyledRadioButton
                   type="radio"
                   name="Design"
                   id="design"
