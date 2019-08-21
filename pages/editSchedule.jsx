@@ -164,14 +164,6 @@ const editSchedule = () => {
 
 editSchedule.getInitialProps = ({ ctx, token }) => {
   const scheduleId = ctx.query.scheduleId || '0';
-  return {
-    scheduleId,
-    token,
-  };
-};
-
-editSchedule.getInitialProps = ({ ctx, token }) => {
-  const { scheduleId } = ctx.query;
   ctx.store.dispatch({
     type: LOAD_SCHEDULE_REQUEST,
     data: {
@@ -179,6 +171,10 @@ editSchedule.getInitialProps = ({ ctx, token }) => {
       token,
     },
   });
+  return {
+    scheduleId,
+    token,
+  };
 };
 
 export default editSchedule;
