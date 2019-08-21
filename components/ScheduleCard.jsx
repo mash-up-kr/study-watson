@@ -280,11 +280,9 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           (!schedules.selfAttendance || !schedules.selfAttendance.pk) && (
             <div>투표에 참여 할 수 없습니다.</div>
           )}
-        {(role === 'manager' || role === 'sub_manager') && (
-          <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
-            <img src="/static/icon-detail.svg" alt="detail icon" />
-          </StyledDetailBtn>
-        )}
+        <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
+          <img src="/static/icon-detail.svg" alt="detail icon" />
+        </StyledDetailBtn>
       </StyledScheduleCard>
 
       <StyledDetailMenu show={click}>
