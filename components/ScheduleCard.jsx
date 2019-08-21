@@ -277,8 +277,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
             </StyledAttendBtnContainer>
           )}
         {!isVoted &&
-          !schedules.selfAttendance &&
-          !schedules.selfAttendance.pk && (
+          (!schedules.selfAttendance || !schedules.selfAttendance.pk) && (
             <div>투표에 참여 할 수 없습니다.</div>
           )}
         {(role === 'manager' || role === 'sub_manager') && (
