@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>icon-vote</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-vote" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#A9AFB3" stroke-width="2" stroke-linecap="square" x="2" y="2" width="20" height="20"></rect>
+        <path d="M11,7 L17,7 M11,12 L17,12 M11,17 L17,17" id="Shape" stroke="#A9AFB3" stroke-width="2" stroke-linecap="square"></path>
+        <rect id="Rectangle" stroke="#A9AFB3" fill="#A9AFB3" x="6.5" y="6.5" width="1" height="1"></rect>
+        <rect id="Rectangle-Copy" stroke="#A9AFB3" fill="#A9AFB3" x="6.5" y="11.5" width="1" height="1"></rect>
+        <rect id="Rectangle-Copy-2" stroke="#A9AFB3" fill="#A9AFB3" x="6.5" y="16.5" width="1" height="1"></rect>
+    </g>
+</svg>
