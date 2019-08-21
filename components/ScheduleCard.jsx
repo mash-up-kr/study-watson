@@ -231,44 +231,56 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
         </StyledCardText>
 
         {!isVoted &&
-        schedules.selfAttendance &&
-        !!schedules.selfAttendance.pk ? (
-          <StyledAttendBtnContainer>
-            <StyledAttendBtn
-              onClick={onClickVote}
-              data-vote="attend"
-              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-            >
-              참석
-            </StyledAttendBtn>
-            <StyledAttendBtn
-              onClick={onClickVote}
-              data-vote="absent"
-              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-            >
-              불참
-            </StyledAttendBtn>
-            <StyledAttendBtn
-              onClick={onClickVote}
-              data-vote="late"
-              data-pk={schedules.selfAttendance && schedules.selfAttendance.pk}
-            >
-              지각
-            </StyledAttendBtn>
-          </StyledAttendBtnContainer>
-        ) : schedules.selfAttendance && !!schedules.selfAttendance.pk ? (
-          <StyledAttendBtnContainer>
-            <StyledAttendText>
-              <span>{expectAtt}</span>
-              <span> 예정</span>
-            </StyledAttendText>
-            <StyledAttendBtn type="button" onClick={reVote}>
-              다시 투표하기
-            </StyledAttendBtn>
-          </StyledAttendBtnContainer>
-        ) : (
-          <div>투표에 참여 할 수 없습니다.</div>
-        )}
+          !!schedules.selfAttendance &&
+          !!schedules.selfAttendance.pk && (
+            <StyledAttendBtnContainer>
+              <StyledAttendBtn
+                onClick={onClickVote}
+                data-vote="attend"
+                data-pk={
+                  schedules.selfAttendance && schedules.selfAttendance.pk
+                }
+              >
+                참석
+              </StyledAttendBtn>
+              <StyledAttendBtn
+                onClick={onClickVote}
+                data-vote="absent"
+                data-pk={
+                  schedules.selfAttendance && schedules.selfAttendance.pk
+                }
+              >
+                불참
+              </StyledAttendBtn>
+              <StyledAttendBtn
+                onClick={onClickVote}
+                data-vote="late"
+                data-pk={
+                  schedules.selfAttendance && schedules.selfAttendance.pk
+                }
+              >
+                지각
+              </StyledAttendBtn>
+            </StyledAttendBtnContainer>
+          )}
+        {!!isVoted &&
+          !!schedules.selfAttendance &&
+          !!schedules.selfAttendance.pk && (
+            <StyledAttendBtnContainer>
+              <StyledAttendText>
+                <span>{expectAtt}</span>
+                <span> 예정</span>
+              </StyledAttendText>
+              <StyledAttendBtn type="button" onClick={reVote}>
+                다시 투표하기
+              </StyledAttendBtn>
+            </StyledAttendBtnContainer>
+          )}
+        {!isVoted &&
+          !schedules.selfAttendance &&
+          !schedules.selfAttendance.pk && (
+            <div>투표에 참여 할 수 없습니다.</div>
+          )}
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
             <img src="/static/icon-detail.svg" alt="detail icon" />
