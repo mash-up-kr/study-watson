@@ -18,7 +18,7 @@ const ScheduleCardBeforeContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const beforeStudy = ({ studyId, token, pk: user }) => {
+const beforeStudy = ({ token }) => {
   const { schedules } = useSelector(state => state.schedule);
   const { role } = useSelector(state => state.study.memberships);
 
@@ -48,9 +48,7 @@ const beforeStudy = ({ studyId, token, pk: user }) => {
               <ScheduleCardBeforeContainer key={schedule.pk}>
                 <ScheduleCardBefore
                   schedules={schedule}
-                  studyId={studyId}
                   token={token}
-                  user={user}
                   role={role}
                 />
               </ScheduleCardBeforeContainer>
@@ -86,9 +84,7 @@ beforeStudy.getInitialProps = ({ ctx, token, pk }) => {
 };
 
 beforeStudy.propTypes = {
-  studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  pk: PropTypes.string.isRequired,
 };
 
 export default beforeStudy;

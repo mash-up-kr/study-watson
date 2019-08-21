@@ -6,10 +6,7 @@ import Axios from 'axios';
 
 import { Link } from '../routes';
 
-import {
-  LOAD_SCHEDULES_REQUEST,
-  DELETE_SCHEDULE_REQUEST,
-} from '../reducers/schedule';
+import { DELETE_SCHEDULE_REQUEST } from '../reducers/schedule';
 import { changeFormat } from '../common/changeFormat';
 
 const StyledScheduleCard = styled.div`
@@ -101,7 +98,7 @@ const StyledAttendText = styled.div`
   }
 `;
 
-const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
+const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
   const [click, setClick] = useState(false);
   const [attendance, setAttendance] = useState(
     '이 일정이 만들어질 당시에는, 스터디에 가입하지 않았습니다',
@@ -207,6 +204,19 @@ const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
           </StyledLabel>
         </StyledDetailItem>
         <StyledDetailItem>
+          <Link route={`/vote/${schedules.pk}`} href={`/vote/${schedules.pk}`}>
+            <a>
+              <StyledLabel>
+                <StyledIcon
+                  src="/static/icon-checkattend.svg"
+                  alt="checkattend icon"
+                />
+                투표 현황
+              </StyledLabel>
+            </a>
+          </Link>
+        </StyledDetailItem>
+        <StyledDetailItem>
           <Link
             route={`/schedule/${schedules.pk}`}
             href={`/schedule/${schedules.pk}`}
@@ -236,9 +246,7 @@ const ScheduleCardBefore = ({ schedules, studyId, token, user, role }) => {
 
 ScheduleCardBefore.propTypes = {
   schedules: PropTypes.object.isRequired,
-  studyId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
 };
 
