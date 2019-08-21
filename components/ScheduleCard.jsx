@@ -31,11 +31,13 @@ const StyledCardTitle = styled.h2`
 const StyledCardText = styled.div`
   font-size: 0.8rem;
   color: #878d91;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
 `;
 
 const StyledSmallIcon = styled.img`
   margin-right: 0.5rem;
+  position: relative;
+  top: 1.5px;
 `;
 
 const StyledAttendBtnContainer = styled.div`
