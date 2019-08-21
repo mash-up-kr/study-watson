@@ -35,7 +35,7 @@ const CreateStudy = () => {
   const addStudy = () => {
     dispatch({
       type: ADD_STUDY_REQUEST,
-      data: { name, description, category, icon: icon.pk },
+      data: { name, description, category, icon },
     });
   };
 

@@ -12,6 +12,7 @@ import {
 } from '../common/StyledComponents';
 import CategoryDevelop from './CategoryDevelop';
 import CategoryDesign from './CategoryDesign';
+import StudyIcon from './StudyIcon';
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -52,47 +53,10 @@ const StyledIconBox = styled.div`
   }
 `;
 
-const StyledIcon = styled.label`
-  position: relative;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const StyledIconCategory = styled.div`
   font-size: 0.7rem;
   color: #878d91;
   margin-bottom: 0.5rem;
-`;
-
-const StyledHideRadio = styled.input`
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  -webkit-appearance: none;
-  box-shadow: none;
-  display: none;
-  &:checked + label {
-    border: 2px solid #4b2bff;
-  }
-`;
-
-const StyledRadioLabel = styled.label`
-  position: relative;
-  z-index: 10;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`;
-
-const StyledIconImage = styled.img`
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 `;
 
 const MakeStudy = ({
@@ -107,6 +71,7 @@ const MakeStudy = ({
   icons,
   setIcon,
 }) => {
+  console.log(icons, icon);
   return (
     <StyledScreen>
       <StyledTitle>새로운 스터디</StyledTitle>
@@ -154,43 +119,65 @@ const MakeStudy = ({
             onChange={setDescription}
           />
         </StyledInputContainer>
-        <StyledInputContainer>
-          <StyledLabel htmlFor="icon">대표 아이콘</StyledLabel>
-          <StyledIconContainer>
-            <StyledIconCategory>Other Categories</StyledIconCategory>
-            <StyledIconBox>
-              {icons.map(i => {
-                console.log(11, i);
-                return (
-                  <div key={i.pk}>
-                    <StyledIcon>
-                      <StyledHideRadio
-                        id={i.pk}
-                        type="radio"
-                        name="test"
-                        value="small"
-                        checked={icon.pk === i.pk}
-                        onChange={() => setIcon(i)}
-                      />
-                      <StyledRadioLabel htmlFor={`${i.pk}`} />
-                      <StyledIconImage src={i.image} alt="img" />
-                    </StyledIcon>
-                  </div>
-                );
-              })}
-            </StyledIconBox>
-            <StyledIconCategory>Design</StyledIconCategory>
-            <StyledIconBox>icons</StyledIconBox>
-            <StyledIconCategory>Basic Language</StyledIconCategory>
-            <StyledIconBox>icons</StyledIconBox>
-            <StyledIconCategory>Mobile Front-End</StyledIconCategory>
-            <StyledIconBox>icons</StyledIconBox>
-            <StyledIconCategory>Web Front-End</StyledIconCategory>
-            <StyledIconBox>icons</StyledIconBox>
-            <StyledIconCategory>Back-End</StyledIconCategory>
-            <StyledIconBox>icons</StyledIconBox>
-          </StyledIconContainer>
-        </StyledInputContainer>
+        {icons.length > 0 && !!icon && !!icon.pk && (
+          <StyledInputContainer>
+            <StyledLabel htmlFor="icon">대표 아이콘</StyledLabel>
+            <StyledIconContainer>
+              <StyledIconCategory>Design</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[6]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[8]} pk={icon.pk} setIcon={setIcon} />
+
+                <StudyIcon icon={icons[18]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[22]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[29]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+              <StyledIconCategory>Basic Language</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[2]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[3]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[10]} pk={icon.pk} setIcon={setIcon} />
+
+                <StudyIcon icon={icons[12]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[13]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[14]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[17]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[19]} pk={icon.pk} setIcon={setIcon} />
+
+                <StudyIcon icon={icons[24]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[25]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+              <StyledIconCategory>Mobile Front-End</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[0]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[7]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[11]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+              <StyledIconCategory>Web Front-End</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[1]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[20]} pk={icon.pk} setIcon={setIcon} />
+
+                <StudyIcon icon={icons[28]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+              <StyledIconCategory>Back-End</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[4]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[15]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[16]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[23]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+              <StyledIconCategory>Other Categories</StyledIconCategory>
+              <StyledIconBox>
+                <StudyIcon icon={icons[5]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[9]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[21]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[26]} pk={icon.pk} setIcon={setIcon} />
+                <StudyIcon icon={icons[27]} pk={icon.pk} setIcon={setIcon} />
+              </StyledIconBox>
+            </StyledIconContainer>
+          </StyledInputContainer>
+        )}
         <StyledButton type="submit" value="다음" />
       </StyledForm>
     </StyledScreen>
