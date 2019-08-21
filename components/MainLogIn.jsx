@@ -64,12 +64,12 @@ const StyledText = styled.div`
   font-size: 0.9rem;
   color: #4d5256;
   line-height: 1.4;
-  word-break: keep-all;
   margin-bottom: 4.5rem;
 `;
 
 const StyledSmallIcon = styled.img`
-  margin: 0 0.3rem 0.1rem 0;
+  
+  margin-right: 0.4rem;
 `;
 
 const StyledIcon = styled.img`

@@ -31,6 +31,7 @@ export default class CustomDocument extends Document {
     return (
       <html lang="ko" dir="ltr" {...htmlAttrs}>
         <head>
+          <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
           <GlobalStyle />
           <script
             async
@@ -51,23 +52,23 @@ export default class CustomDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
-          <title>study-watson</title>
+          <title>Study Watson</title>
           <meta
             name="description"
-            content="모든 스터디 관리를 한 곳에서 도와주는 Study Watson 입니다."
+            content="효율적으로 스터디를 관리하는 가장 쉬운 방법 Study Watson"
           />
           <meta property="og:type" content="website" />
           <meta
             property="og:url"
             content="https://study-watson.herokuapp.com/"
           />
-          <meta property="og:title" content="study-watson" />
+          <meta property="og:title" content="Study Watson" />
           <meta property="og:image" content="/static/meta-image.png" />
           <meta
             property="og:description"
-            content="모든 스터디 관리를 한 곳에서 도와주는 Study Watson 입니다."
+            content="효율적으로 스터디를 관리하는 가장 쉬운 방법 Study Watson"
           />
-          <meta property="og:site_name" content="study-watson" />
+          <meta property="og:site_name" content="Study Watson" />
           <meta property="og:locale" content="ko" />
           {/* <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" /> */}

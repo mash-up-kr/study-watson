@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledContainer = styled.span`
   font-size: 0.9rem;
   color: #FF6584;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 const StyledCircle = styled.span`
@@ -13,7 +13,7 @@ const StyledCircle = styled.span`
   display: inline-block;
   border-radius: 50%;
   background-color: #FF6584;
-  margin: 0 6px 2px 0;
+  margin: 0 6px 1px 0;
 `;
 
 const CategoryDesign = () => {

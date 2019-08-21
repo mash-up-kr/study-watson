@@ -219,6 +219,8 @@ a {
 
 body { 
   background-color: #F8FAFB;
+  font-family: 'Lato', 'APPLE SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Helvetica, "NanumGothic", "맑은 고딕", "Malgun Gothic", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 input, textarea {
