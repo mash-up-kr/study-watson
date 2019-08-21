@@ -43,7 +43,7 @@ const StyledCardBottom = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  
+  letter-spacing: -0.5px;
 `;
 
 const StyledCardContainer = styled.div`
@@ -68,7 +68,6 @@ const StyledText = styled.div`
 `;
 
 const StyledSmallIcon = styled.img`
-  
   margin-right: 0.4rem;
 `;
 
