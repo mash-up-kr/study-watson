@@ -16,7 +16,8 @@ const router = routes()
   .add('subManager', '/subManager/:studyId', 'subManager')
   .add('normal', '/normal/:studyId', 'normal')
   .add('withdrawStudy', '/withdrawStudy/:studyId', 'withdrawStudy')
-  .add('studyInvite', '/studyInvite/:studyId', 'studyInvite');
+  .add('studyInvite', '/studyInvite/:studyId', 'studyInvite')
+  .add('vote', '/vote/:scheduleId', 'vote');
 exports.Link = router.Link;
 
 module.exports = router;
