@@ -19,7 +19,6 @@ const AddFAB = () => {
   const [icon, setIcon] = useState('');
   useEffect(() => {
     const path = window.location.pathname.replace(/[1-9]/g, "");
-    console.log(path);
     switch (path) {
       case '/':
         setIcon('icon-add');

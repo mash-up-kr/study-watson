@@ -226,6 +226,8 @@ body {
 input, textarea {
   -webkit-appearance: none;
 }
+
+
 `;
 
 export {
