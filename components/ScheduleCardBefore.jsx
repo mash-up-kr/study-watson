@@ -176,33 +176,12 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
           <span>{attendance}</span>
         </StyledAttendText>
 
-        {(role === 'manager' || role === 'sub_manager') && (
-          <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
-            <img src="/static/icon-detail.svg" alt="detail icon" />
-          </StyledDetailBtn>
-        )}
+        <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
+          <img src="/static/icon-detail.svg" alt="detail icon" />
+        </StyledDetailBtn>
       </StyledScheduleCard>
 
       <StyledDetailMenu show={click}>
-        <StyledDetailItem>
-          <Link
-            route={`/editSchedule/${schedules.pk}`}
-            href={`/editSchedule/${schedules.pk}`}
-          >
-            <a>
-              <StyledLabel data-pk={schedules.pk}>
-                <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
-                일정 수정
-              </StyledLabel>
-            </a>
-          </Link>
-        </StyledDetailItem>
-        <StyledDetailItem>
-          <StyledLabel data-pk={schedules.pk} onClick={deleteSchedule}>
-            <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
-            일정 삭제
-          </StyledLabel>
-        </StyledDetailItem>
         <StyledDetailItem>
           <Link route={`/vote/${schedules.pk}`} href={`/vote/${schedules.pk}`}>
             <a>
@@ -216,22 +195,45 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
             </a>
           </Link>
         </StyledDetailItem>
-        <StyledDetailItem>
-          <Link
-            route={`/schedule/${schedules.pk}`}
-            href={`/schedule/${schedules.pk}`}
-          >
-            <a>
-              <StyledLabel>
-                <StyledIcon
-                  src="/static/icon-checkattend.svg"
-                  alt="checkattend icon"
-                />
-                출결 관리
+        {(role === 'manager' || role === 'sub_manager') && (
+          <>
+            <StyledDetailItem>
+              <Link
+                route={`/editSchedule/${schedules.pk}`}
+                href={`/editSchedule/${schedules.pk}`}
+              >
+                <a>
+                  <StyledLabel data-pk={schedules.pk}>
+                    <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
+                    일정 수정
+                  </StyledLabel>
+                </a>
+              </Link>
+            </StyledDetailItem>
+            <StyledDetailItem>
+              <StyledLabel data-pk={schedules.pk} onClick={deleteSchedule}>
+                <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
+                일정 삭제
               </StyledLabel>
-            </a>
-          </Link>
-        </StyledDetailItem>
+            </StyledDetailItem>
+            <StyledDetailItem>
+              <Link
+                route={`/schedule/${schedules.pk}`}
+                href={`/schedule/${schedules.pk}`}
+              >
+                <a>
+                  <StyledLabel>
+                    <StyledIcon
+                      src="/static/icon-checkattend.svg"
+                      alt="checkattend icon"
+                    />
+                    출결 관리
+                  </StyledLabel>
+                </a>
+              </Link>
+            </StyledDetailItem>
+          </>
+        )}
         <StyledDetailItem onClick={closeMenu}>
           <StyledLabel>
             <StyledIcon src="/static/icon-close.svg" alt="close icon" />

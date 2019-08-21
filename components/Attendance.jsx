@@ -21,7 +21,7 @@ const StyledMemberList = styled.div`
 
 const StyledName = styled.div`
   font-weight: bold;
-  color: #4D5256;
+  color: #4d5256;
   font-size: 0.9rem;
 `;
 
@@ -44,44 +44,47 @@ const StyledAttendBtn = styled.button`
 const Attendance = ({ attendance, onClickAttendance }) => {
   return (
     <StyledMemberList>
-      <StyledPhoto
-        src={attendance.user.imgProfile}
-        alt=""
-      />
+      <StyledPhoto src={attendance.user.imgProfile} alt="" />
       <StyledName>{attendance.user.nickname}</StyledName>
-      <StyledAttendBtnContainer>
-        <StyledAttendBtn
-          data-pk={attendance.pk}
-          data-user={attendance.user.pk}
-          data-attendance="attend"
-          onClick={onClickAttendance}
-        >
-          출석
-        </StyledAttendBtn>
-        <StyledAttendBtn
-          data-pk={attendance.pk}
-          data-user={attendance.user.pk}
-          data-attendance="late"
-          onClick={onClickAttendance}
-        >
-          지각
-        </StyledAttendBtn>
-        <StyledAttendBtn
-          data-pk={attendance.pk}
-          data-user={attendance.user.pk}
-          data-attendance="absent"
-          onClick={onClickAttendance}
-        >
-          결석
-        </StyledAttendBtn>
-      </StyledAttendBtnContainer>
+      {!!onClickAttendance && (
+        <StyledAttendBtnContainer>
+          <StyledAttendBtn
+            data-pk={attendance.pk}
+            data-user={attendance.user.pk}
+            data-attendance="attend"
+            onClick={onClickAttendance}
+          >
+            출석
+          </StyledAttendBtn>
+          <StyledAttendBtn
+            data-pk={attendance.pk}
+            data-user={attendance.user.pk}
+            data-attendance="late"
+            onClick={onClickAttendance}
+          >
+            지각
+          </StyledAttendBtn>
+          <StyledAttendBtn
+            data-pk={attendance.pk}
+            data-user={attendance.user.pk}
+            data-attendance="absent"
+            onClick={onClickAttendance}
+          >
+            결석
+          </StyledAttendBtn>
+        </StyledAttendBtnContainer>
+      )}
     </StyledMemberList>
   );
 };
 
 Attendance.propTypes = {
   attendance: PropTypes.object.isRequired,
-  onClickAttendance: PropTypes.func.isRequired,
+  onClickAttendance: PropTypes.any,
+};
+
+Attendance.defaultProps = {
+  onClickAttendance: null,
 };
 
 export default Attendance;
