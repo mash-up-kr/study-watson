@@ -62,6 +62,7 @@ const StyledAttendBtn = styled.button`
 
 const StyledAttendText = styled.div`
   font-size: 0.8rem;
+  color: #878d91;
   span {
     color: #878d91;
   }
@@ -278,7 +279,9 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           )}
         {!isVoted &&
           (!schedules.selfAttendance || !schedules.selfAttendance.pk) && (
-            <div>투표에 참여 할 수 없습니다.</div>
+            <StyledAttendBtnContainer>
+              <StyledAttendText>투표에 참여 할 수 없습니다.</StyledAttendText>
+            </StyledAttendBtnContainer>
           )}
         <StyledDetailBtn type="button" onClick={onClickDetailBtn}>
           <img src="/static/icon-detail.svg" alt="detail icon" />
