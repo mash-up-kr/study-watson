@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import Axios from 'axios';
 import styled from 'styled-components';
 
 import Header from '../containers/Header';
