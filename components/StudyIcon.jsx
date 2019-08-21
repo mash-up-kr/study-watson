@@ -40,7 +40,6 @@ const StyledIconImage = styled.img`
 `;
 
 const StudyIcon = ({ icon, pk, setIcon }) => {
-  console.log(22, pk);
   return (
     <div key={icon.pk}>
       <StyledIcon>
