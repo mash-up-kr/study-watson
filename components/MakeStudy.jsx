@@ -71,7 +71,6 @@ const MakeStudy = ({
   icons,
   setIcon,
 }) => {
-  console.log(icons, icon);
   return (
     <StyledScreen>
       <StyledTitle>새로운 스터디</StyledTitle>
