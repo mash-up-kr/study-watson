@@ -41,7 +41,6 @@ const Vote = () => {
   const [late, setLate] = useState([]);
   const [absent, setAbsent] = useState([]);
   const [none, setNone] = useState([]);
-  console.log(11, schedule);
 
   if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
     const attendList = [];
@@ -68,74 +67,10 @@ const Vote = () => {
     }
   }
 
-  const onClickAttendance = async event => {
-    console.log('scheduleDetail');
-    const { pk, user, attendance: vote } = event.target.dataset;
-    try {
-      await Axios.patch(
-        `https://study-watson.lhy.kr/api/v1/study/attendances/${pk}/`,
-        {
-          user,
-          vote,
-        },
-      );
-      // Router.push(`/schedule/${scheduleId}`);
-      const attendance =
-        attend.find(Element => {
-          return JSON.parse(Element.pk) === JSON.parse(pk);
-        }) ||
-        late.find(Element => {
-          return JSON.parse(Element.pk) === JSON.parse(pk);
-        }) ||
-        absent.find(Element => {
-          return JSON.parse(Element.pk) === JSON.parse(pk);
-        }) ||
-        none.find(Element => {
-          return JSON.parse(Element.pk) === JSON.parse(pk);
-        });
-      const filterAttend = attend.filter(Element => {
-        return JSON.parse(Element.pk) !== JSON.parse(pk);
-      });
-      setAttend(filterAttend);
-      const filterLate = late.filter(Element => {
-        return JSON.parse(Element.pk) !== JSON.parse(pk);
-      });
-      setLate(filterLate);
-      const filterAbsent = absent.filter(Element => {
-        return JSON.parse(Element.pk) !== JSON.parse(pk);
-      });
-      setAbsent(filterAbsent);
-      const filterNone = none.filter(Element => {
-        return JSON.parse(Element.pk) !== JSON.parse(pk);
-      });
-      setNone(filterNone);
-      if (vote === 'attend') {
-        if (!!attendance && !!attendance.pk) {
-          // eslint-disable-next-line no-shadow
-          setAttend(attend => [...attend, attendance]);
-        }
-      } else if (vote === 'late') {
-        if (!!attendance && !!attendance.pk) {
-          // eslint-disable-next-line no-shadow
-          setLate(late => [...late, attendance]);
-        }
-      } else if (vote === 'absent') {
-        if (!!attendance && !!attendance.pk) {
-          // eslint-disable-next-line no-shadow
-          setAbsent(absent => [...absent, attendance]);
-        }
-      } else {
-        console.log('???');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const attendCount = `출석 ${attend.length}`;
   const lateCount = `지각 ${late.length}`;
   const absentCount = `결석 ${absent.length}`;
   const noneCount = `미정 ${none.length}`;
-  console.log(none);
   return (
     <>
       <Header />
@@ -151,13 +86,7 @@ const Vote = () => {
           {attend &&
             attend.length > 0 &&
             attend.map(attendance => {
-              return (
-                <Attendance
-                  key={attendance.pk}
-                  attendance={attendance}
-                  onClickAttendance={onClickAttendance}
-                />
-              );
+              return <Attendance key={attendance.pk} attendance={attendance} />;
             })}
         </div>
         <div>
@@ -165,13 +94,7 @@ const Vote = () => {
           {late &&
             late.length > 0 &&
             late.map(attendance => {
-              return (
-                <Attendance
-                  key={attendance.pk}
-                  attendance={attendance}
-                  onClickAttendance={onClickAttendance}
-                />
-              );
+              return <Attendance key={attendance.pk} attendance={attendance} />;
             })}
         </div>
         <div>
@@ -179,13 +102,7 @@ const Vote = () => {
           {absent &&
             absent.length > 0 &&
             absent.map(attendance => {
-              return (
-                <Attendance
-                  key={attendance.pk}
-                  attendance={attendance}
-                  onClickAttendance={onClickAttendance}
-                />
-              );
+              return <Attendance key={attendance.pk} attendance={attendance} />;
             })}
         </div>
         <div>
@@ -193,13 +110,7 @@ const Vote = () => {
           {none &&
             none.length > 0 &&
             none.map(attendance => {
-              return (
-                <Attendance
-                  key={attendance.pk}
-                  attendance={attendance}
-                  onClickAttendance={onClickAttendance}
-                />
-              );
+              return <Attendance key={attendance.pk} attendance={attendance} />;
             })}
         </div>
       </StyledScreen>

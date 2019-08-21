@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -63,7 +63,7 @@ const StyledIcon = styled.label`
 
 const StyledIconCategory = styled.div`
   font-size: 0.7rem;
-  color: #878D91;
+  color: #878d91;
   margin-bottom: 0.5rem;
 `;
 
@@ -75,7 +75,7 @@ const StyledHideRadio = styled.input`
   box-shadow: none;
   display: none;
   &:checked + label {
-     border: 2px solid #4B2BFF;
+    border: 2px solid #4b2bff;
   }
 `;
 
@@ -115,7 +115,7 @@ const MakeStudy = ({
           <StyledLabel htmlFor="category">카테고리</StyledLabel>
           <StyledRadio>
             <div>
-              <label>
+              <label htmlFor="develop">
                 <StyledRadioButton
                   type="radio"
                   name="Develop"
@@ -128,7 +128,7 @@ const MakeStudy = ({
               </label>
             </div>
             <div style={{ marginLeft: '1rem' }}>
-              <label>
+              <label htmlFor="design">
                 <StyledRadioButton
                   type="radio"
                   name="Design"
@@ -157,9 +157,10 @@ const MakeStudy = ({
         <StyledInputContainer>
           <StyledLabel htmlFor="icon">대표 아이콘</StyledLabel>
           <StyledIconContainer>
-            <StyledIconCategory>Design</StyledIconCategory>
+            <StyledIconCategory>Other Categories</StyledIconCategory>
             <StyledIconBox>
               {icons.map(i => {
+                console.log(11, i);
                 return (
                   <div key={i.pk}>
                     <StyledIcon>
@@ -178,26 +179,16 @@ const MakeStudy = ({
                 );
               })}
             </StyledIconBox>
+            <StyledIconCategory>Design</StyledIconCategory>
+            <StyledIconBox>icons</StyledIconBox>
             <StyledIconCategory>Basic Language</StyledIconCategory>
-            <StyledIconBox>
-              icons
-            </StyledIconBox>
+            <StyledIconBox>icons</StyledIconBox>
             <StyledIconCategory>Mobile Front-End</StyledIconCategory>
-            <StyledIconBox>
-              icons
-            </StyledIconBox>
+            <StyledIconBox>icons</StyledIconBox>
             <StyledIconCategory>Web Front-End</StyledIconCategory>
-            <StyledIconBox>
-              icons
-            </StyledIconBox>
+            <StyledIconBox>icons</StyledIconBox>
             <StyledIconCategory>Back-End</StyledIconCategory>
-            <StyledIconBox>
-              icons
-            </StyledIconBox>
-            <StyledIconCategory>Other Categories</StyledIconCategory>
-            <StyledIconBox>
-              icons
-            </StyledIconBox>
+            <StyledIconBox>icons</StyledIconBox>
           </StyledIconContainer>
         </StyledInputContainer>
         <StyledButton type="submit" value="다음" />
