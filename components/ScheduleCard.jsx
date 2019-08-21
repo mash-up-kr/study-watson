@@ -163,7 +163,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
       try {
         await Axios.patch(
           `https://study-watson.lhy.kr/api/v1/study/attendances/${
-            event.target.dataset.pk
+          event.target.dataset.pk
           }/`,
           {
             user,
@@ -291,8 +291,8 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
             <a>
               <StyledLabel>
                 <StyledIcon
-                  src="/static/icon-checkattend.svg"
-                  alt="checkattend icon"
+                  src="/static/icon-vote.svg"
+                  alt="vote icon"
                 />
                 투표 현황
               </StyledLabel>
