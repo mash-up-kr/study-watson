@@ -82,13 +82,13 @@ const editSchedule = () => {
     event.preventDefault();
     const voteEndAtToISOString = new Date(voteEndAt).toISOString();
     const startAtToISOString = new Date(startAt).toISOString();
-
+    console.log('before dispatch', schedule.subject);
     dispatch({
       type: UPDATE_SCHEDULE_REQUEST,
       data: {
         id: schedule.pk,
         study: schedule.study,
-        subject: schedule.subject,
+        subject,
         location,
         description,
         voteEndAt: voteEndAtToISOString,
