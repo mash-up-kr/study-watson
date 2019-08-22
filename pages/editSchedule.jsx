@@ -29,20 +29,20 @@ const StyledForm = styled.form`
 const editSchedule = () => {
   const { schedule } = useSelector(state => state.schedule);
 
-  // const [subject, setSubject] = useInput(schedule.subject);
   const [location, setLocation] = useInput('');
+  const [subject, setSubject] = useInput('');
   const [description, setDescription] = useInput('');
   const [voteEndAt, setvoteEndAt] = useInput('');
   const [startAt, setStartAt] = useInput('');
   const [studyingTime, setStudyTime] = useInput('');
 
   useEffect(() => {
-    // const s = {
-    //   target: {
-    //     value: schedule.subject,
-    //   },
-    // };
-    // setSubject(s);
+    const s = {
+      target: {
+        value: schedule.subject ? schedule.subject : '',
+      },
+    };
+    setSubject(s);
     const l = {
       target: {
         value: schedule.location ? schedule.location : '',
@@ -81,13 +81,12 @@ const editSchedule = () => {
     event.preventDefault();
     const voteEndAtToISOString = new Date(voteEndAt).toISOString();
     const startAtToISOString = new Date(startAt).toISOString();
-
     dispatch({
       type: UPDATE_SCHEDULE_REQUEST,
       data: {
         id: schedule.pk,
         study: schedule.study,
-        // subject,
+        subject,
         location,
         description,
         voteEndAt: voteEndAtToISOString,
@@ -103,21 +102,13 @@ const editSchedule = () => {
       <StyledScreen>
         <StyledTitle>일정 수정</StyledTitle>
         <StyledForm onSubmit={onSumit}>
-          {/* <Input
-            label="주제"
+          <Input
+            label="제목"
             id="subject"
             type="text"
             value={subject}
             onChange={setSubject}
             onClickReset={() => setSubject('')}
-          /> */}
-          <Input
-            label="장소"
-            id="location"
-            type="text"
-            value={location}
-            onChange={setLocation}
-            onClickReset={() => setLocation('')}
           />
           <Input
             label="내용"
@@ -126,6 +117,14 @@ const editSchedule = () => {
             value={description}
             onChange={setDescription}
             onClickReset={() => setDescription('')}
+          />
+          <Input
+            label="장소"
+            id="location"
+            type="text"
+            value={location}
+            onChange={setLocation}
+            onClickReset={() => setLocation('')}
           />
           <Input
             label="투표 종류 일시"
@@ -163,6 +162,7 @@ const editSchedule = () => {
 };
 
 editSchedule.getInitialProps = ({ ctx, token }) => {
+  //
   const scheduleId = ctx.query.scheduleId || '0';
   ctx.store.dispatch({
     type: LOAD_SCHEDULE_REQUEST,
