@@ -29,20 +29,21 @@ const StyledForm = styled.form`
 const editSchedule = () => {
   const { schedule } = useSelector(state => state.schedule);
 
-  // const [subject, setSubject] = useInput(schedule.subject);
   const [location, setLocation] = useInput('');
+  const [subject, setSubject] = useInput('');
   const [description, setDescription] = useInput('');
   const [voteEndAt, setvoteEndAt] = useInput('');
   const [startAt, setStartAt] = useInput('');
   const [studyingTime, setStudyTime] = useInput('');
 
   useEffect(() => {
-    // const s = {
-    //   target: {
-    //     value: schedule.subject,
-    //   },
-    // };
-    // setSubject(s);
+    console.log('Editschedule', schedule);
+    const s = {
+      target: {
+        value: schedule.subject ? schedule.subject : '',
+      },
+    };
+    setSubject(s);
     const l = {
       target: {
         value: schedule.location ? schedule.location : '',
@@ -87,7 +88,7 @@ const editSchedule = () => {
       data: {
         id: schedule.pk,
         study: schedule.study,
-        // subject,
+        subject: schedule.subject,
         location,
         description,
         voteEndAt: voteEndAtToISOString,
@@ -103,21 +104,13 @@ const editSchedule = () => {
       <StyledScreen>
         <StyledTitle>일정 수정</StyledTitle>
         <StyledForm onSubmit={onSumit}>
-          {/* <Input
-            label="주제"
+          <Input
+            label="제목"
             id="subject"
             type="text"
             value={subject}
             onChange={setSubject}
             onClickReset={() => setSubject('')}
-          /> */}
-          <Input
-            label="장소"
-            id="location"
-            type="text"
-            value={location}
-            onChange={setLocation}
-            onClickReset={() => setLocation('')}
           />
           <Input
             label="내용"
@@ -126,6 +119,14 @@ const editSchedule = () => {
             value={description}
             onChange={setDescription}
             onClickReset={() => setDescription('')}
+          />
+          <Input
+            label="장소"
+            id="location"
+            type="text"
+            value={location}
+            onChange={setLocation}
+            onClickReset={() => setLocation('')}
           />
           <Input
             label="투표 종류 일시"
