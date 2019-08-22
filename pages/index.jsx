@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import Axios from 'axios';
 
 import Header from '../containers/Header';
 import Main from '../components/Main';
@@ -11,22 +12,43 @@ const StyledIndex = styled.div`
   height: 100vh;
 `;
 
-const Index = () => {
+const Index = ({ user }) => {
   return (
     <StyledIndex>
       <Header />
-      <Main />
+      <Main user={user} />
     </StyledIndex>
   );
 };
-Index.getInitialProps = ({ ctx, token, pk }) => {
+Index.getInitialProps = async ({ ctx, token, pk }) => {
   if (token && pk) {
-    ctx.store.dispatch({
-      type: LOAD_STUDIES_REQUEST,
-      token,
-      pk,
-    });
+    try {
+      const result = await Axios.get(
+        'https://study-watson.lhy.kr/api/v1/members/profile/',
+        {
+          headers: { Authorization: `Token ${token}` },
+        },
+      );
+      ctx.store.dispatch({
+        type: LOAD_STUDIES_REQUEST,
+        token,
+        pk,
+      });
+      if (result.data) {
+        return {
+          user: result.data,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
+  return {
+    user: {},
+  };
+};
+Index.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 export default Index;

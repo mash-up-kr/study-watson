@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import MainLogIn from './MainLogIn';
 import MainLogOut from './MainLogOut';
@@ -12,10 +13,18 @@ const StyledMain = styled.div`
   flex-direction: column;
 `;
 
-const Main = () => {
+const Main = ({ user }) => {
   const { isLogin } = useSelector(state => state.user);
 
-  return <StyledMain>{isLogin ? <MainLogIn /> : <MainLogOut />}</StyledMain>;
+  return (
+    <StyledMain>
+      {isLogin || (!!user && user.isLogin) ? <MainLogIn /> : <MainLogOut />}
+    </StyledMain>
+  );
+};
+
+Main.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 export default Main;

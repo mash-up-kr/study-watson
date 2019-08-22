@@ -63,8 +63,7 @@ function* edit(action) {
     });
     Router.pushRoute('/profile');
   } catch (error) {
-    console.log(error.response);
-    console.error(error);
+    console.log(error.response.data);
     alert('수정에 실패하였습니다.');
     yield put({
       type: EDIT_USER_FAILURE,
@@ -88,7 +87,6 @@ function logInAPI({ email, password }) {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    console.log(result);
     const { pk, username, email, phoneNumber, nickname } = result.data.user;
     const { key } = result.data;
     document.cookie = `token=${key}; path=/`;
@@ -126,26 +124,32 @@ function loadUserAPI({ key }) {
 
 function* loadUser(action) {
   try {
-    const result = yield call(loadUserAPI, action);
-    const {
-      pk,
-      username,
-      email,
-      phoneNumber,
-      imgProfile,
-      nickname,
-    } = result.data;
-    yield put({
-      type: LOAD_USER_SUCCESS,
-      data: {
+    if (action.key) {
+      const result = yield call(loadUserAPI, action);
+      const {
         pk,
         username,
         email,
         phoneNumber,
         imgProfile,
         nickname,
-      },
-    });
+      } = result.data;
+      yield put({
+        type: LOAD_USER_SUCCESS,
+        data: {
+          pk,
+          username,
+          email,
+          phoneNumber,
+          imgProfile,
+          nickname,
+        },
+      });
+    } else {
+      yield put({
+        type: LOAD_USER_FAILURE,
+      });
+    }
   } catch (error) {
     console.log(error);
     deleteCookie('token');
@@ -215,14 +219,12 @@ function* watchSignUp() {
 
 function* logOut() {
   try {
-    console.log('111');
     deleteCookie('token');
     deleteCookie('pk');
-    console.log('222');
     yield put({
       type: LOG_OUT_SUCCESS,
     });
-    Router.pushRoute('/');
+    window.location.href = '/';
   } catch (e) {
     // console.error(e);
     alert('로그아웃에 실패하였습니다.');
