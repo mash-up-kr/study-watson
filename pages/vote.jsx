@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -34,37 +34,37 @@ const StyledSubTitle = styled.div`
 `;
 
 const Vote = () => {
-  const mount = useRef(null);
   const { schedule } = useSelector(state => state.schedule);
   const [attend, setAttend] = useState([]);
   const [late, setLate] = useState([]);
   const [absent, setAbsent] = useState([]);
   const [none, setNone] = useState([]);
 
-  if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
-    const attendList = [];
-    const lateList = [];
-    const absentList = [];
-    const noneList = [];
-    schedule.attendanceSet.forEach(attendance => {
-      if (attendance.vote === 'attend') {
-        attendList.push(attendance);
-      } else if (attendance.vote === 'late') {
-        lateList.push(attendance);
-      } else if (attendance.vote === 'absent') {
-        absentList.push(attendance);
-      } else {
-        noneList.push(attendance);
-      }
-    });
-    if (!mount.current) {
-      mount.current = true;
+  useEffect(() => {
+    if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
+      const attendList = [];
+      const lateList = [];
+      const absentList = [];
+      const noneList = [];
+
+      schedule.attendanceSet.forEach(attendance => {
+        if (attendance.vote === 'attend') {
+          attendList.push(attendance);
+        } else if (attendance.vote === 'late') {
+          lateList.push(attendance);
+        } else if (attendance.vote === 'absent') {
+          absentList.push(attendance);
+        } else {
+          noneList.push(attendance);
+        }
+      });
+
       setAttend(attendList);
       setLate(lateList);
       setAbsent(absentList);
       setNone(noneList);
     }
-  }
+  }, [schedule, schedule.attendanceSet]);
 
   const attendCount = `출석 ${attend.length}`;
   const lateCount = `지각 ${late.length}`;
