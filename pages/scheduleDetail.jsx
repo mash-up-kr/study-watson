@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
 import styled from 'styled-components';
@@ -35,40 +35,36 @@ const StyledSubTitle = styled.div`
 `;
 
 const ScheduleDetail = () => {
-  const mount = useRef(null);
   const { schedule } = useSelector(state => state.schedule);
   const [attend, setAttend] = useState([]);
   const [late, setLate] = useState([]);
   const [absent, setAbsent] = useState([]);
   const [none, setNone] = useState([]);
 
-  if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
-    const attendList = [];
-    const lateList = [];
-    const absentList = [];
-    const noneList = [];
-    schedule.attendanceSet.forEach(attendance => {
-      if (attendance.att === 'attend') {
-        attendList.push(attendance);
-      } else if (attendance.att === 'late') {
-        lateList.push(attendance);
-      } else if (attendance.att === 'absent') {
-        absentList.push(attendance);
-      } else {
-        noneList.push(attendance);
-      }
-    });
-    if (!mount.current) {
-      mount.current = true;
+  useEffect(() => {
+    if (schedule.attendanceSet && schedule.attendanceSet.length > 0) {
+      const attendList = [];
+      const lateList = [];
+      const absentList = [];
+      const noneList = [];
+      schedule.attendanceSet.forEach(attendance => {
+        if (attendance.att === 'attend') {
+          attendList.push(attendance);
+        } else if (attendance.att === 'late') {
+          lateList.push(attendance);
+        } else if (attendance.att === 'absent') {
+          absentList.push(attendance);
+        } else {
+          noneList.push(attendance);
+        }
+      });
       setAttend(attendList);
       setLate(lateList);
       setAbsent(absentList);
       setNone(noneList);
     }
-  }
-
+  }, [schedule]);
   const onClickAttendance = async event => {
-    console.log('scheduleDetail');
     const { pk, user, attendance: att } = event.target.dataset;
     try {
       await Axios.patch(
@@ -78,7 +74,6 @@ const ScheduleDetail = () => {
           att,
         },
       );
-      // Router.push(`/schedule/${scheduleId}`);
       const attendance =
         attend.find(Element => {
           return JSON.parse(Element.pk) === JSON.parse(pk);
@@ -127,7 +122,7 @@ const ScheduleDetail = () => {
         console.log('???');
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
   const attendCount = `출석 ${attend.length}`;
