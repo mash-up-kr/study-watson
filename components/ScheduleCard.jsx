@@ -125,7 +125,7 @@ const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
+const ScheduleCard = ({ schedules, studyId, token, user, role = 'normal' }) => {
   const [click, setClick] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
   const [expectAtt, setExpectAtt] = useState('아직 투표하지 않았습니다');
@@ -164,7 +164,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
       try {
         await Axios.patch(
           `https://study-watson.lhy.kr/api/v1/study/attendances/${
-          event.target.dataset.pk
+            event.target.dataset.pk
           }/`,
           {
             user,
@@ -293,10 +293,7 @@ const ScheduleCard = ({ schedules, studyId, token, user, role }) => {
           <Link route={`/vote/${schedules.pk}`} href={`/vote/${schedules.pk}`}>
             <a>
               <StyledLabel>
-                <StyledIcon
-                  src="/static/icon-vote.svg"
-                  alt="vote icon"
-                />
+                <StyledIcon src="/static/icon-vote.svg" alt="vote icon" />
                 투표 현황
               </StyledLabel>
             </a>

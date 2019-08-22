@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { LOAD_STUDY_REQUEST, LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
+import {
+  LOAD_STUDY_REQUEST,
+  LOAD_STUDY_MEMBERSHIPS_REQUEST,
+} from '../reducers/study';
 import Header from '../containers/Header';
 import MemberSettingBtn from '../components/MemberSettingBtn';
 import MemberListItem from '../components/MemberListItem';
@@ -17,9 +20,7 @@ const StyledScreen = styled.div`
 
 const studyMembersInfo = ({ studyId }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const { role } = useSelector(
-    state => state.study.memberships,
-  );
+  const { role } = useSelector(state => state.study.memberships);
   const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
 
   useEffect(() => {
