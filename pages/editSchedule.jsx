@@ -162,6 +162,7 @@ const editSchedule = () => {
 };
 
 editSchedule.getInitialProps = ({ ctx, token }) => {
+  //
   const scheduleId = ctx.query.scheduleId || '0';
   ctx.store.dispatch({
     type: LOAD_SCHEDULE_REQUEST,
