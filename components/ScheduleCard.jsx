@@ -126,7 +126,6 @@ const StyledIcon = styled.img`
 `;
 
 const ScheduleCard = ({ schedules, studyId, token, user, role = 'normal' }) => {
-  console.log('card', schedules);
   const [click, setClick] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
   const [expectAtt, setExpectAtt] = useState('아직 투표하지 않았습니다');

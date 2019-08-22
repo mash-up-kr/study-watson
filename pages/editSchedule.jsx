@@ -37,7 +37,6 @@ const editSchedule = () => {
   const [studyingTime, setStudyTime] = useInput('');
 
   useEffect(() => {
-    console.log('Editschedule', schedule);
     const s = {
       target: {
         value: schedule.subject ? schedule.subject : '',
@@ -82,7 +81,6 @@ const editSchedule = () => {
     event.preventDefault();
     const voteEndAtToISOString = new Date(voteEndAt).toISOString();
     const startAtToISOString = new Date(startAt).toISOString();
-    console.log('before dispatch', schedule.subject);
     dispatch({
       type: UPDATE_SCHEDULE_REQUEST,
       data: {
