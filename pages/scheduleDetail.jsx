@@ -134,7 +134,6 @@ const ScheduleDetail = () => {
   const lateCount = `지각 ${late.length}`;
   const absentCount = `결석 ${absent.length}`;
   const noneCount = `미정 ${none.length}`;
-  console.log(none);
   return (
     <>
       <Header />

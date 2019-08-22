@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import PropTypes from 'prop-types';
 
-const StyledPhoto = styled.img`
+export const StyledPhoto = styled.img`
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -11,7 +11,7 @@ const StyledPhoto = styled.img`
   margin-right: 0.8rem;
 `;
 
-const StyledMemberList = styled.div`
+export const StyledMemberList = styled.div`
   width: 100%;
   margin-bottom: 1rem;
   display: flex;
@@ -19,19 +19,19 @@ const StyledMemberList = styled.div`
   align-items: center;
 `;
 
-const StyledName = styled.div`
+export const StyledName = styled.div`
   font-weight: bold;
   color: #4d5256;
   font-size: 0.9rem;
 `;
 
-const StyledAttendBtnContainer = styled.div`
+export const StyledAttendBtnContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: auto;
 `;
 
-const StyledAttendBtn = styled.button`
+export const StyledAttendBtn = styled.button`
   font-size: 0.8rem;
   color: #878d91;
   background-color: #ededed;

@@ -7,6 +7,14 @@ import Axios from 'axios';
 import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import { Link } from '../routes';
+import {
+  StyledMemberList,
+  StyledPhoto,
+  StyledName,
+  StyledAttendBtnContainer,
+  StyledAttendBtn,
+} from '../components/Attendance';
+import { StyledText } from '../components/MemberListItem';
 
 const Manager = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
@@ -58,10 +66,10 @@ const Manager = ({ studyId, token }) => {
     Router.push(`/studyDetail/${studyId}`);
   };
   return (
-    <div>
+    <div style={{ margin: '8px' }}>
       <Header />
       <div>
-        <div>
+        <div style={{ margin: '8px 8px 16px' }}>
           <Link
             route={`/studyDetail/${studyId}`}
             href={`/studyDetail/${studyId}`}
@@ -69,52 +77,25 @@ const Manager = ({ studyId, token }) => {
             <a>스터디로 돌아가기</a>
           </Link>
         </div>
-        {memberList &&
-          memberList.map(membership => {
-            return (
-              <div key={membership.pk}>
-                {membership.user.imgProfile && (
-                  <img
-                    src={membership.user.imgProfile}
-                    alt=""
-                    style={{ width: '50px' }}
-                  />
-                )}
-                <div>
-                  <div>nickname</div>
-                  <div>{membership.user.nickname || membership.user.email}</div>
-                </div>
-                {membership.user.name && (
-                  <div>
-                    <div>name</div>
-                    <div>{membership.user.name}</div>
-                  </div>
-                )}
-                {membership.user.email && (
-                  <div>
-                    <div>email</div>
-                    <div>{membership.user.email}</div>
-                  </div>
-                )}
-                {membership.user.phoneNumber && (
-                  <div>
-                    <div>phoneNumber</div>
-                    <div>{membership.user.phoneNumber}</div>
-                  </div>
-                )}
-                {membership.roleDisplay && (
-                  <div>
-                    <div>roleDisplay</div>
-                    <div>{membership.roleDisplay}</div>
-                  </div>
-                )}
-                <div data-pk={membership.pk} onClick={onClick}>
-                  리더 임명
-                </div>
-                <hr />
-              </div>
-            );
-          })}
+        <div style={{ margin: '8px' }}>
+          {memberList &&
+            memberList.map(membership => {
+              return (
+                <StyledMemberList key={`${membership.id}`}>
+                  <StyledPhoto src={membership.user.imgProfile} alt="img" />
+                  <StyledName style={{ marginRight: '8px' }}>
+                    {membership.user.nickname || membership.user.email}
+                  </StyledName>
+                  <StyledText>{membership.roleDisplay}</StyledText>
+                  <StyledAttendBtnContainer>
+                    <StyledAttendBtn data-pk={membership.pk} onClick={onClick}>
+                      리더 임명
+                    </StyledAttendBtn>
+                  </StyledAttendBtnContainer>
+                </StyledMemberList>
+              );
+            })}
+        </div>
       </div>
     </div>
   );
