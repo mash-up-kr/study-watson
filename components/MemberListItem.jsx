@@ -30,12 +30,12 @@ const StyledPhoto = styled.img`
 
 const StyledName = styled.div`
   font-weight: bold;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
-const StyledText = styled.div`
+export const StyledText = styled.div`
   font-size: 0.8rem;
-  color: #878D91;
+  color: #878d91;
   &:last-child {
     margin-top: 0.5rem;
   }
@@ -44,28 +44,19 @@ const StyledText = styled.div`
 const MemberListItem = ({ membership }) => {
   return (
     <StyledMemberList>
-      <StyledPhoto
-        src={membership.user.imgProfile}
-        alt=""
-      />
+      <StyledPhoto src={membership.user.imgProfile} alt="" />
       <StyledContainer>
         <StyledName>
           {membership.user.nickname || membership.user.email}
         </StyledName>
-        <StyledText>
-          {membership.roleDisplay}
-        </StyledText>
+        <StyledText>{membership.roleDisplay}</StyledText>
       </StyledContainer>
       <StyledContainer>
         {membership.user.email && (
-          <StyledText>
-            {membership.user.email}
-          </StyledText>
+          <StyledText>{membership.user.email}</StyledText>
         )}
         {membership.user.phoneNumber && (
-          <StyledText>
-            {membership.user.phoneNumber}
-          </StyledText>
+          <StyledText>{membership.user.phoneNumber}</StyledText>
         )}
       </StyledContainer>
     </StyledMemberList>
