@@ -12,21 +12,18 @@ const StyledText = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledLogo = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+const StyledLogo = styled.img`
+  width: 100px;
+  display: block;
+  margin: 0 auto;
   padding: 1rem;
+  align: center;
 `;
 
 const Information = () => {
   return (
     <div>
-      <StyledLogo>
-        <img src="/static/logo-32.png" alt="logo" />
-      </StyledLogo>
+      <StyledLogo src="/static/logo-192.png" alt="logo" />
 
       <StyledImageText>
         효율적으로 스터디를
