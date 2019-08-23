@@ -88,7 +88,7 @@ const Manager = ({ studyId, token }) => {
           {!!memberList &&
             memberList.map(membership => {
               return (
-                <StyledMemberList key={`${membership.id}`}>
+                <StyledMemberList key={membership.pk}>
                   <StyledPhoto src={membership.user.imgProfile} alt="img" />
                   <StyledName style={{ marginRight: '8px' }}>
                     {membership.user.nickname || membership.user.email}

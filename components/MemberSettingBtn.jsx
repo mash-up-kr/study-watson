@@ -32,7 +32,7 @@ const StyledSettingItem = styled.div`
   width: 100%;
   padding: 0.8rem 0;
   & :last-child {
-    border-top: 1px solid #EDEDED;
+    border-top: 1px solid #ededed;
   }
 `;
 
@@ -52,14 +52,14 @@ const StyledLabel = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #4D5256;
+  color: #4d5256;
 `;
 
 const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const MemberSettingBtn = ({ studyId }) => {
+const MemberSettingBtn = ({ studyId, role }) => {
   const [click, setClick] = useState(false);
 
   const onClickSettingBtn = () => {
@@ -68,7 +68,7 @@ const MemberSettingBtn = ({ studyId }) => {
 
   const closeMenu = () => {
     setClick(!click);
-  }
+  };
 
   return (
     <div>
@@ -76,48 +76,45 @@ const MemberSettingBtn = ({ studyId }) => {
         <img src="/static/icon-setting.svg" alt="setting icon" />
       </StyledSettingBtn>
       <StyledSettingMenu show={click}>
+        {role === 'manager' && (
+          <StyledSettingItem>
+            <Link route={`/manager/${studyId}`} href={`/manager/${studyId}`}>
+              <a>
+                <StyledLabel>스터디 리더 임명</StyledLabel>
+              </a>
+            </Link>
+          </StyledSettingItem>
+        )}
         <StyledSettingItem>
-          <Link route={`/manager/${studyId}`} href={`/manager/${studyId}`}>
+          <Link
+            route={`/subManager/${studyId}`}
+            href={`/subManager/${studyId}`}
+          >
             <a>
-              <StyledLabel>
-                스터디 리더 임명
-              </StyledLabel>
-            </a>
-          </Link>
-        </StyledSettingItem>
-        <StyledSettingItem>
-          <Link route={`/subManager/${studyId}`} href={`/subManager/${studyId}`}>
-            <a>
-              <StyledLabel>
-                스터디 서브 리더 임명
-              </StyledLabel>
+              <StyledLabel>스터디 서브 리더 임명</StyledLabel>
             </a>
           </Link>
         </StyledSettingItem>
         <StyledSettingItem>
           <Link route={`/normal/${studyId}`} href={`/normal/${studyId}`}>
             <a>
-              <StyledLabel>
-                스터디 멤버 임명
-              </StyledLabel>
+              <StyledLabel>스터디 멤버 임명</StyledLabel>
             </a>
           </Link>
         </StyledSettingItem>
         <StyledSettingItem>
-          <Link route={`/withdrawStudy/${studyId}`} href={`/withdrawStudy/${studyId}`}>
+          <Link
+            route={`/withdrawStudy/${studyId}`}
+            href={`/withdrawStudy/${studyId}`}
+          >
             <a>
-              <StyledLabel>
-                스터디 멤버 제명
-              </StyledLabel>
+              <StyledLabel>스터디 멤버 제명</StyledLabel>
             </a>
           </Link>
         </StyledSettingItem>
         <StyledSettingItem onClick={closeMenu}>
           <StyledLabel>
-            <StyledIcon
-              src="/static/icon-close.svg"
-              alt="close icon"
-            />
+            <StyledIcon src="/static/icon-close.svg" alt="close icon" />
             취소
           </StyledLabel>
         </StyledSettingItem>
@@ -129,6 +126,7 @@ const MemberSettingBtn = ({ studyId }) => {
 
 MemberSettingBtn.propTypes = {
   studyId: PropTypes.string.isRequired,
-}
+  role: PropTypes.string.isRequired,
+};
 
 export default MemberSettingBtn;

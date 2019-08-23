@@ -66,7 +66,7 @@ const studyMembersInfo = ({ studyId }) => {
           })}
 
         {(role === 'manager' || role === 'sub_manager') && (
-          <MemberSettingBtn studyId={studyId} />
+          <MemberSettingBtn studyId={studyId} role={role} />
         )}
       </StyledScreen>
     </>
