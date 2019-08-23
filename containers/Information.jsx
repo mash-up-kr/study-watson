@@ -13,13 +13,10 @@ const StyledText = styled.div`
 `;
 
 const StyledLogo = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 `;
 
 const Information = () => {
@@ -35,7 +32,6 @@ const Information = () => {
         관리하는 가장 쉬운 방법
       </StyledImageText>
 
-      {/* StyledFeature: 할 수 있는 기능에 대해 간략하게 설명합니다 */}
       <ul>
         <StyledText>일정 관리</StyledText>
         <StyledText>참여 여부 투표</StyledText>
