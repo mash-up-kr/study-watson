@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -18,9 +18,7 @@ import { StyledText } from '../components/MemberListItem';
 const subManager = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
   const [memberList, setMemberList] = useState([]);
-  const mount = useRef(null);
-  if (!mount.current) {
-    mount.current = true;
+  useEffect(() => {
     const filterMemberList =
       membershipSet &&
       membershipSet.length > 0 &&
@@ -32,7 +30,7 @@ const subManager = ({ studyId, token }) => {
         );
       });
     setMemberList(filterMemberList);
-  }
+  }, membershipSet);
   const onClick = async event => {
     const { pk } = event.target.dataset;
     try {
@@ -48,8 +46,8 @@ const subManager = ({ studyId, token }) => {
           },
         },
       );
-      const filterMemberList = membershipSet.filter(membership => {
-        return JSON.stringify(membership.pk) === JSON.stringify(pk);
+      const filterMemberList = memberList.filter(membership => {
+        return parseInt(membership.pk, 10) !== parseInt(pk, 10);
       });
       setMemberList([...filterMemberList]);
     } catch (error) {
@@ -75,7 +73,7 @@ const subManager = ({ studyId, token }) => {
           {memberList &&
             memberList.map(membership => {
               return (
-                <StyledMemberList key={`${membership.id}`}>
+                <StyledMemberList key={membership.pk}>
                   <StyledPhoto src={membership.user.imgProfile} alt="img" />
                   <StyledName style={{ marginRight: '8px' }}>
                     {membership.user.nickname || membership.user.email}
