@@ -23,13 +23,11 @@ const Information = () => {
   return (
     <div>
       <StyledLogo src="/static/logo-192.png" alt="logo" />
-
       <StyledImageText>
         효율적으로 스터디를
         <br />
         관리하는 가장 쉬운 방법
       </StyledImageText>
-
       <ul>
         <StyledText>일정 관리</StyledText>
         <StyledText>참여 여부 투표</StyledText>
