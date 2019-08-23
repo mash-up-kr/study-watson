@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
@@ -18,18 +18,25 @@ import { StyledText } from '../components/MemberListItem';
 
 const Manager = ({ studyId, token }) => {
   const { membershipSet } = useSelector(state => state.study.study);
-  const manager =
-    membershipSet &&
-    membershipSet.length > 0 &&
-    membershipSet.filter(membership => {
-      return membership.role === 'manager';
-    });
-  const memberList =
-    membershipSet &&
-    membershipSet.length > 0 &&
-    membershipSet.filter(membership => {
-      return membership.isWithdraw !== true && membership.role !== 'manager';
-    });
+  const [memberList, setMemberList] = useState([]);
+  const [managerList, setManagerList] = useState([]);
+  useEffect(() => {
+    const manager =
+      membershipSet &&
+      membershipSet.length > 0 &&
+      membershipSet.filter(membership => {
+        return membership.role === 'manager';
+      });
+    setManagerList(manager);
+    const filterMemberList =
+      membershipSet &&
+      membershipSet.length > 0 &&
+      membershipSet.filter(membership => {
+        return membership.isWithdraw !== true && membership.role !== 'manager';
+      });
+    setMemberList(filterMemberList);
+  }, [membershipSet]);
+
   const onClick = async event => {
     try {
       await Axios.patch(
@@ -48,7 +55,7 @@ const Manager = ({ studyId, token }) => {
       );
       await Axios.patch(
         `https://study-watson.lhy.kr/api/v1/study/memberships/${
-          manager[0].pk
+          managerList[0].pk
         }/`,
         {
           role: 'sub_manager',
@@ -78,7 +85,7 @@ const Manager = ({ studyId, token }) => {
           </Link>
         </div>
         <div style={{ margin: '8px' }}>
-          {memberList &&
+          {!!memberList &&
             memberList.map(membership => {
               return (
                 <StyledMemberList key={`${membership.id}`}>
