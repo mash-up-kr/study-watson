@@ -13,10 +13,12 @@ const StyledText = styled.div`
 `;
 
 const StyledLogo = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 `;
 
 const Information = () => {
