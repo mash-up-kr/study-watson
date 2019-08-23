@@ -17,7 +17,6 @@ const StyledLogo = styled.img`
   display: block;
   margin: 0 auto;
   padding: 1rem;
-  align: center;
 `;
 
 const Information = () => {
