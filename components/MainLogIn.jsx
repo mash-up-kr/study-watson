@@ -144,10 +144,13 @@ const MainLogIn = () => {
           <>
             <StyledCardContainer>
               {filterStudies.map((study, idx) => {
+                const filterUser = study.studyMemberships.filter(user => {
+                  return user.isWithdraw === false;
+                });
                 const userProfileCount =
-                  !!study.studyMembers &&
-                  study.studyMembers.length > 3 &&
-                  `+${study.studyMembers.length - 3}`;
+                  !!filterUser &&
+                  filterUser.length > 3 &&
+                  `+${filterUser.length - 3}`;
                 return (
                   <Link
                     key={idx}
@@ -188,18 +191,18 @@ const MainLogIn = () => {
                           />
                           {getNearestScheduleStartAt(study.studySchedules)}
                           <StyledProfileContainer>
-                            {study.studyMembers
-                              .slice(0, Math.min(3, study.studyMembers.length))
-                              .map(item => {
+                            {filterUser
+                              .slice(0, Math.min(3, filterUser.length))
+                              .map(({ user }) => {
                                 return (
                                   <StyledProfileImage
-                                    key={item.pk}
-                                    src={item.imgProfile}
+                                    key={user.pk}
+                                    src={user.imgProfile}
                                     alt="profile"
                                   />
                                 );
                               })}
-                            {study.studyMembers.length > 3 && (
+                            {filterUser.length > 3 && (
                               <StyledProfileCount>
                                 {userProfileCount}
                               </StyledProfileCount>
