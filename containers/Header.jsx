@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-// import { useSelector } from 'react-redux';
 
 import { Link } from '../routes';
 import Menu from '../components/Menu';
 
 const StyledHeader = styled.div`
-  width: 100%;
-  height: 56px;
+  align-items: center;
+  background-color: #fff;
   border-bottom: 1px solid #ededed;
   display: flex;
   flex-direction: row;
+  height: 56px;
   justify-content: center;
-  align-items: center;
-  background-color: #fff;
+  width: 100%;
 `;
 
-const StyledButton = styled.div`
-  position: absolute;
+const StyledLeftButton = styled.div`
   left: 1rem;
+  position: absolute;
   z-index: 1002;
 `;
 
@@ -28,56 +28,31 @@ const StyledRightButton = styled.div`
 `;
 
 const StyledBackground = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6);
   display: ${props => (props.value ? 'block' : 'none')};
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 `;
 
-const Header = () => {
+const Header = ({ user }) => {
   const [value, setValue] = useState(false);
-  const [link, setLink] = useState('');
-  const [label, setLabel] = useState('');
+  const link = !!user.pk ? '' : '/login';
+  const label = !!user.pk ? '' : '로그인';
 
-  // const { isLogin } = useSelector(state => state.user);
-
-  const onClick = () => {
+  const onClick = useCallback(() => {
     setValue(!value);
-  };
-
-  useEffect(() => {
-    const path = window.location.pathname;
-    switch (path) {
-      // case '/profile':
-      //   setLink('/profile-edit');
-      //   setLabel('프로필 수정');
-      //   break;
-      // case '/':
-      //   if (!isLogin) {
-      //     setLink('/login');
-      //     setLabel('로그인');
-      //   } else {
-      //     setLink('');
-      //     setLabel('');
-      //   }
-      //   break;
-      default:
-        setLink('');
-        setLabel('');
-        break;
-    }
-  });
+  }, [value]);
 
   return (
     <>
       <StyledHeader>
-        <StyledButton type="button" onClick={onClick}>
+        <StyledLeftButton type="button" onClick={onClick}>
           <img src="/static/icon-menu.svg" alt="menu icon" />
-        </StyledButton>
+        </StyledLeftButton>
         <Link route="/" href="/">
           <a>
             <img src="/static/logo.svg" alt="logo" />
@@ -89,10 +64,20 @@ const Header = () => {
           </Link>
         </StyledRightButton>
       </StyledHeader>
-      <Menu value={value} show={onClick} />
+      <Menu value={value} show={onClick} user={user} />
       <StyledBackground value={value} onClick={onClick} />
     </>
   );
 };
+
+Header.propType = {
+  user: PropTypes.object,
+}
+
+Header.defaultProps = {
+  user: {
+    pk: null,
+  }
+}
 
 export default Header;

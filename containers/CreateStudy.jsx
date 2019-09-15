@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Axios from 'axios';
+import PropTypes from 'prop-types';
 
 import ShowStudy from '../components/ShowStudy';
 import MakeStudy from '../components/MakeStudy';
@@ -22,49 +22,37 @@ const StyledToast = styled.div`
   text-align: center;
 `;
 
-const CreateStudy = () => {
+const CreateStudy = ({icons}) => {
   const [category, setCategory] = useInput('3');
   const [page, setPage] = useState(firstPage);
   const [name, setName] = useInput('');
   const [description, setDescription] = useInput('');
-  const [icons, setIcons] = useState([]);
-  const [icon, setIcon] = useState({});
+  const [icon, setIcon] = useState(icons[0]);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const addStudy = () => {
+  const addStudy = useCallback(() => {
     dispatch({
       type: ADD_STUDY_REQUEST,
       data: { name, description, category, icon: icon.pk },
     });
-  };
+  },[name, description, icon, category]);
 
-  const clickLink = () => {
+  const clickLink = useCallback(() => {
     setShow(true);
     setTimeout(() => {
       setShow(false);
     }, 1000);
-  };
+  }, []);
 
-  const onSubmitForm = e => {
+  const onSubmitForm = useCallback(e => {
     e.preventDefault();
     if (name.length > 1 && description.length > 1) {
       setPage(secondPage);
     } else {
       clickLink();
     }
-  };
-
-  const getIcon = async () => {
-    const result = await Axios.get(
-      'https://study-watson.lhy.kr/api/v1/study/icons/',
-    );
-    setIcons(result.data);
-    setIcon(result.data[0]);
-  };
-  useEffect(() => {
-    getIcon();
-  }, []);
+  },[name, description]);
 
   const components = {
     [firstPage]: (
@@ -102,5 +90,9 @@ const CreateStudy = () => {
     <div>{components[page]}</div>
   );
 };
+
+CreateStudy.propTypes = {
+  icons: PropTypes.array.isRequired,
+}
 
 export default CreateStudy;

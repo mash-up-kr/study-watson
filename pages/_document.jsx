@@ -1,8 +1,8 @@
-import * as React from 'react';
 import Document, { Main, NextScript } from 'next/document';
-// import getConfig from 'next/config';
-import { ServerStyleSheet } from 'styled-components';
 import Helmet from 'react-helmet';
+import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
+// import getConfig from 'next/config';
 
 import { GlobalStyle } from '../common/StyledComponents';
 

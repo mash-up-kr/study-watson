@@ -1,19 +1,18 @@
-import { Container } from 'next/app';
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import createSagaMiddleware from 'redux-saga';
-import withReduxSaga from 'next-redux-saga';
-import axios from 'axios';
-
-import withRedux from 'next-redux-wrapper';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { Provider } from 'react-redux';
+import axios from 'axios';
+import { Container } from 'next/app';
+import createSagaMiddleware from 'redux-saga';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
+import withRedux from 'next-redux-wrapper';
+import withReduxSaga from 'next-redux-saga';
 
-import reducer from '../reducers';
-import { LOAD_USER_REQUEST } from '../reducers/user';
-import rootSaga from '../sagas';
 import { getCookie, getCookieServer } from '../common/cookie';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+import reducer from '../reducers';
+import rootSaga from '../sagas';
 
 const MyApp = ({ Component, store, pageProps }) => {
   useEffect(() => {
@@ -74,7 +73,6 @@ const configureStore = (initialState, options) => {
       if (process.env.NODE_ENV !== 'production') {
         console.log(store, action);
       }
-
       next(action);
     },
   ];
@@ -96,6 +94,7 @@ const configureStore = (initialState, options) => {
 MyApp.getInitialProps = async context => {
   let token = '';
   let pk = '';
+  const { res } = context.ctx;
   const isServer = !!context.ctx.req;
   if (isServer) {
     token = getCookieServer({ value: 'token', context });
@@ -105,14 +104,14 @@ MyApp.getInitialProps = async context => {
     pk = getCookie('pk');
   }
   axios.defaults.headers.Authorization = `Bearer ${token}`;
-  context.ctx.store.dispatch({
-    type: LOAD_USER_REQUEST,
-    key: token,
-  });
+  // context.ctx.store.dispatch({
+  //   type: LOAD_USER_REQUEST,
+  //   key: token,
+  // });
   let pageProps = {};
   if (context.Component.getInitialProps) {
     const { ctx } = context;
-    pageProps = await context.Component.getInitialProps({ ctx, token, pk });
+    pageProps = await context.Component.getInitialProps({ ctx, token, pk, res });
   }
   return { pageProps, isServer };
 };
