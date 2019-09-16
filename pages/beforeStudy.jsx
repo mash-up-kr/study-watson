@@ -1,13 +1,13 @@
+import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Header from '../containers/Header';
-import { LOAD_SCHEDULES_REQUEST } from '../reducers/schedule';
-import { LOAD_STUDY_MEMBERSHIPS_REQUEST } from '../reducers/study';
 import ScheduleCardBefore from '../components/ScheduleCardBefore';
 import { StyledTitle } from '../common/StyledComponents';
+import checkLogin from '../common/checkLogin';
+import redirect from '../common/redirect'
 
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
@@ -18,36 +18,20 @@ const ScheduleCardBeforeContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const beforeStudy = ({ token }) => {
-  const { schedules } = useSelector(state => state.schedule);
-  const { role } = useSelector(state => state.study.memberships);
-
-  const filterSchedules =
-    schedules &&
-    schedules.filter(schedule => {
-      return schedule.startAt < new Date().toISOString();
-    });
-
-  const recentSchedules = [...filterSchedules];
-  recentSchedules.sort((a, b) => {
-    if (a.startAt < b.startAt) {
-      return 1;
-    }
-    return -1;
-  });
+const beforeStudy = ({ token, schedules, role,user }) => {
 
   return (
     <div>
-      <Header />
+      <Header user={user} />
       <StyledScreen>
         <StyledTitle>이전 스터디</StyledTitle>
-        {recentSchedules &&
-          recentSchedules.length > 0 &&
-          recentSchedules.map(schedule => {
+        {schedules &&
+          schedules.length > 0 &&
+          schedules.map(schedule => {
             return (
               <ScheduleCardBeforeContainer key={schedule.pk}>
                 <ScheduleCardBefore
-                  schedules={schedule}
+                  schedule={schedule}
                   token={token}
                   role={role}
                 />
@@ -59,32 +43,62 @@ const beforeStudy = ({ token }) => {
   );
 };
 
-beforeStudy.getInitialProps = ({ ctx, token, pk }) => {
+beforeStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
+  const user = await checkLogin({ res, token })
   const { studyId = 0 } = ctx.query;
-  ctx.store.dispatch({
-    type: LOAD_SCHEDULES_REQUEST,
-    data: {
+  if (!studyId) {
+    redirect({ res });
+  }
+  try {
+    const result = await Promise.all([
+      axios.get(
+        `https://study-watson.lhy.kr/api/v1/study/schedules/?study=${studyId}`,
+        { headers: { Authorization: `Token ${token}` } },
+      ),
+      axios.get(
+        `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}&study=${studyId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+          },
+        },
+      ),
+    ])
+    const schedules = result[0].data;
+
+    const filterSchedules =
+      schedules &&
+      schedules.filter(schedule => {
+        return schedule.startAt < new Date().toISOString();
+      });
+
+    const recentSchedules = [...filterSchedules];
+    recentSchedules.sort((a, b) => {
+      if (a.startAt < b.startAt) {
+        return 1;
+      }
+      return -1;
+    });
+
+    return {
+      schedules: recentSchedules,
+      role: result[1].data[0].role,
+      user,
       studyId,
       token,
-    },
-  });
-  ctx.store.dispatch({
-    type: LOAD_STUDY_MEMBERSHIPS_REQUEST,
-    data: {
-      studyId,
-      pk,
-      token,
-    },
-  });
-  return {
-    studyId,
-    token,
-    pk,
-  };
+    };
+  } catch (error) {
+    console.log(error);
+    redirect({ res });
+  }
 };
 
 beforeStudy.propTypes = {
+  schedules: PropTypes.array.isRequired,
+  role: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default beforeStudy;

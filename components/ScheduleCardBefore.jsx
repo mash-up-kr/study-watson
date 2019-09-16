@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -98,23 +98,24 @@ const StyledAttendText = styled.div`
   }
 `;
 
-const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
+const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
+  console.log(schedule)
   const [click, setClick] = useState(false);
   const [attendance, setAttendance] = useState(
-    '이 일정이 만들어질 당시에는, 스터디에 가입하지 않았습니다',
+    !!schedule.selfAttendance && !!schedule.selfAttendance.pk ? schedule.selfAttendance.attDisplay : '이 일정이 만들어질 당시에는, 스터디에 가입하지 않았습니다',
   );
 
   const dispatch = useDispatch();
 
-  const getAtt = async id => {
+  const getAtt = useCallback(async id => {
     const { data } = await Axios.get(
       `https://study-watson.lhy.kr/api/v1/study/attendances/${id}/`,
     );
 
     setAttendance(data.attDisplay);
-  };
+  });
 
-  const deleteSchedule = event => {
+  const deleteSchedule = useCallback(event => {
     if (window.confirm('스케쥴을 삭제 하시겠습니까?')) {
       const { pk } = event.currentTarget.dataset;
       dispatch({
@@ -125,26 +126,24 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
         },
       });
     }
-  };
+  });
 
-  const onClickDetailBtn = () => {
+  const onClickDetailBtn = useCallback(() => {
     setClick(!click);
-  };
+  }, [click]);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setClick(!click);
-  };
+  }, [click]);
 
-  useEffect(() => {
-    // console.log('component did mount');
-    if (schedules.selfAttendance) getAtt(schedules.selfAttendance.pk);
-  }, []);
+  const startAt = useMemo(() => changeFormat(schedule.startAt), [])
+  const voteEndAt = useMemo(() => changeFormat(schedule.voteEndAt), [])
 
   return (
     <>
       <StyledScheduleCard>
         <StyledCardTitle style={{ marginBottom: '1rem' }}>
-          {schedules.subject}
+          {schedule.subject}
         </StyledCardTitle>
         <StyledCardText>
           <img
@@ -152,7 +151,7 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
             alt="calendar icon"
             style={{ marginRight: '0.5rem' }}
           />
-          {changeFormat(schedules.startAt)}
+          {startAt}
         </StyledCardText>
         <StyledCardText>
           <img
@@ -160,7 +159,7 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
             alt="calendar icon"
             style={{ marginRight: '0.5rem' }}
           />
-          {schedules.location}
+          {schedule.location}
         </StyledCardText>
         <StyledCardText>
           <img
@@ -168,7 +167,7 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
             alt="check icon"
             style={{ marginRight: '0.5rem' }}
           />
-          {changeFormat(schedules.voteEndAt)}
+          {voteEndAt}
           &nbsp;까지
         </StyledCardText>
 
@@ -183,7 +182,7 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
 
       <StyledDetailMenu show={click}>
         <StyledDetailItem>
-          <Link route={`/vote/${schedules.pk}`} href={`/vote/${schedules.pk}`}>
+          <Link route={`/vote/${schedule.pk}`} href={`/vote/${schedule.pk}`}>
             <a>
               <StyledLabel>
                 <StyledIcon
@@ -199,11 +198,11 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
           <>
             <StyledDetailItem>
               <Link
-                route={`/editSchedule/${schedules.pk}`}
-                href={`/editSchedule/${schedules.pk}`}
+                route={`/editSchedule/${schedule.pk}`}
+                href={`/editSchedule/${schedule.pk}`}
               >
                 <a>
-                  <StyledLabel data-pk={schedules.pk}>
+                  <StyledLabel data-pk={schedule.pk}>
                     <StyledIcon src="/static/icon-edit.svg" alt="edit icon" />
                     일정 수정
                   </StyledLabel>
@@ -211,15 +210,15 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
               </Link>
             </StyledDetailItem>
             <StyledDetailItem>
-              <StyledLabel data-pk={schedules.pk} onClick={deleteSchedule}>
+              <StyledLabel data-pk={schedule.pk} onClick={deleteSchedule}>
                 <StyledIcon src="/static/icon-delete.svg" alt="delete icon" />
                 일정 삭제
               </StyledLabel>
             </StyledDetailItem>
             <StyledDetailItem>
               <Link
-                route={`/schedule/${schedules.pk}`}
-                href={`/schedule/${schedules.pk}`}
+                route={`/schedule/${schedule.pk}`}
+                href={`/schedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel>
@@ -247,7 +246,7 @@ const ScheduleCardBefore = ({ schedules, token, role = 'normal' }) => {
 };
 
 ScheduleCardBefore.propTypes = {
-  schedules: PropTypes.object.isRequired,
+  schedule: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
 };

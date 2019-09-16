@@ -1,8 +1,10 @@
+import axios from 'axios';
 import React from 'react';
 
 import Header from '../containers/Header';
 import EditStudy from '../components/EditStudy';
-import { LOAD_STUDY_REQUEST } from '../reducers/study';
+import checkLogin from '../common/checkLogin';
+import redirect from '../common/redirect'
 
 const editStudy = () => {
   return (
@@ -14,9 +16,11 @@ const editStudy = () => {
 };
 editStudy.getInitialProps = ({ ctx, token }) => {
   const studyId = ctx.query.studyId || '0';
-  ctx.store.dispatch({
-    type: LOAD_STUDY_REQUEST,
-    data: { token, studyId },
+  const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
   });
   return {
     studyId,

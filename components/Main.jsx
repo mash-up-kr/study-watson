@@ -14,11 +14,10 @@ const StyledMain = styled.div`
 `;
 
 const Main = ({ user }) => {
-  const { isLogin } = useSelector(state => state.user);
 
   return (
     <StyledMain>
-      {isLogin || (!!user && user.isLogin) ? <MainLogIn /> : <MainLogOut />}
+      {!!user ? <MainLogIn /> : <MainLogOut />}
     </StyledMain>
   );
 };

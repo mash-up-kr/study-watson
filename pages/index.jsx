@@ -15,7 +15,7 @@ const StyledIndex = styled.div`
 const Index = ({ user }) => {
   return (
     <StyledIndex>
-      <Header />
+      <Header user={user}/>
       <Main user={user} />
     </StyledIndex>
   );

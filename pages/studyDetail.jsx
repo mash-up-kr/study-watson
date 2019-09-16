@@ -155,8 +155,7 @@ const studyDetail = ({ studyId, token, pk: user }) => {
         {recentSchedules && recentSchedules.length > 0 ? (
           <ScheduleCard
             key={recentSchedules[0].pk}
-            schedules={recentSchedules[0]}
-            studyId={studyId}
+            schedule={recentSchedules[0]}
             token={token}
             user={user}
             role={role}

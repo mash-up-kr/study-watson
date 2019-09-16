@@ -11,7 +11,6 @@ export default async ({res, token}) => {
     if (!result.data.pk) {
       login(res);
     }
-    console.log(result.data)
     return result.data;
   } catch (error) {
     console.log(error)
