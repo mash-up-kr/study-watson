@@ -13,17 +13,18 @@ const StyledMain = styled.div`
   flex-direction: column;
 `;
 
-const Main = ({ user }) => {
+const Main = ({ user, studies }) => {
 
   return (
     <StyledMain>
-      {!!user ? <MainLogIn /> : <MainLogOut />}
+      {(!!user && !!user.pk) ? <MainLogIn studies={studies} /> : <MainLogOut />}
     </StyledMain>
   );
 };
 
 Main.propTypes = {
   user: PropTypes.object.isRequired,
+  studies: PropTypes.array.isRequired,
 };
 
 export default Main;

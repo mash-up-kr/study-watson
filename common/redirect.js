@@ -22,3 +22,14 @@ export const login = ({res}) => {
     Router.push('/login')
   }
 }
+
+export const error = ({res}) => {
+  if (res) {
+    res.writeHead(302, {
+      Location: '/error'
+    })
+    res.end()
+  } else {
+    Router.push('/error')
+  }
+}
