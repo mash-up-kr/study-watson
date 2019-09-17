@@ -18,7 +18,7 @@ const editSchedule = ({ schedule, user }) => {
 
 editSchedule.getInitialProps = async ({ ctx, token, pk, res }) => {
   const user = await checkLogin({ res, token })
-  const { scheduleId } = ctx.query.scheduleId;
+  const { scheduleId } = ctx.query;
   if (!scheduleId) {
     redirect({ res });
   }

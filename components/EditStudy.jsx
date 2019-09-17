@@ -69,7 +69,7 @@ const EditStudy = ({ study, icons }) => {
   const [icon, setIcon] = useState(study.icon);
   const dispatch = useDispatch();
 
-  console.log(111, category)
+  console.log(111, study)
 
   const onSubmitForm = useCallback(event => {
     event.preventDefault();

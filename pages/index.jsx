@@ -41,7 +41,6 @@ Index.getInitialProps = async ({ token, pk, res }) => {
           },
         ),
       ])
-      console.log(99, result[1].data)
       const studies = result[1].data;
       const filterStudies =
         studies.length > 0 &&

@@ -38,11 +38,7 @@ const StyledProfileContainer = styled.div`
   margin: 1rem 0 3rem 0;
 `;
 
-const JoinForm = ({ study, token, id }) => {
-  const userProfileCount =
-    !!study.studyMembers &&
-    study.studyMembers.length > 3 &&
-    `+${study.studyMembers.length - 3}`;
+const JoinForm = ({ study, token, id, userProfileCount }) => {
 
   const join = async () => {
     try {
@@ -111,6 +107,7 @@ const JoinForm = ({ study, token, id }) => {
 };
 
 JoinForm.propTypes = {
+  userProfileCount: PropTypes.string.isRequired,
   study: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

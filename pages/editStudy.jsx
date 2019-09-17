@@ -17,7 +17,7 @@ const editStudy = ({ study, user, icons }) => {
 };
 editStudy.getInitialProps = async ({ ctx, token, res }) => {
   const user = await checkLogin({ res, token })
-  const { studyId } = ctx.query.studyId;
+  const { studyId } = ctx.query;
   if (!studyId) {
     redirect({ res });
   }
@@ -37,6 +37,7 @@ editStudy.getInitialProps = async ({ ctx, token, res }) => {
       study: result[0].data,
       icons: result[1].data,
       user,
+      studyId,
     };
   } catch (error) {
     console.log(error);

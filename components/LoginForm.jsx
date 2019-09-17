@@ -13,7 +13,7 @@ const StyledScreen = styled.div`
   margin: auto;
 `;
 
-const StyledButton = styled.div`
+const StyledButton = styled.button`
   width: 100%;
   padding: 1rem 0;
   background-color: #4B2BFF;
@@ -31,7 +31,9 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const onClick = async () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     try {
       dispatch({
         type: LOG_IN_REQUEST,
@@ -46,28 +48,28 @@ const LoginForm = () => {
   };
 
   return (
-      <StyledScreen>
-        <StyledForm>
-          <StyledTitle>로그인</StyledTitle>
-          <Input
-            label="이메일"
-            id="email"
-            type="email"
-            value={email}
-            onChange={setEmail}
-            onClickReset={() => setEmail('')}
-          />
-          <Input
-            label="비밀번호"
-            id="password"
-            type="password"
-            value={password}
-            onChange={setPassword}
-            onClickReset={() => setPassword('')}
-          />
-        </StyledForm>
-        <StyledButton onClick={onClick}>로그인</StyledButton>
-      </StyledScreen>
+    <StyledScreen>
+      <StyledForm onSubmit={onSubmit}>
+        <StyledTitle>로그인</StyledTitle>
+        <Input
+          label="이메일"
+          id="email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          onClickReset={() => setEmail('')}
+        />
+        <Input
+          label="비밀번호"
+          id="password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          onClickReset={() => setPassword('')}
+        />
+        <StyledButton type="submit">로그인</StyledButton>
+      </StyledForm>
+    </StyledScreen>
   );
 };
 

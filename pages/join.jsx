@@ -7,11 +7,12 @@ import redirect from '../common/redirect'
 import Header from '../containers/Header';
 import JoinForm from '../components/JoinForm';
 
-const Join = ({ study, token, id, user }) => {
+const Join = ({ study, token, id, user, userProfileCount }) => {
+  console.log(user)
   return (
     <>
       <Header user={user} />
-      <JoinForm study={study} token={token} id={id} />
+      <JoinForm study={study} token={token} id={id} userProfileCount={userProfileCount} />
     </>
   );
 };
@@ -38,10 +39,17 @@ Join.getInitialProps = async ({ ctx, token, res, pk }) => {
     // if (isJoin.length > 0) {
     //   redirect({ res });
     // }
+    const study = result.data;
+    const userProfileCount =
+      (!!study.studyMembers &&
+        study.studyMembers.length > 3)
+        ? `+${study.studyMembers.length - 3}`
+        : '';
 
     return {
+      userProfileCount,
       user,
-      study: result.data,
+      study,
       token,
       id,
     };
@@ -52,6 +60,7 @@ Join.getInitialProps = async ({ ctx, token, res, pk }) => {
 };
 
 Join.propTypes = {
+  userProfileCount: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   study: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,

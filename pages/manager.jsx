@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import axios from 'axios';
 
-import Axios from 'axios';
-import { LOAD_STUDY_REQUEST } from '../reducers/study';
 import Header from '../containers/Header';
 import { Link } from '../routes';
 import {
@@ -15,66 +13,51 @@ import {
   StyledAttendBtn,
 } from '../components/Attendance';
 import { StyledText } from '../components/MemberListItem';
+import checkLogin from '../common/checkLogin';
+import redirect from '../common/redirect'
 
-const Manager = ({ studyId, token }) => {
-  const { membershipSet } = useSelector(state => state.study.study);
-  const [memberList, setMemberList] = useState([]);
-  const [managerList, setManagerList] = useState([]);
-  useEffect(() => {
-    const manager =
-      membershipSet &&
-      membershipSet.length > 0 &&
-      membershipSet.filter(membership => {
-        return membership.role === 'manager';
-      });
-    setManagerList(manager);
-    const filterMemberList =
-      membershipSet &&
-      membershipSet.length > 0 &&
-      membershipSet.filter(membership => {
-        return membership.isWithdraw !== true && membership.role !== 'manager';
-      });
-    setMemberList(filterMemberList);
-  }, [membershipSet]);
-
+const Manager = ({ studyId, token, manager,memberList,user }) => {
+  
   const onClick = async event => {
     try {
-      await Axios.patch(
-        `https://study-watson.lhy.kr/api/v1/study/memberships/${
+      await Promise.all([
+        axios.patch(
+          `https://study-watson.lhy.kr/api/v1/study/memberships/${
           event.target.dataset.pk
-        }/`,
-        {
-          role: 'manager',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${token}`,
+          }/`,
+          {
+            role: 'manager',
           },
-        },
-      );
-      await Axios.patch(
-        `https://study-watson.lhy.kr/api/v1/study/memberships/${
-          managerList[0].pk
-        }/`,
-        {
-          role: 'sub_manager',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${token}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${token}`,
+            },
           },
-        },
-      );
+        ),
+        axios.patch(
+          `https://study-watson.lhy.kr/api/v1/study/memberships/${
+          manager[0].pk
+          }/`,
+          {
+            role: 'sub_manager',
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${token}`,
+            },
+          },
+        ),
+      ])
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
     Router.push(`/studyDetail/${studyId}`);
   };
   return (
     <div style={{ margin: '8px' }}>
-      <Header />
+      <Header user={user} />
       <div>
         <div style={{ margin: '8px 8px 16px' }}>
           <Link
@@ -110,26 +93,38 @@ const Manager = ({ studyId, token }) => {
 
 Manager.getInitialProps = async ({ ctx, token, res }) => {
   const user = await checkLogin({ res, token })
-  const {studyId} = ctx.query.studyId;
+  const { studyId } = ctx.query;
   if (!studyId) {
     redirect({ res });
   }
   try {
-    const result = await Promise.all([
-      axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${token}`,
-        },
-      }),
-      axios.get(
-        'https://study-watson.lhy.kr/api/v1/study/icons/',
-      ),
-    ])
+    const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const { membershipSet } = result.data;
+    const manager =
+      (membershipSet &&
+      membershipSet.length > 0)
+        ? membershipSet.filter(membership => {
+          return membership.role === 'manager';
+        })
+        : [];
+    const memberList =
+      (membershipSet &&
+      membershipSet.length > 0)
+        ? membershipSet.filter(membership => {
+          return membership.isWithdraw !== true && membership.role !== 'manager';
+        })
+        : [];
     return {
-      study: result[0].data,
-      icons: result[1].data,
+      manager,
+      memberList,
       user,
+      token,
+      studyId,
     };
   } catch (error) {
     console.log(error);
@@ -137,25 +132,12 @@ Manager.getInitialProps = async ({ ctx, token, res }) => {
   }
 };
 
-editStudy.propTypes = {
-  user: PropTypes.object.isRequired,
-  icons: PropTypes.array.isRequired,
-  study: PropTypes.object.isRequired,
-}
-
-
-Manager.getInitialProps = ({ ctx, token }) => {
-  const { studyId } = ctx.query;
-  ctx.store.dispatch({
-    type: LOAD_STUDY_REQUEST,
-    data: { token, studyId },
-  });
-  return { studyId, token };
-};
-
 Manager.propTypes = {
-  studyId: PropTypes.string.isRequired,
+  manager: PropTypes.array.isRequired,
+  memberList: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
+  studyId: PropTypes.string.isRequired,
 };
 
 export default Manager;
