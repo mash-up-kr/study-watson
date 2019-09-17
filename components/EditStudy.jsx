@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import Axios from 'axios';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { useInput } from '../common/useInput';
 import { UPDATE_STUDY_REQUEST } from '../reducers/study';
@@ -62,42 +62,16 @@ const StyledIconCategory = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const EditStudy = () => {
-  const [name, setName] = useInput('');
-  const [category, setCategory] = useInput('3');
-  const [description, setDescription] = useInput('');
-  const [icons, setIcons] = useState([]);
-  const [icon, setIcon] = useState({});
+const EditStudy = ({ study, icons }) => {
+  const [name, setName] = useInput(study.name);
+  const [category, setCategory] = useInput((!!study.category && !!study.category.pk) ? JSON.stringify(study.category.pk) : '3');
+  const [description, setDescription] = useInput(study.description);
+  const [icon, setIcon] = useState(study.icon);
   const dispatch = useDispatch();
 
-  const { study } = useSelector(state => state.study);
-  useEffect(() => {
-    if (study) {
-      const n = {
-        target: {
-          value: study.name,
-        },
-      };
-      setName(n);
+  console.log(111, category)
 
-      const d = {
-        target: {
-          value: study.description,
-        },
-      };
-      setDescription(d);
-      if (!!study.category && !!study.category.pk) {
-        const cat = {
-          target: {
-            value: JSON.stringify(study.category.pk),
-          },
-        };
-        setCategory(cat);
-      }
-      setIcon(study.icon);
-    }
-  }, [study]);
-  const onSubmitForm = event => {
+  const onSubmitForm = useCallback(event => {
     event.preventDefault();
 
     dispatch({
@@ -110,22 +84,12 @@ const EditStudy = () => {
         icon: icon.pk,
       },
     });
-  };
-
-  const getIcon = async () => {
-    const result = await Axios.get(
-      'https://study-watson.lhy.kr/api/v1/study/icons/',
-    );
-    setIcons(result.data);
-  };
-  useEffect(() => {
-    getIcon();
-  }, []);
+  }, [category, name, description. icon]);
 
   return (
     <StyledScreen>
       <StyledTitle>스터디 수정하기</StyledTitle>
-      <StyledForm onSubmit={e => onSubmitForm(e, 1)}>
+      <StyledForm onSubmit={onSubmitForm}>
         <StyledInputContainer>
           <StyledLabel htmlFor="category">카테고리</StyledLabel>
           <StyledRadio>
@@ -233,5 +197,10 @@ const EditStudy = () => {
     </StyledScreen>
   );
 };
+
+EditStudy.propTypes = {
+  study: PropTypes.object.isRequired,
+  icons: PropTypes.array.isRequired,
+}
 
 export default EditStudy;
