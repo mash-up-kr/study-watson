@@ -18,7 +18,7 @@ const Join = ({ study, token, id, user }) => {
 
 Join.getInitialProps = async ({ ctx, token, res, pk }) => {
   const user = await checkLogin({ res, token })
-  const id = ctx.query.id || 0;
+  const { id } = ctx.query;
   if (!id) {
     redirect({ res });
   }

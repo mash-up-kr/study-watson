@@ -108,6 +108,42 @@ const Manager = ({ studyId, token }) => {
   );
 };
 
+Manager.getInitialProps = async ({ ctx, token, res }) => {
+  const user = await checkLogin({ res, token })
+  const {studyId} = ctx.query.studyId;
+  if (!studyId) {
+    redirect({ res });
+  }
+  try {
+    const result = await Promise.all([
+      axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      }),
+      axios.get(
+        'https://study-watson.lhy.kr/api/v1/study/icons/',
+      ),
+    ])
+    return {
+      study: result[0].data,
+      icons: result[1].data,
+      user,
+    };
+  } catch (error) {
+    console.log(error);
+    redirect({ res });
+  }
+};
+
+editStudy.propTypes = {
+  user: PropTypes.object.isRequired,
+  icons: PropTypes.array.isRequired,
+  study: PropTypes.object.isRequired,
+}
+
+
 Manager.getInitialProps = ({ ctx, token }) => {
   const { studyId } = ctx.query;
   ctx.store.dispatch({

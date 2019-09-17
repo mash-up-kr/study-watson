@@ -17,7 +17,7 @@ const editStudy = ({ study, user, icons }) => {
 };
 editStudy.getInitialProps = async ({ ctx, token, res }) => {
   const user = await checkLogin({ res, token })
-  const studyId = ctx.query.studyId || '0';
+  const { studyId } = ctx.query.studyId;
   if (!studyId) {
     redirect({ res });
   }

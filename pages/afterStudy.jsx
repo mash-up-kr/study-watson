@@ -45,7 +45,7 @@ const afterStudy = ({ studyId, token, pk: userPK, user, schedules, role }) => {
 
 afterStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
   const user = await checkLogin({ res, token })
-  const { studyId = 0 } = ctx.query;
+  const { studyId } = ctx.query;
   if (!studyId) {
     redirect({ res });
   }

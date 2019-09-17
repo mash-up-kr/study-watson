@@ -7,7 +7,7 @@ import checkLogin from '../common/checkLogin';
 import redirect from '../common/redirect'
 import EditForm from '../components/EditForm';
 
-const editSchedule = ({schedule, user}) => {
+const editSchedule = ({ schedule, user }) => {
   return (
     <>
       <Header user={user} />
@@ -18,7 +18,7 @@ const editSchedule = ({schedule, user}) => {
 
 editSchedule.getInitialProps = async ({ ctx, token, pk, res }) => {
   const user = await checkLogin({ res, token })
-  const scheduleId = ctx.query.scheduleId || '0';
+  const { scheduleId } = ctx.query.scheduleId;
   if (!scheduleId) {
     redirect({ res });
   }
@@ -31,7 +31,7 @@ editSchedule.getInitialProps = async ({ ctx, token, pk, res }) => {
       schedule: result.data,
       user,
     };
-  } catch(error) {
+  } catch (error) {
     console.log(error);
     redirect({ res });
   }

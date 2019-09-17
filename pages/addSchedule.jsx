@@ -16,11 +16,11 @@ const addSchedule = ({ studyId, user }) => {
   );
 };
 
-addSchedule.getInitialProps = async ({ ctx, res,token }) => {
-  const user = await checkLogin({res, token});
-  const studyId = ctx.query.studyId || 0;
-  if(!studyId) {
-    redirect({res});
+addSchedule.getInitialProps = async ({ ctx, res, token }) => {
+  const user = await checkLogin({ res, token });
+  const { studyId } = ctx.query;
+  if (!studyId) {
+    redirect({ res });
   }
   return {
     user,
