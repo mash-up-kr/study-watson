@@ -8,7 +8,7 @@ export default ({res}) => {
       })
       res.end()
     } else {
-      Router.push('/')
+      Router.pushRoute('/')
     }
   }
 
@@ -19,7 +19,18 @@ export const login = ({res}) => {
     })
     res.end()
   } else {
-    Router.push('/login')
+    Router.pushRoute('/login')
+  }
+}
+
+export const studyDetail = ({res, studyId}) => {
+  if (res) {
+    res.writeHead(302, {
+      Location: `/studyDetail/${studyId}`
+    })
+    res.end()
+  } else {
+    Router.pushRoute(`/studyDetail/${studyId}`);
   }
 }
 
@@ -30,6 +41,6 @@ export const error = ({res}) => {
     })
     res.end()
   } else {
-    Router.push('/error')
+    Router.pushRoute('/error')
   }
 }
