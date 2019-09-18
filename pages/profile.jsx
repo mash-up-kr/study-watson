@@ -86,7 +86,7 @@ const Profile = () => {
           <StyledText>{phoneNumber}</StyledText>
           <StyledContainer>
             <StyledItem>
-              <Link route="/profile-edit" href="/profile-edit">
+              <Link route="/editProfile" href="/editProfile">
                 <a>
                   <StyledLabel>
                     <StyledIcon

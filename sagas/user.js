@@ -30,8 +30,9 @@ import {
 } from '../reducers/user';
 
 // EDIT_USER
-function editAPI({ pk, password, imgProfile, email, nickname }) {
-  const data = cleanNullArgs({ password, imgProfile, email, nickname });
+function editAPI({ pk, password, imgProfile, email, nickname, phoneNumber }) {
+  const data = cleanNullArgs({ password, imgProfile, email, nickname, phoneNumber });
+  console.log(111, phoneNumber)
   const token = getCookie('token');
   return axios.patch(
     `https://study-watson.lhy.kr/api/v1/members/${pk}/`,
@@ -50,6 +51,7 @@ function editAPI({ pk, password, imgProfile, email, nickname }) {
 function* edit(action) {
   try {
     const result = yield call(editAPI, action.data);
+    console.log(111,result)
     const { pk, phoneNumber, imgProfile, nickname, email } = result.data;
     yield put({
       type: EDIT_USER_SUCCESS,
