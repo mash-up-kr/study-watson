@@ -8,7 +8,7 @@ import checkLogin from '../common/checkLogin';
 import redirect, { studyDetail } from '../common/redirect'
 import EditForm from '../components/EditForm';
 
-const editSchedule = ({ schedule, user }) => {
+const EditSchedule = ({ schedule, user }) => {
   return (
     <>
       <Header user={user} />
@@ -17,7 +17,7 @@ const editSchedule = ({ schedule, user }) => {
   );
 };
 
-editSchedule.getInitialProps = async ({ ctx, token, res, pk }) => {
+EditSchedule.getInitialProps = async ({ ctx, token, res, pk }) => {
   const user = await checkLogin({ res, token })
   const { studyId, scheduleId } = ctx.query;
   if (!scheduleId) {
@@ -42,9 +42,9 @@ editSchedule.getInitialProps = async ({ ctx, token, res, pk }) => {
   }
 };
 
-editSchedule.propTypes = {
+EditSchedule.propTypes = {
   user: PropTypes.object.isRequired,
   schedule: PropTypes.object.isRequired,
 }
 
-export default editSchedule;
+export default EditSchedule;

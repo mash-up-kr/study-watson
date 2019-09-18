@@ -16,8 +16,7 @@ const EditProfile = ({ user }) => {
 };
 
 EditProfile.getInitialProps = async ({ token, res }) => {
-  const user = await checkLogin({ res, token })
-  console.log(user)
+  const user = await checkLogin({ res, token });
   return {
     user,
   };

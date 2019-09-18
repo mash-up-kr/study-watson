@@ -235,8 +235,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
 
         {(role === 'manager' || role === 'sub_manager') && (
           <Link
-            route={`/addSchedule/${studyId}`}
-            href={`/addSchedule/${studyId}`}
+            route={`/study/${studyId}/addSchedule`}
+            href={`/study/${studyId}/addSchedule`}
           >
             <a>
               <AddFAB />
