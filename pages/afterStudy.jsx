@@ -51,24 +51,13 @@ afterStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
   if (!studyId) {
     redirect({ res });
   }
-  await checkMember({res, token, studyId, pk});
+  const member = await checkMember({res, token, studyId, pk});
   try {
-    const result = await Promise.all([
-      axios.get(
+    const result = await axios.get(
         `https://study-watson.lhy.kr/api/v1/study/schedules/?study=${studyId}`,
         { headers: { Authorization: `Token ${token}` } },
-      ),
-      axios.get(
-        `https://study-watson.lhy.kr/api/v1/study/memberships/?user=${pk}&study=${studyId}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${token}`,
-          },
-        },
-      ),
-    ])
-    const schedules = result[0].data;
+      );
+    const schedules = result.data;
 
     const filterSchedules =
       schedules &&
@@ -86,7 +75,7 @@ afterStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
 
     return {
       schedules: recentSchedules,
-      role: result[1].data[0].role,
+      role: member.role,
       user,
       studyId,
       token,
