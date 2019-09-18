@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useCallback ,useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
@@ -39,7 +39,7 @@ const SignUpData = () => {
 
   const type = 'email';
 
-  const checkEmail = e => {
+  const checkEmail = useCallback(e => {
     setEmail(e.target.value);
     const emailChecker = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (emailChecker.test(e.target.value)) {
@@ -47,9 +47,9 @@ const SignUpData = () => {
     } else {
       setIsEmailValid(false);
     }
-  };
+  }, []);
 
-  const checkPassword1 = e => {
+  const checkPassword1 = useCallback(e => {
     setPassword1(e.target.value);
     const passwordChecker = /^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
     if (passwordChecker.test(e.target.value)) {
@@ -57,18 +57,18 @@ const SignUpData = () => {
     } else {
       setIsPassword1Valid(false);
     }
-  };
+  }, []);
 
-  const checkPassword2 = e => {
+  const checkPassword2 = useCallback(e => {
     setPassword2(e.target.value);
     if (password1 === e.target.value) {
       setIsPassword2Valid(true);
     } else {
       setIsPassword2Valid(false);
     }
-  };
+  }, [password1]);
 
-  const checkNickname = e => {
+  const checkNickname = useCallback(e => {
     setNickname(e.target.value);
     const nickNameChecker = /^.*(?=.{2,8}).*$/;
     if (nickNameChecker.test(e.target.value)) {
@@ -76,9 +76,9 @@ const SignUpData = () => {
     } else {
       setIsNicknameValid(false);
     }
-  };
+  }, []);
 
-  const checkPhoneNumber = e => {
+  const checkPhoneNumber = useCallback(e => {
     setPhoneNumber(e.target.value);
     const value = e.target.value.split('-').join('');
     const phoneNumberChecker = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
@@ -87,9 +87,9 @@ const SignUpData = () => {
     } else {
       setIsPhoneNumberValid(false);
     }
-  };
+  }, []);
 
-  const onSubmit = async event => {
+  const onSubmit = useCallback(async event => {
     event.preventDefault();
     try {
       const result = await axios.post(
@@ -142,11 +142,11 @@ const SignUpData = () => {
         nickname,
       },
     });
-  };
+  }, [email, password1, password2, type, phoneNumber, nickname, isEmailValid, isPassword1Valid, isPassword2Valid, isNicknameValid, isPhoneNumberValid]);
 
-  const onClickInput = value => {
+  const onClickInput = useCallback(value => {
     setFocus(value);
-  };
+  }, []);
 
   return (
     <StyledScreen>

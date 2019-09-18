@@ -47,10 +47,9 @@ Index.getInitialProps = async ({ token, pk, res }) => {
         studies.filter(study => {
           return study.isWithdraw === false;
         });
-
       return {
         user: result[0].data,
-        studies: filterStudies,
+        studies: filterStudies || [],
       };
     } catch (error) {
       console.log(error);

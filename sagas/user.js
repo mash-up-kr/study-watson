@@ -204,7 +204,7 @@ function* signUp(action) {
     });
     document.cookie = `token=${token}; path=/`;
     document.cookie = `pk=${pk}; path=/`;
-    Router.pushRoute('/');
+    Router.pushRoute('/signupend');
   } catch (error) {
     console.log(error.response.data);
     alert('회원가입에 실패하였습니다.');
