@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import checkMember from '../common/checkMember';
 import Header from '../containers/Header';
 import EditStudyForm from '../components/EditStudyForm';
 import checkLogin from '../common/checkLogin';
@@ -15,11 +16,15 @@ const editStudy = ({ study, user, icons }) => {
     </>
   );
 };
-editStudy.getInitialProps = async ({ ctx, token, res }) => {
+editStudy.getInitialProps = async ({ ctx, token, res, pk }) => {
   const user = await checkLogin({ res, token })
   const { studyId } = ctx.query;
   if (!studyId) {
     redirect({ res });
+  }
+  const membership = await checkMember({ res, token, studyId, pk });
+  if (membership.role !== 'manager' && membership.role !== 'sub_manager') {
+    studyDetail({ res, studyId });
   }
   try {
     const result = await Promise.all([

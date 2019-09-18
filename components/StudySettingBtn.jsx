@@ -113,8 +113,8 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
         {(role === 'manager' || role === 'sub_manager') && (
           <StyledSettingItem>
             <Link
-              route={`/study/${studyId}/editStudy/${studyId}`}
-              href={`/study/${studyId}/editStudy/${studyId}`}
+              route={`/editStudy/${studyId}`}
+              href={`/editStudy/${studyId}`}
             >
               <a>
                 <StyledLabel>

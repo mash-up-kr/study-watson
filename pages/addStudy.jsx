@@ -17,13 +17,16 @@ const AddStudy = ({ user, icons }) => {
 
 AddStudy.getInitialProps = async ({ res, token }) => {
   const user = await checkLogin({ res, token });
-  const result = await axios.get(
-    'https://study-watson.lhy.kr/api/v1/study/icons/',
-  );
-  console.log(result.data)
-  return {
-    user,
-    icons: result.data,
+  try {
+    const result = await axios.get(
+      'https://study-watson.lhy.kr/api/v1/study/icons/',
+    );
+    return {
+      user,
+      icons: result.data,
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 

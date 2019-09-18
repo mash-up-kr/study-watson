@@ -50,6 +50,7 @@ beforeStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
   if (!studyId) {
     redirect({ res });
   }
+  await checkMember({res, token, studyId, pk});
   try {
     const result = await Promise.all([
       axios.get(

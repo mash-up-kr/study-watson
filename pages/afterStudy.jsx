@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
 import Header from '../containers/Header';
 import ScheduleCard from '../components/ScheduleCard';
 import { StyledTitle } from '../common/StyledComponents';
-import checkLogin from '../common/checkLogin';
 import redirect from '../common/redirect'
 
 const StyledScreen = styled.div`
@@ -50,6 +51,7 @@ afterStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
   if (!studyId) {
     redirect({ res });
   }
+  await checkMember({res, token, studyId, pk});
   try {
     const result = await Promise.all([
       axios.get(
