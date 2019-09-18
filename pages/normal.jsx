@@ -1,15 +1,16 @@
 import axios from 'axios'
-import React, { useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 import Router from 'next/router';
 
-import Header from '../containers/Header';
-import checkLogin from '../common/checkLogin';
-import redirect from '../common/redirect'
 import AuthorityManagementForm from '../components/AuthorityManagementForm';
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
+import Header from '../containers/Header';
+import redirect from '../common/redirect'
 
-const Normal = ({ studyId, token, memberList: InitialMemberList, pk:userPK }) => {
-  const [ memberList, setMemberList] = useState(InitialMemberList)
+const Normal = ({ studyId, token, memberList: InitialMemberList, pk: userPK }) => {
+  const [memberList, setMemberList] = useState(InitialMemberList)
   const text = '일반 유저 임명';
   const onClick = useCallback(async event => {
     const { pk } = event.target.dataset;
@@ -35,9 +36,6 @@ const Normal = ({ studyId, token, memberList: InitialMemberList, pk:userPK }) =>
       setMemberList([...filterMemberList]);
     } catch (error) {
       console.log(error);
-      if (error) {
-        console.log(error.response);
-      }
     }
   }, [memberList]);
   return (
@@ -54,6 +52,10 @@ Normal.getInitialProps = async ({ ctx, token, res, pk }) => {
   if (!studyId) {
     redirect({ res });
   }
+  const membership = await checkMember({ res, token, studyId, pk });
+  if (membership.role !== 'manager' && membership.role !== 'sub_manager') {
+    studyDetail({ res, studyId });
+  }
   try {
     const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
       headers: {
@@ -62,17 +64,17 @@ Normal.getInitialProps = async ({ ctx, token, res, pk }) => {
       },
     });
     const { membershipSet } = result.data;
-        const memberList =
+    const memberList =
       (membershipSet &&
-      membershipSet.length > 1 )
-      ?membershipSet.filter(membership => {
-        return (
-          membership.isWithdraw !== true &&
-          membership.role !== 'manager' &&
-          membership.role !== 'normal'
-        );
-      })
-      : [];
+        membershipSet.length > 1)
+        ? membershipSet.filter(membership => {
+          return (
+            membership.isWithdraw !== true &&
+            membership.role !== 'manager' &&
+            membership.role !== 'normal'
+          );
+        })
+        : [];
     return {
       memberList,
       user,

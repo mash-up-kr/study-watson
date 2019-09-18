@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import Router from 'next/router';
 
-import Header from '../containers/Header';
-import checkLogin from '../common/checkLogin';
-import redirect, { studyDetail } from '../common/redirect'
 import AuthorityManagementForm from '../components/AuthorityManagementForm';
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
+import Header from '../containers/Header';
+import redirect, { studyDetail } from '../common/redirect'
 
 const Manager = ({ studyId, token, manager, memberList, user }) => {
   const text = '리더 임명';
@@ -62,6 +63,10 @@ Manager.getInitialProps = async ({ ctx, token, res, pk }) => {
   if (!studyId) {
     redirect({ res });
   }
+  const membership = await checkMember({ res, token, studyId, pk });
+  if (membership.role !== 'manager') {
+    studyDetail({ res, studyId });
+  }
   try {
     const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
       headers: {
@@ -69,7 +74,7 @@ Manager.getInitialProps = async ({ ctx, token, res, pk }) => {
         Authorization: `Token ${token}`,
       },
     });
-    const { membershipSet } = result.data;
+    const { membershipSet, author } = result.data;
     const managerList =
       (membershipSet &&
         membershipSet.length > 0)
