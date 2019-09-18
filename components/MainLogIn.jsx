@@ -147,10 +147,10 @@ const MainLogIn = ({ studies }) => {
                 return (
                   <Link
                     key={idx}
-                    route={`/studyDetail/${study &&
+                    route={`/study/${study &&
                       study.study &&
                       study.study.pk}`}
-                    href={`/studyDetail/${study &&
+                    href={`/study/${study &&
                       study.study &&
                       study.study.pk}`}
                   >

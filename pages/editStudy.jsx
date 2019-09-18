@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '../containers/Header';
-import EditStudy from '../components/EditStudy';
+import EditStudyForm from '../components/EditStudyForm';
 import checkLogin from '../common/checkLogin';
 import redirect from '../common/redirect'
 
@@ -11,7 +11,7 @@ const editStudy = ({ study, user, icons }) => {
   return (
     <>
       <Header user={user} />
-      <EditStudy study={study} icons={icons} />
+      <EditStudyForm study={study} icons={icons} />
     </>
   );
 };

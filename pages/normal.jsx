@@ -27,7 +27,7 @@ const Normal = ({ studyId, token, memberList: InitialMemberList, pk:userPK }) =>
         },
       );
       if (result.data.user.pk === parseInt(userPK, 10)) {
-        Router.pushRoute(`/studyDetail/${studyId}`);
+        Router.pushRoute(`/study/${studyId}`);
       }
       const filterMemberList = memberList.filter(membership => {
         return parseInt(membership.pk, 10) !== parseInt(pk, 10);

@@ -54,7 +54,7 @@ const JoinForm = ({ study, token, id, userProfileCount }) => {
       alert('성공적으로 가입되었습니다');
       console.log(result)
 
-      Router.pushRoute(`/studyDetail/${result.data.study.pk}`);
+      Router.pushRoute(`/study/${result.data.study.pk}`);
     } catch (error) {
       console.log(error)
       if (!!error.response && !!error.response.data && error.response.data.detail) {

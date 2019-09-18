@@ -17,8 +17,8 @@ const AuthorityManagementForm = ({ studyId, onClick, memberList, text }) => {
     <>
       <div style={{ margin: '8px 8px 16px' }}>
         <Link
-          route={`/studyDetail/${studyId}`}
-          href={`/studyDetail/${studyId}`}
+          route={`/study/${studyId}`}
+          href={`/study/${studyId}`}
         >
           <a>스터디로 돌아가기</a>
         </Link>

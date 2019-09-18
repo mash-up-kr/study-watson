@@ -26,11 +26,11 @@ export const login = ({res}) => {
 export const studyDetail = ({res, studyId}) => {
   if (res) {
     res.writeHead(302, {
-      Location: `/studyDetail/${studyId}`
+      Location: `/study/${studyId}`
     })
     res.end()
   } else {
-    Router.pushRoute(`/studyDetail/${studyId}`);
+    Router.pushRoute(`/study/${studyId}`);
   }
 }
 

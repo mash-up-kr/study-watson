@@ -168,8 +168,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
         <StyledCardBtnContainer>
           <StyledCardBtn>
             <Link
-              route={`/studyDetail/${studyId}/afterStudy`}
-              href={`/studyDetail/${studyId}/afterStudy`}
+              route={`/study/${studyId}/afterStudy`}
+              href={`/study/${studyId}/afterStudy`}
             >
               <StyledCardBtnWrapper>
                 <img
@@ -184,8 +184,8 @@ const studyDetail = ({ studyId, token, pk: user }) => {
           </StyledCardBtn>
           <StyledCardBtn>
             <Link
-              route={`/studyDetail/${studyId}/beforeStudy`}
-              href={`/studyDetail/${studyId}/beforeStudy`}
+              route={`/study/${studyId}/beforeStudy`}
+              href={`/study/${studyId}/beforeStudy`}
             >
               <StyledCardBtnWrapper>
                 <img

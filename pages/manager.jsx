@@ -45,7 +45,7 @@ const Manager = ({ studyId, token, manager, memberList, user }) => {
     } catch (error) {
       console.log(error.response.data);
     }
-    Router.pushRoute(`/studyDetail/${studyId}`);
+    Router.pushRoute(`/study/${studyId}`);
   }, []);
 
   return (

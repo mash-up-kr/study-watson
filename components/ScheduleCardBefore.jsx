@@ -182,7 +182,7 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
 
       <StyledDetailMenu show={click}>
         <StyledDetailItem>
-          <Link route={`/vote/${schedule.pk}`} href={`/vote/${schedule.pk}`}>
+          <Link route={`/study/${study.pk}/vote/${schedule.pk}`} href={`/study/${study.pk}/vote/${schedule.pk}`}>
             <a>
               <StyledLabel>
                 <StyledIcon
@@ -198,8 +198,8 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
           <>
             <StyledDetailItem>
               <Link
-                route={`/editSchedule/${schedule.pk}`}
-                href={`/editSchedule/${schedule.pk}`}
+                route={`/study/${study.pk}/editSchedule/${schedule.pk}`}
+                href={`/study/${study.pk}/editSchedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel data-pk={schedule.pk}>
@@ -217,8 +217,8 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
             </StyledDetailItem>
             <StyledDetailItem>
               <Link
-                route={`/schedule/${schedule.pk}`}
-                href={`/schedule/${schedule.pk}`}
+                route={`/study/${study.pk}/schedule/${schedule.pk}`}
+                href={`/study/${study.pk}/schedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel>
