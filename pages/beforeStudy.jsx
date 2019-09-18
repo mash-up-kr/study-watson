@@ -18,7 +18,7 @@ const ScheduleCardBeforeContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const beforeStudy = ({ token, schedules, role,user }) => {
+const beforeStudy = ({ studyId,token, schedules, role,user }) => {
 
   return (
     <div>
@@ -31,6 +31,7 @@ const beforeStudy = ({ token, schedules, role,user }) => {
             return (
               <ScheduleCardBeforeContainer key={schedule.pk}>
                 <ScheduleCardBefore
+                studyId={studyId}
                   schedule={schedule}
                   token={token}
                   role={role}
@@ -95,6 +96,7 @@ beforeStudy.getInitialProps = async ({ ctx, token, pk, res }) => {
 };
 
 beforeStudy.propTypes = {
+  studyId: PropTypes.string.isRequired,
   schedules: PropTypes.array.isRequired,
   role: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,

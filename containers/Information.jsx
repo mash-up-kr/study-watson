@@ -54,7 +54,7 @@ const Information = () => {
       Axios.get(`https://api.github.com/users/${name[3]}`),
     ])
     setUsers([result[0].data, result[1].data, result[2].data, result[3].data]);
-  },[]);
+  }, []);
   useEffect(() => {
     getUsers();
   }, []);

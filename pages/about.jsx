@@ -6,7 +6,7 @@ import React from 'react';
 
 import { userProfile } from '../common/url';
 
-const About = ({user}) => {
+const About = ({ user }) => {
   return (
     <>
       <Header user={user} />
@@ -23,7 +23,7 @@ About.getInitialProps = async ({ token }) => {
     return {
       user: result.data,
     }
-  } catch(error) {
+  } catch (error) {
     console.log(error)
     return {
       user: {

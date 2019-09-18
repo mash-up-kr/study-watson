@@ -30,6 +30,7 @@ const afterStudy = ({ studyId, token, pk: userPK, user, schedules, role }) => {
             return (
               <ScheduleCardContainer key={schedule.pk}>
                 <ScheduleCard
+                  studyId={studyId}
                   schedule={schedule}
                   token={token}
                   user={userPK}

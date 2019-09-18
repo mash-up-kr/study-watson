@@ -124,7 +124,7 @@ const StyledIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const ScheduleCard = ({ schedule, token, user, role = 'normal' }) => {
+const ScheduleCard = ({ studyId, schedule, token, user, role = 'normal' }) => {
   const [click, setClick] = useState(false);
   const [isVoted, setIsVoted] = useState(!!schedule.selfAttendance && !!schedule.selfAttendance.voteDisplay);
   const [expectAtt, setExpectAtt] = useState((!!schedule.selfAttendance && !!schedule.selfAttendance.voteDisplay) ? schedule.selfAttendance.voteDisplay : '아직 투표하지 않았습니다');
@@ -278,7 +278,7 @@ const ScheduleCard = ({ schedule, token, user, role = 'normal' }) => {
 
       <StyledDetailMenu show={click}>
         <StyledDetailItem>
-          <Link route={`/study/${study.pk}/vote/${schedule.pk}`} href={`/study/${study.pk}/vote/${schedule.pk}`}>
+          <Link route={`/study/${studyId}/vote/${schedule.pk}`} href={`/study/${studyId}/vote/${schedule.pk}`}>
             <a>
               <StyledLabel>
                 <StyledIcon src="/static/icon-vote.svg" alt="vote icon" />
@@ -291,8 +291,8 @@ const ScheduleCard = ({ schedule, token, user, role = 'normal' }) => {
           <>
             <StyledDetailItem>
               <Link
-                route={`/study/${study.pk}/editSchedule/${schedule.pk}`}
-                href={`/study/${study.pk}/editSchedule/${schedule.pk}`}
+                route={`/study/${studyId}/editSchedule/${schedule.pk}`}
+                href={`/study/${studyId}/editSchedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel data-pk={schedule.pk}>
@@ -310,8 +310,8 @@ const ScheduleCard = ({ schedule, token, user, role = 'normal' }) => {
             </StyledDetailItem>
             <StyledDetailItem>
               <Link
-                route={`/study/${study.pk}/schedule/${schedule.pk}`}
-                href={`/study/${study.pk}/schedule/${schedule.pk}`}
+                route={`/study/${studyId}/schedule/${schedule.pk}`}
+                href={`/study/${studyId}/schedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel>

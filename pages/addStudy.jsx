@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React from 'react';
 import PropTypes from 'prop-types'
+import React from 'react';
 
+import checkLogin from '../common/checkLogin'
 import CreateStudy from '../containers/CreateStudy';
 import Header from '../containers/Header';
-import checkLogin from '../common/checkLogin'
 
 const AddStudy = ({ user, icons }) => {
   return (

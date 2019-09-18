@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
+import checkLogin from '../common/checkLogin'
 import CreateSchedule from '../components/CreateSchedule'
 import Header from '../containers/Header';
-import checkLogin from '../common/checkLogin'
 import redirect from '../common/redirect';
 
 

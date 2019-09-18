@@ -98,7 +98,7 @@ const StyledAttendText = styled.div`
   }
 `;
 
-const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
+const ScheduleCardBefore = ({ studyId,schedule, token, role = 'normal' }) => {
   console.log(schedule)
   const [click, setClick] = useState(false);
   const [attendance, setAttendance] = useState(
@@ -182,7 +182,7 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
 
       <StyledDetailMenu show={click}>
         <StyledDetailItem>
-          <Link route={`/study/${study.pk}/vote/${schedule.pk}`} href={`/study/${study.pk}/vote/${schedule.pk}`}>
+          <Link route={`/study/${studyId}/vote/${schedule.pk}`} href={`/study/${studyId}/vote/${schedule.pk}`}>
             <a>
               <StyledLabel>
                 <StyledIcon
@@ -198,8 +198,8 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
           <>
             <StyledDetailItem>
               <Link
-                route={`/study/${study.pk}/editSchedule/${schedule.pk}`}
-                href={`/study/${study.pk}/editSchedule/${schedule.pk}`}
+                route={`/study/${studyId}/editSchedule/${schedule.pk}`}
+                href={`/study/${studyId}/editSchedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel data-pk={schedule.pk}>
@@ -217,8 +217,8 @@ const ScheduleCardBefore = ({ schedule, token, role = 'normal' }) => {
             </StyledDetailItem>
             <StyledDetailItem>
               <Link
-                route={`/study/${study.pk}/schedule/${schedule.pk}`}
-                href={`/study/${study.pk}/schedule/${schedule.pk}`}
+                route={`/study/${studyId}/schedule/${schedule.pk}`}
+                href={`/study/${studyId}/schedule/${schedule.pk}`}
               >
                 <a>
                   <StyledLabel>

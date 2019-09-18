@@ -88,7 +88,6 @@ const addSchedule = ({ studyId }) => {
             value={voteEndAt}
             onChange={setvoteEndAt}
             onClickReset={() => setvoteEndAt('')}
-          // 2019. 07. 20 SAT 2:00 PM
           />
           <Input
             label="스터디 시작 일시"

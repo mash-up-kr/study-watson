@@ -10,7 +10,6 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 
 import { getCookie, getCookieServer } from '../common/cookie';
-import { LOAD_USER_REQUEST } from '../reducers/user';
 import reducer from '../reducers';
 import rootSaga from '../sagas';
 
@@ -79,12 +78,12 @@ const configureStore = (initialState, options) => {
   const enhancer =
     process.env.NODE_ENV === 'development'
       ? compose(
-          applyMiddleware(...middlewares),
-          !options.isServer &&
-            typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
-            ? window.__REDUX_DEVTOOLS_EXTENSION__()
-            : f => f,
-        )
+        applyMiddleware(...middlewares),
+        !options.isServer &&
+          typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
+          ? window.__REDUX_DEVTOOLS_EXTENSION__()
+          : f => f,
+      )
       : compose(applyMiddleware(...middlewares));
   const store = createStore(reducer, initialState, enhancer);
   store.sagaTask = sagaMiddleware.run(rootSaga);
@@ -104,10 +103,6 @@ MyApp.getInitialProps = async context => {
     pk = getCookie('pk');
   }
   axios.defaults.headers.Authorization = `Bearer ${token}`;
-  // context.ctx.store.dispatch({
-  //   type: LOAD_USER_REQUEST,
-  //   key: token,
-  // });
   let pageProps = {};
   if (context.Component.getInitialProps) {
     const { ctx } = context;
