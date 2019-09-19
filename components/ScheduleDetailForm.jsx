@@ -99,10 +99,11 @@ const ScheduleDetailForm = ({ schedule, attendList, lateList, absentList, noneLi
       console.log(error.response);
     }
   }, [attend, late, absent, none]);
-  const attendCount = useMemo(() => `출석 ${attend.length}`, [attend])
-  const lateCount = useMemo(() => `지각 ${late.length}`, [attend])
-  const absentCount = useMemo(() => `결석 ${absent.length}`, [attend])
-  const noneCount = useMemo(() => `미정 ${none.length}`, [attend])
+  
+  const attendCount = `출석 ${attend.length}`
+  const lateCount = `지각 ${late.length}`
+  const absentCount = `결석 ${absent.length}`
+  const noneCount = `미정 ${none.length}`
 
   return (
       <StyledScreen>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
 
 import { changeFormat } from '../common/changeFormat';
 
@@ -72,27 +72,12 @@ const StyeldattendanceItem = styled.div`
   align-items: center;
 `;
 
-const MemberAttendanceItem = ({ membership }) => {
+const MemberAttendanceItem = ({ membership, attendCount }) => {
   const [click, setClick] = useState(false);
 
-  const onClickMoreBtn = () => {
+  const onClickMoreBtn = useCallback(() => {
     setClick(!click);
-  };
-
-  let attend = 0;
-  let late = 0;
-  let absent = 0;
-  membership.attendanceSet.forEach(attendance => {
-    if (attendance.att === 'attend') {
-      attend += 1;
-    } else if (attendance.att === 'late') {
-      late += 1;
-    } else if (attendance.att === 'absent') {
-      absent += 1;
-    }
-  });
-  const attendCount = `참석 ${attend} · 지각 ${late} · 결석 ${absent}`;
-
+  }, [click]);
   return (
     <>
       <StyledMemberList>
@@ -136,6 +121,7 @@ const MemberAttendanceItem = ({ membership }) => {
 
 MemberAttendanceItem.propTypes = {
   membership: PropTypes.object.isRequired,
+  attendCount: PropTypes.string.isRequired,
 };
 
 export default MemberAttendanceItem;
