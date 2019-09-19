@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback,useState } from 'react';
 import PropTypes from 'prop-types';
 
 import AuthorityManagementForm from '../components/AuthorityManagementForm';
@@ -8,20 +7,11 @@ import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
 import Header from '../containers/Header';
 import redirect from '../common/redirect'
-import { Link } from '../routes';
-import {
-  StyledMemberList,
-  StyledPhoto,
-  StyledName,
-  StyledAttendBtnContainer,
-  StyledAttendBtn,
-} from '../components/Attendance';
-import { StyledText } from '../components/MemberListItem';
 
 const WithdrawStudy = ({ studyId, token, user, memberList: InitialMemberList }) => {
   const [memberList, setMemberList] = useState(InitialMemberList);
   const text = '제명';
-  const onClick = async event => {
+  const onClick = useCallback(async event => {
     const { pk } = event.target.dataset;
     try {
       await axios.delete(
@@ -36,7 +26,7 @@ const WithdrawStudy = ({ studyId, token, user, memberList: InitialMemberList }) 
           },
         },
       );
-      const filterMemberList = membershipSet.filter(membership => {
+      const filterMemberList = memberList.filter(membership => {
         return JSON.stringify(membership.pk) === JSON.stringify(pk);
       });
       setMemberList(filterMemberList);
@@ -46,7 +36,7 @@ const WithdrawStudy = ({ studyId, token, user, memberList: InitialMemberList }) 
         console.log(error.response);
       }
     }
-  };
+  }, [memberList]);
   return (
     <div style={{ margin: '8px' }}>
       <Header user={user} />
