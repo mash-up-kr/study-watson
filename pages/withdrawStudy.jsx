@@ -1,10 +1,13 @@
+import axios from 'axios';
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Axios from 'axios';
-import { LOAD_STUDY_REQUEST } from '../reducers/study';
+import AuthorityManagementForm from '../components/AuthorityManagementForm';
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
 import Header from '../containers/Header';
+import redirect from '../common/redirect'
 import { Link } from '../routes';
 import {
   StyledMemberList,
@@ -15,24 +18,13 @@ import {
 } from '../components/Attendance';
 import { StyledText } from '../components/MemberListItem';
 
-const WithdrawStudy = ({ studyId, token }) => {
-  const { membershipSet } = useSelector(state => state.study.study);
-  const [memberList, setMemberList] = useState([]);
-  const mount = useRef(null);
-  if (!mount.current) {
-    mount.current = true;
-    const filterMemberList =
-      membershipSet &&
-      membershipSet.length > 0 &&
-      membershipSet.filter(membership => {
-        return membership.isWithdraw !== true && membership.role !== 'manager';
-      });
-    setMemberList(filterMemberList);
-  }
+const WithdrawStudy = ({ studyId, token, user, memberList: InitialMemberList }) => {
+  const [memberList, setMemberList] = useState(InitialMemberList);
+  const text = '제명';
   const onClick = async event => {
     const { pk } = event.target.dataset;
     try {
-      await Axios.delete(
+      await axios.delete(
         `https://study-watson.lhy.kr/api/v1/study/memberships/${pk}/`,
         {
           role: 'normal',
@@ -57,52 +49,54 @@ const WithdrawStudy = ({ studyId, token }) => {
   };
   return (
     <div style={{ margin: '8px' }}>
-      <Header />
-      <div>
-        <div style={{ margin: '8px 8px 16px' }}>
-          <Link
-            route={`/study/${studyId}`}
-            href={`/study/${studyId}`}
-          >
-            <a>스터디로 돌아가기</a>
-          </Link>
-        </div>
-        <div style={{ margin: '8px' }}>
-          {memberList &&
-            memberList.map(membership => {
-              return (
-                <StyledMemberList key={`${membership.id}`}>
-                  <StyledPhoto src={membership.user.imgProfile} alt="img" />
-                  <StyledName style={{ marginRight: '8px' }}>
-                    {membership.user.nickname || membership.user.email}
-                  </StyledName>
-                  <StyledText>{membership.roleDisplay}</StyledText>
-                  <StyledAttendBtnContainer>
-                    <StyledAttendBtn data-pk={membership.pk} onClick={onClick}>
-                      제명
-                    </StyledAttendBtn>
-                  </StyledAttendBtnContainer>
-                </StyledMemberList>
-              );
-            })}
-        </div>
-      </div>
+      <Header user={user} />
+      <AuthorityManagementForm onClick={onClick} memberList={memberList} studyId={studyId} text={text} />
     </div>
   );
 };
 
-WithdrawStudy.getInitialProps = ({ ctx, token }) => {
+WithdrawStudy.getInitialProps = async ({ ctx, token, res, pk }) => {
+  const user = await checkLogin({ res, token })
   const { studyId } = ctx.query;
-  ctx.store.dispatch({
-    type: LOAD_STUDY_REQUEST,
-    data: { token, studyId },
-  });
-  return { studyId, token };
+  if (!studyId) {
+    redirect({ res });
+  }
+  const membership = await checkMember({ res, token, studyId, pk });
+  if (membership.role !== 'manager') {
+    studyDetail({ res, studyId });
+  }
+  try {
+    const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const { membershipSet } = result.data;
+    const memberList =
+      (membershipSet &&
+        membershipSet.length > 0)
+        ? membershipSet.filter(membership => {
+          return membership.isWithdraw !== true && membership.role !== 'manager';
+        })
+        : [];
+    return {
+      memberList,
+      user,
+      token,
+      studyId,
+    };
+  } catch (error) {
+    console.log(error);
+    redirect({ res });
+  }
 };
 
 WithdrawStudy.propTypes = {
-  studyId: PropTypes.string.isRequired,
+  memberList: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
+  studyId: PropTypes.string.isRequired,
 };
 
 export default WithdrawStudy;
