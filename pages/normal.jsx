@@ -9,7 +9,7 @@ import checkLogin from '../common/checkLogin';
 import Header from '../containers/Header';
 import redirect from '../common/redirect'
 
-const Normal = ({ studyId, token, memberList: InitialMemberList, pk: userPK }) => {
+const Normal = ({ studyId, token, memberList: InitialMemberList, pk: userPK, user }) => {
   const [memberList, setMemberList] = useState(InitialMemberList)
   const text = '일반 유저 임명';
   const onClick = useCallback(async event => {
@@ -40,7 +40,7 @@ const Normal = ({ studyId, token, memberList: InitialMemberList, pk: userPK }) =
   }, [memberList]);
   return (
     <div style={{ margin: '8px' }}>
-      <Header />
+      <Header user={user} />
       <AuthorityManagementForm onClick={onClick} memberList={memberList} studyId={studyId} text={text} />
     </div>
   );
