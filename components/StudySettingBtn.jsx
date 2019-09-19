@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback,useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -68,15 +68,15 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
 
   const dispatch = useDispatch();
 
-  const onClickSettingBtn = () => {
+  const onClickSettingBtn = useCallback(() => {
     setClick(!click);
-  };
+  },[click]);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setClick(!click);
-  }
+  }, [click]);
 
-  const onClickWithdrawStudy = () => {
+  const onClickWithdrawStudy = useCallback(() => {
     if (window.confirm('스터디를 탈퇴 하시겠습니까?')) {
       dispatch({
         type: WITHDRAW_STUDY_REQUEST,
@@ -86,7 +86,7 @@ const StudySettingBtn = ({ studyId, token, memberId, role }) => {
         },
       });
     }
-  };
+  }, []);
 
   return (
     <div>

@@ -40,7 +40,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         onClick={() => onClickInput(id)}
-        autocomplete={type === 'password' ? 'new-password' : 'off'}
+        // autocomplete={type === 'password' ? 'new-password' : 'off'}
       />
       {focus === id && (
         <StyledHelpText>

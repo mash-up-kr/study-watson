@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Axios from 'axios';
@@ -28,16 +28,33 @@ const StyledLogo = styled.img`
   padding: 1rem;
 `;
 
+const StyledContributor = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+`;
+
+const StyledLink = styled.a`
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
 const Information = () => {
   const [users, setUsers] = useState([]);
-  const getUsers = async () => {
+  // TODO: server로 이전 필요
+  const getUsers = useCallback(async () => {
     const name = ['jus0k', 'snaag', 'Yuni-Q', 'LeeHanYeong'];
-    const one = await Axios.get(`https://api.github.com/users/${name[0]}`);
-    const two = await Axios.get(`https://api.github.com/users/${name[1]}`);
-    const three = await Axios.get(`https://api.github.com/users/${name[2]}`);
-    const four = await Axios.get(`https://api.github.com/users/${name[3]}`);
-    setUsers([one.data, two.data, three.data, four.data]);
-  };
+    const result = await Promise.all([
+      Axios.get(`https://api.github.com/users/${name[0]}`),
+      Axios.get(`https://api.github.com/users/${name[1]}`),
+      Axios.get(`https://api.github.com/users/${name[2]}`),
+      Axios.get(`https://api.github.com/users/${name[3]}`),
+    ])
+    setUsers([result[0].data, result[1].data, result[2].data, result[3].data]);
+  }, []);
   useEffect(() => {
     getUsers();
   }, []);
@@ -70,27 +87,16 @@ const Information = () => {
         <StyledText>스터디원의 권한을 변경 할 수 있습니다</StyledText>
       </ul>
       <StyledTitle>Contributor</StyledTitle>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '16px',
-        }}
+      <StyledContributor
       >
         {users.length > 0 &&
           users.map(user => {
             return (
-              <a
+              <StyledLink
+                key={user.id}
                 href={user.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  margin: '0 16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                }}
               >
                 <StyledPhoto
                   src={user.avatar_url}
@@ -98,10 +104,10 @@ const Information = () => {
                   style={{ margin: '0 0 8px 0' }}
                 />
                 <StyledName>{user.name || user.login}</StyledName>
-              </a>
+              </StyledLink>
             );
           })}
-      </div>
+      </StyledContributor>
     </div>
   );
 };

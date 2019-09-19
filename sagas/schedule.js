@@ -64,7 +64,7 @@ function* addSchedule(action) {
     yield put({
       type: ADD_SCHEDULE_SUCCESS,
     });
-    Router.pushRoute(`/studyDetail/${action.data.study}`);
+    Router.pushRoute(`/study/${action.data.study}`);
   } catch (error) {
     console.log(error.response.data);
     alert('스케줄 추가에 실패했습니다');
@@ -175,7 +175,7 @@ function* updateSchedule(action) {
     yield put({
       type: UPDATE_SCHEDULE_SUCCESS,
     });
-    Router.pushRoute(`/studyDetail/${action.data.study}`);
+    Router.pushRoute(`/study/${action.data.study}`);
   } catch (error) {
     console.log(error.response.data);
     alert('스케줄 업데이트에 실패했습니다');

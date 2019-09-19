@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { Link } from '../routes';
-import { LOG_OUT_REQUEST } from '../reducers/user';
+import { deleteCookie } from '../common/cookie';
 
 const StyledMenu = styled.div`
   position: fixed;
@@ -61,15 +60,14 @@ const StyledName = styled.div`
   font-weight: bold;
 `;
 
-const LoginMenu = ({ value, show }) => {
-  const { nickname, imgProfile } = useSelector(state => state.user);
-  const dispatch = useDispatch();
+const LoginMenu = ({ value, show, user }) => {
+  const { nickname, imgProfile } = user;
 
   const onClickLogout = () => {
     show();
-    dispatch({
-      type: LOG_OUT_REQUEST,
-    });
+    deleteCookie('token');
+    deleteCookie('pk');
+    window.location.href = '/';
   };
 
   return (
@@ -139,6 +137,7 @@ const LoginMenu = ({ value, show }) => {
 LoginMenu.propTypes = {
   value: PropTypes.bool.isRequired,
   show: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default LoginMenu;

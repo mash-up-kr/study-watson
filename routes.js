@@ -3,13 +3,13 @@ const routes = require('next-routes');
 // routes.add(name, pattern = /name, page = name)
 const router = routes()
   .add('join', '/join/:id', 'join')
-  .add('studyDetail', '/studyDetail/:studyId', 'studyDetail')
-  .add('beforeStudy', '/studyDetail/:studyId/beforeStudy', 'beforeStudy')
-  .add('afterStudy', '/studyDetail/:studyId/afterStudy', 'afterStudy')
+  .add('studyDetail', '/study/:studyId', 'studyDetail')
+  .add('beforeStudy', '/study/:studyId/beforeStudy', 'beforeStudy')
+  .add('afterStudy', '/study/:studyId/afterStudy', 'afterStudy')
   .add('editStudy', '/editStudy/:studyId', 'editStudy')
-  .add('addSchedule', '/addSchedule/:studyId', 'addSchedule')
-  .add('scheduleDetail', '/schedule/:scheduleId', 'scheduleDetail')
-  .add('editSchedule', '/editSchedule/:scheduleId', 'editSchedule')
+  .add('addSchedule', '/study/:studyId/addSchedule', 'addSchedule')
+  .add('scheduleDetail', '/study/:studyId/schedule/:scheduleId', 'scheduleDetail')
+  .add('editSchedule', '/study/:studyId/editSchedule/:scheduleId', 'editSchedule')
   .add('studyMembers', '/studyMembers/:studyId', 'studyMembers')
   .add('studyMembersInfo', '/studyMembersInfo/:studyId', 'studyMembersInfo')
   .add('manager', '/manager/:studyId', 'manager')
@@ -17,7 +17,7 @@ const router = routes()
   .add('normal', '/normal/:studyId', 'normal')
   .add('withdrawStudy', '/withdrawStudy/:studyId', 'withdrawStudy')
   .add('studyInvite', '/studyInvite/:studyId', 'studyInvite')
-  .add('vote', '/vote/:scheduleId', 'vote');
+  .add('vote', '/study/:studyId/vote/:scheduleId', 'vote');
 exports.Link = router.Link;
 
 module.exports = router;

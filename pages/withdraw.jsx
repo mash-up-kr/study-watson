@@ -1,11 +1,12 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import Header from '../containers/Header';
-import { WITHDRAW_USER_REQUEST } from '../reducers/user'; import {
-  StyledTitle,
-} from '../common/StyledComponents';
+import checkLogin from '../common/checkLogin';
+import Header from '../components/Header';
+import { WITHDRAW_USER_REQUEST } from '../reducers/user';
+import { StyledTitle } from '../common/StyledComponents';
 
 const StyledWithdraw = styled.div`
   width: calc(100vw - 2rem);
@@ -30,22 +31,21 @@ const StyledList = styled.li`
   margin-bottom: 0.5rem;
 `;
 
-const Withdraw = () => {
-  const { pk } = useSelector(state => state.user);
+const Withdraw = ({ user }) => {
+  const { pk } = user;
   const dispatch = useDispatch();
 
-  const onClick = () => {
+  const onClick = useCallback(() => {
     dispatch({
       type: WITHDRAW_USER_REQUEST,
       data: {
         pk,
       },
     });
-  };
-
+  }, []);
   return (
     <>
-      <Header />
+      <Header user={user} />
       <StyledWithdraw>
         <StyledTitle>탈퇴하기</StyledTitle>
         <ul>
@@ -61,5 +61,17 @@ const Withdraw = () => {
     </>
   );
 };
+
+Withdraw.getInitialProps = async ({ ctx, token, res, pk }) => {
+  const user = await checkLogin({ res, token })
+  return {
+    user,
+  };
+};
+
+Withdraw.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
 
 export default Withdraw;

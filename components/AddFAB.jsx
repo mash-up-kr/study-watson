@@ -23,7 +23,7 @@ const AddFAB = () => {
       case '/':
         setIcon('icon-add');
         break;
-      case '/studyDetail/':
+      case '/study/':
         setIcon('icon-calendar-white');
         break;
       default:

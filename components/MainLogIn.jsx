@@ -128,22 +128,15 @@ export const getNearestScheduleStartAt = schedules => {
     : '다음 일정이 없습니다';
 };
 
-const MainLogIn = () => {
-  const { studies } = useSelector(state => state.study);
-
-  const filterStudies =
-    studies.length > 0 &&
-    studies.filter(study => {
-      return study.isWithdraw === false;
-    });
+const MainLogIn = ({ studies }) => {
 
   return (
     <div>
       <div>
-        {filterStudies.length > 0 ? (
+        {studies.length > 0 ? (
           <>
             <StyledCardContainer>
-              {filterStudies.map((study, idx) => {
+              {studies.map((study, idx) => {
                 const filterUser = study.studyMemberships.filter(user => {
                   return user.isWithdraw === false;
                 });
@@ -154,10 +147,10 @@ const MainLogIn = () => {
                 return (
                   <Link
                     key={idx}
-                    route={`/studyDetail/${study &&
+                    route={`/study/${study &&
                       study.study &&
                       study.study.pk}`}
-                    href={`/studyDetail/${study &&
+                    href={`/study/${study &&
                       study.study &&
                       study.study.pk}`}
                   >
@@ -167,8 +160,8 @@ const MainLogIn = () => {
                           {study.study.category.name === 'Develop' ? (
                             <CategoryDevelop />
                           ) : (
-                            <CategoryDesign />
-                          )}
+                              <CategoryDesign />
+                            )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -222,24 +215,24 @@ const MainLogIn = () => {
             </Link>
           </>
         ) : (
-          <StyledContainer>
-            <img
-              src="/static/image_main.svg"
-              alt="main illust"
-              style={{ marginBottom: '2rem' }}
-            />
-            <StyledImageText>
-              진행중인 스터디가 없습니다.
+            <StyledContainer>
+              <img
+                src="/static/image_main.svg"
+                alt="main illust"
+                style={{ marginBottom: '2rem' }}
+              />
+              <StyledImageText>
+                진행중인 스터디가 없습니다.
               <br />
-              스터디를 만들고 관리해보세요!
+                스터디를 만들고 관리해보세요!
             </StyledImageText>
-            <Link route="/addStudy" href="/addStudy">
-              <a>
-                <StyledActionButton type="button" value="스터디 만들기" />
-              </a>
-            </Link>
-          </StyledContainer>
-        )}
+              <Link route="/addStudy" href="/addStudy">
+                <a>
+                  <StyledActionButton type="button" value="스터디 만들기" />
+                </a>
+              </Link>
+            </StyledContainer>
+          )}
       </div>
     </div>
   );

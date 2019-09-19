@@ -2,27 +2,29 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import checkLogin from '../common/checkLogin';
+import EditProfileForm from '../components/editProfileForm';
 import Header from '../components/Header';
-import ProfileForm from '../components/ProfileForm';
 
-const Profile = ({ user }) => {
+const EditProfile = ({ user }) => {
+
   return (
     <>
       <Header user={user} />
-      <ProfileForm user={user} />
+      <EditProfileForm user={user} />
     </>
   );
 };
 
-Profile.getInitialProps = async ({ token, res }) => {
+EditProfile.getInitialProps = async ({ token, res }) => {
   const user = await checkLogin({ res, token });
   return {
     user,
   };
 };
 
-Profile.propTypes = {
+EditProfile.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-export default Profile;
+
+export default EditProfile;

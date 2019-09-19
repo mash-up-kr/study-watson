@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Link } from '../routes';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+import styled from 'styled-components';
 
 const StyledSettingBtn = styled.button`
   position: absolute;
@@ -62,13 +62,13 @@ const StyledIcon = styled.img`
 const MemberSettingBtn = ({ studyId, role }) => {
   const [click, setClick] = useState(false);
 
-  const onClickSettingBtn = () => {
+  const onClickSettingBtn = useCallback(() => {
     setClick(!click);
-  };
+  }, [click]);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setClick(!click);
-  };
+  }, [click]);
 
   return (
     <div>

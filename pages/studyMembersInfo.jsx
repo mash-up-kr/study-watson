@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
 
-import {
-  LOAD_STUDY_REQUEST,
-  LOAD_STUDY_MEMBERSHIPS_REQUEST,
-} from '../reducers/study';
-import Header from '../containers/Header';
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
+import Header from '../components/Header';
+import redirect from '../common/redirect'
 import MemberSettingBtn from '../components/MemberSettingBtn';
 import MemberListItem from '../components/MemberListItem';
 import { StyledTitle } from '../common/StyledComponents';
@@ -18,53 +17,19 @@ const StyledScreen = styled.div`
   padding-bottom: 2rem;
 `;
 
-const studyMembersInfo = ({ studyId }) => {
-  const { membershipSet } = useSelector(state => state.study.study);
-  const { role } = useSelector(state => state.study.memberships);
-  const [sortMembershipSet, setSortMembershipSet] = useState(membershipSet);
-
-  useEffect(() => {
-    if (!!membershipSet && membershipSet.length > 0) {
-      const filterMemberList = membershipSet.filter(membership => {
-        return membership.isWithdraw !== true;
-      });
-      const sortMember = filterMemberList.sort((a, b) => {
-        return a.user.nickname > b.user.nickname;
-      });
-      const normalMemeber = sortMember.filter(member => {
-        return member.role === 'normal';
-      });
-      const subManagerMember = sortMember.filter(member => {
-        return member.role === 'sub_manager';
-      });
-      const managerMember = sortMember.filter(member => {
-        return member.role === 'manager';
-      });
-      const resultMember = [
-        ...managerMember,
-        ...subManagerMember,
-        ...normalMemeber,
-      ];
-      setSortMembershipSet(resultMember);
-    }
-    // }
-  }, [membershipSet]);
-
-  const totalMember = `총 ${!!sortMembershipSet &&
-    sortMembershipSet.length}명의 참여자`;
+const StudyMembersInfo = ({ studyId, memberList, role, user }) => {
+  const totalMember = `총 ${memberList.length}명의 참여자`;
 
   return (
     <>
-      <Header />
+      <Header user={user} />
       <StyledScreen>
         <StyledTitle>{totalMember}</StyledTitle>
-        {!!sortMembershipSet &&
-          sortMembershipSet.map(membership => {
-            return (
-              <MemberListItem key={membership.pk} membership={membership} />
-            );
-          })}
-
+        {memberList.map(membership => {
+          return (
+            <MemberListItem key={membership.pk} membership={membership} />
+          );
+        })}
         {(role === 'manager' || role === 'sub_manager') && (
           <MemberSettingBtn studyId={studyId} role={role} />
         )}
@@ -73,29 +38,59 @@ const studyMembersInfo = ({ studyId }) => {
   );
 };
 
-studyMembersInfo.getInitialProps = ({ ctx, token, pk }) => {
+StudyMembersInfo.getInitialProps = async ({ ctx, token, res, pk }) => {
+  const user = await checkLogin({ res, token })
   const { studyId } = ctx.query;
-  ctx.store.dispatch({
-    type: LOAD_STUDY_REQUEST,
-    data: { token, studyId },
-  });
-  ctx.store.dispatch({
-    type: LOAD_STUDY_MEMBERSHIPS_REQUEST,
-    data: {
+  if (!studyId) {
+    redirect({ res });
+  }
+  const member = await checkMember({ res, token, studyId, pk });
+  try {
+    const result = await axios.get(`https://study-watson.lhy.kr/api/v1/study/${studyId}/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
+    const { membershipSet } = result.data;
+    const filterMemberList = membershipSet.filter(membership => {
+      return membership.isWithdraw !== true;
+    });
+    const sortMember = filterMemberList.sort((a, b) => {
+      return a.user.nickname > b.user.nickname;
+    });
+    const normalMemeber = sortMember.filter(member => {
+      return member.role === 'normal';
+    });
+    const subManagerMember = sortMember.filter(member => {
+      return member.role === 'sub_manager';
+    });
+    const managerMember = sortMember.filter(member => {
+      return member.role === 'manager';
+    });
+    const memberList = [
+      ...managerMember,
+      ...subManagerMember,
+      ...normalMemeber,
+    ];
+    return {
       studyId,
-      pk,
-      token,
-    },
-  });
-  return {
-    studyId,
-    token,
-    pk,
-  };
+      memberList,
+      user,
+      role: member.role,
+    };
+  } catch (error) {
+    console.log(error);
+    redirect({ res });
+  }
 };
 
-studyMembersInfo.propTypes = {
+StudyMembersInfo.propTypes = {
   studyId: PropTypes.string.isRequired,
+  memberList: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
-export default studyMembersInfo;
+export default StudyMembersInfo;
+

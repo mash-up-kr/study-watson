@@ -52,7 +52,7 @@ function* addStudy(action) {
       type: ADD_STUDY_SUCCESS,
       data,
     });
-    Router.pushRoute(`/studyDetail/${data.pk}`);
+    Router.pushRoute(`/study/${data.pk}`);
   } catch (e) {
     console.log(JSON.stringify(e));
     console.error(e);
@@ -93,7 +93,7 @@ function* updateStudy(action) {
       type: UPDATE_STUDY_SUCCESS,
       data,
     });
-    Router.pushRoute(`/studyDetail/${data.pk}`);
+    Router.pushRoute(`/study/${data.pk}`);
   } catch (e) {
     console.log(JSON.stringify(e));
     console.error(e);

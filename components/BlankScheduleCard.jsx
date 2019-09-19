@@ -44,8 +44,8 @@ const BlankScheduleCard = ({ studyId, role }) => {
           일정을 만들고 스터디 멤버들과 공유해보세요!
         </StyledText>
         <Link
-          route={`/addSchedule/${studyId}`}
-          href={`/addSchedule/${studyId}`}
+          route={`/study/${studyId}/addSchedule`}
+          href={`/study/${studyId}/addSchedule`}
         >
           <a>
             <StyledBtn>일정 만들기</StyledBtn>
