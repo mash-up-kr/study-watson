@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import ProfileForm from '../components/ProfileForm';
 
 const Profile = ({ user }) => {

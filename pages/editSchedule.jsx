@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import checkMember from '../common/checkMember'
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import checkLogin from '../common/checkLogin';
 import redirect, { studyDetail } from '../common/redirect'
 import EditForm from '../components/EditForm';

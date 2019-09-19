@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import StudyDetailForm from '../components/StudyDetailForm';
 import redirect from '../common/redirect'
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import { WITHDRAW_USER_REQUEST } from '../reducers/user';
 import { StyledTitle } from '../common/StyledComponents';
 

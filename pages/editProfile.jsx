@@ -3,7 +3,7 @@ import React from 'react';
 
 import checkLogin from '../common/checkLogin';
 import EditProfileForm from '../components/editProfileForm';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 
 const EditProfile = ({ user }) => {
 

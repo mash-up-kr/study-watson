@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import React from 'react';
 
 import checkLogin from '../common/checkLogin'
-import CreateStudy from '../containers/CreateStudy';
-import Header from '../containers/Header';
+import CreateStudy from '../components/CreateStudy';
+import Header from '../components/Header';
 
 const AddStudy = ({ user, icons }) => {
   return (

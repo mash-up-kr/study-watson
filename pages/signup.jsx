@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import fb from '../firebase';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import SignUpData from '../components/SignUpData';
 
 const Signup = () => {

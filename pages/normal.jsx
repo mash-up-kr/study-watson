@@ -6,7 +6,7 @@ import Router from 'next/router';
 import AuthorityManagementForm from '../components/AuthorityManagementForm';
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect from '../common/redirect'
 
 const Normal = ({ studyId, token, memberList: InitialMemberList, pk: userPK, user }) => {

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect from '../common/redirect'
 import MemberAttendanceItem from '../components/MemberAttendanceItem';
 import { StyledTitle } from '../common/StyledComponents';

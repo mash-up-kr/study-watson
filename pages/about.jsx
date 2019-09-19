@@ -1,6 +1,6 @@
 import axios from 'axios';
-import Header from '../containers/Header';
-import Information from '../containers/Information';
+import Header from '../components/Header';
+import Information from '../components/Information';
 import PropTypes from 'prop-types';
 import React from 'react';
 

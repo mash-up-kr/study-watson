@@ -8,7 +8,7 @@ import Attendance from '../components/Attendance';
 import { changeFormat } from '../common/changeFormat';
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect from '../common/redirect'
 import VoteForm from '../components/VoteForm';
 

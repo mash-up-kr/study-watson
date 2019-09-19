@@ -4,7 +4,7 @@ import React from 'react';
 
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect from '../common/redirect'
 import ScheduleDetailForm from '../components/scheduleDetailForm';
 

@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { Link } from '../routes';
-import Menu from '../components/Menu';
+import Menu from './Menu';
 
 const StyledHeader = styled.div`
   align-items: center;

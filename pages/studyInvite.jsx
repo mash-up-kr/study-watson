@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import StudyInviteForm from '../components/StudyInviteForm';
 import redirect from '../common/redirect'
 

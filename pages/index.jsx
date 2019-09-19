@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import Main from '../components/Main';
 import { login } from '../common/redirect'
 import { deleteCookie } from '../common/cookie';

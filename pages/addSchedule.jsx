@@ -3,7 +3,7 @@ import React from 'react';
 
 import checkLogin from '../common/checkLogin'
 import CreateSchedule from '../components/CreateSchedule'
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect from '../common/redirect';
 
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import ScheduleCardBefore from '../components/ScheduleCardBefore';
 import { StyledTitle } from '../common/StyledComponents';
 import redirect from '../common/redirect'

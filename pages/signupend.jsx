@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import { StyledButton } from '../common/StyledComponents';
 import { Link } from '../routes';
 

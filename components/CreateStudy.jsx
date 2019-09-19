@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import ShowStudy from '../components/ShowStudy';
-import MakeStudy from '../components/MakeStudy';
+import ShowStudy from './ShowStudy';
+import MakeStudy from './MakeStudy';
 import { useInput } from '../common/useInput';
 import { ADD_STUDY_REQUEST } from '../reducers/study';
 
