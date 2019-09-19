@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import checkMember from '../common/checkMember';
+import checkLogin from '../common/checkLogin';
 import Header from '../containers/Header';
 import ScheduleCardBefore from '../components/ScheduleCardBefore';
 import { StyledTitle } from '../common/StyledComponents';
-import checkLogin from '../common/checkLogin';
 import redirect from '../common/redirect'
 
 const StyledScreen = styled.div`

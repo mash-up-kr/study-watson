@@ -175,7 +175,6 @@ const ScheduleDetailForm = ({ schedule, attendList, lateList, absentList, noneLi
 
 
 ScheduleDetailForm.propTypes = {
-  user: PropTypes.object.isRequired,
   schedule: PropTypes.object.isRequired,
   attendList: PropTypes.array.isRequired,
   lateList: PropTypes.array.isRequired,
