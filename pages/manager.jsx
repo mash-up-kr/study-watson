@@ -6,7 +6,7 @@ import Router from 'next/router';
 import AuthorityManagementForm from '../components/AuthorityManagementForm';
 import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import redirect, { studyDetail } from '../common/redirect'
 
 const Manager = ({ studyId, token, manager, memberList, user }) => {

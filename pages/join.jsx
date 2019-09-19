@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import checkLogin from '../common/checkLogin';
 import redirect from '../common/redirect'
-import Header from '../containers/Header';
+import Header from '../components/Header';
 import JoinForm from '../components/JoinForm';
 
 const Join = ({ study, token, id, user, userProfileCount }) => {
