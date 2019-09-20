@@ -6,7 +6,7 @@ import checkMember from '../common/checkMember';
 import checkLogin from '../common/checkLogin';
 import Header from '../components/Header';
 import redirect from '../common/redirect'
-import ScheduleDetailForm from '../components/scheduleDetailForm';
+import ScheduleDetailForm from '../components/ScheduleDetailForm';
 
 
 const ScheduleDetail = ({ schedule, attendList, lateList, absentList, noneList, user }) => {
