@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build",
-    "prestart": "npm run build",
+    "prestart": "rm -rf ./build  && rm -rf ./node_modules &&  npm install && npm run build",
     "start": "NODE_ENV=production node server.js",
     "predeloy": "npm run build",
     "deploy": "git pull && npm install && pm2 start ecosystem.config.js --env production",
