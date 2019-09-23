@@ -226,8 +226,32 @@ body {
 input, textarea {
   -webkit-appearance: none;
 }
+`;
 
+const StyledProfileImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-left: -0.5rem;
+  box-sizing: content-box;
+`;
 
+const StyledProfileCount = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 24px;
+  box-sizing: content-box;
 `;
 
 export {
@@ -240,4 +264,6 @@ export {
   StyledActionButton,
   StyledImageText,
   StyledInputContainer,
+  StyledProfileImage,
+  StyledProfileCount,
 };

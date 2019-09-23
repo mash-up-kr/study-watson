@@ -9,7 +9,7 @@ import {
   StyledAttendBtnContainer,
   StyledAttendBtn,
 } from './Attendance';
-import { StyledText } from './MemberListItem';
+import { StyledText } from '../pages/studyMembersInfo/MemberListItem';
 
 const AuthorityManagementForm = ({ studyId, onClick, memberList, text }) => {
 
