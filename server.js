@@ -2,9 +2,13 @@ const express = require('express');
 const next = require('next');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const { createServer } = require('http');
+const http = require('http');
 const { parse } = require('url');
 const { resolve } = require('path');
+
+setInterval(function() {
+  http.get('http://study-watson.herokuapp.com/');
+}, 300000);
 
 const port = process.env.PORT || 8080;
 const router = require('./routes');
@@ -24,17 +28,19 @@ app.prepare().then(() => {
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
 
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true);
-    const { pathname } = parsedUrl;
+  http
+    .createServer((req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
 
-    if (pathname === '/service-worker.js') {
-      app.serveStatic(req, res, resolve('./static/service-worker.js'));
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  }).listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+      if (pathname === '/service-worker.js') {
+        app.serveStatic(req, res, resolve('./static/service-worker.js'));
+      } else {
+        handle(req, res, parsedUrl);
+      }
+    })
+    .listen(port, err => {
+      if (err) throw err;
+      console.log(`> Ready on http://localhost:${port}`);
+    });
 });
