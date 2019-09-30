@@ -22,7 +22,6 @@ const Join = ({ study, token, id, user, userProfileCount }) => {
 };
 
 Join.getInitialProps = async ({ ctx, token, res, pk }) => {
-  console.log(1111111);
   const user = await checkLogin({ res, token });
   const { id } = ctx.query;
   if (!id) {

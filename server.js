@@ -7,7 +7,7 @@ const { parse } = require('url');
 const { resolve } = require('path');
 
 setInterval(function() {
-  http.get('http://study-watson.herokuapp.com/');
+  http.get('http://study-watson.herokuapp.com');
 }, 300000);
 
 const port = process.env.PORT || 8080;

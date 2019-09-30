@@ -1,11 +1,11 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import axios from 'axios';
-import { Container } from 'next/app';
+import App from 'next/app';
 import createSagaMiddleware from 'redux-saga';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import React, { useEffect } from 'react';
+import React from 'react';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 
@@ -13,8 +13,8 @@ import { getCookie, getCookieServer } from '../common/cookie';
 import reducer from '../reducers';
 import rootSaga from '../sagas';
 
-const MyApp = ({ Component, store, pageProps }) => {
-  useEffect(() => {
+class MyApp extends App {
+  componentDidMount() {
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/service-worker.js')
@@ -25,9 +25,10 @@ const MyApp = ({ Component, store, pageProps }) => {
           console.log('service worker registration failed', err.message);
         });
     }
-  }, []);
-  return (
-    <Container>
+  }
+  render() {
+    const { Component, store, pageProps } = this.props;
+    return (
       <Provider store={store}>
         <Helmet
           title="study-watson"
@@ -60,9 +61,9 @@ const MyApp = ({ Component, store, pageProps }) => {
         />
         <Component {...pageProps} />
       </Provider>
-    </Container>
-  );
-};
+    );
+  }
+}
 
 const configureStore = (initialState, options) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -78,12 +79,12 @@ const configureStore = (initialState, options) => {
   const enhancer =
     process.env.NODE_ENV === 'development'
       ? compose(
-        applyMiddleware(...middlewares),
-        !options.isServer &&
-          typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
-          ? window.__REDUX_DEVTOOLS_EXTENSION__()
-          : f => f,
-      )
+          applyMiddleware(...middlewares),
+          !options.isServer &&
+            typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
+            ? window.__REDUX_DEVTOOLS_EXTENSION__()
+            : f => f,
+        )
       : compose(applyMiddleware(...middlewares));
   const store = createStore(reducer, initialState, enhancer);
   store.sagaTask = sagaMiddleware.run(rootSaga);
@@ -106,7 +107,12 @@ MyApp.getInitialProps = async context => {
   let pageProps = {};
   if (context.Component.getInitialProps) {
     const { ctx } = context;
-    pageProps = await context.Component.getInitialProps({ ctx, token, pk, res });
+    pageProps = await context.Component.getInitialProps({
+      ctx,
+      token,
+      pk,
+      res,
+    });
   }
   return { pageProps, isServer };
 };
