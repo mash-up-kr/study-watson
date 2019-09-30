@@ -1,54 +1,37 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import React  from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-
-import Attendance from '../../components/Attendance';
-import { changeFormat } from '../../common/changeFormat';
 import checkMember from '../../common/checkMember';
 import checkLogin from '../../common/checkLogin';
 import Header from '../../components/Header';
-import redirect from '../../common/redirect'
+import redirect from '../../common/redirect';
 import VoteForm from './VoteForm';
 
-const StyledScreen = styled.div`
-  width: calc(100% - 2rem);
-  margin: auto;
-`;
-
-const StyledLabel = styled.div`
-  font-size: 0.9rem;
-  color: #4d5256;
-  padding: 1rem 0 0.5rem 0;
-  border-bottom: 1px solid #ededed;
-  margin-bottom: 1rem;
-`;
-
-const StyledTitle = styled.h1`
-  width: 100%;
-  font-size: 1.5rem;
-  padding: 1.5rem 0 0.5rem 0;
-  color: #4d5256;
-`;
-
-const StyledSubTitle = styled.div`
-  font-size: 0.9rem;
-  color: #878d91;
-  margin-bottom: 1rem;
-`;
-
-const Vote = ({ schedule, attendList, lateList, absentList, noneList, user }) => {
+const Vote = ({
+  schedule,
+  attendList,
+  lateList,
+  absentList,
+  noneList,
+  user,
+}) => {
   return (
     <>
       <Header user={user} />
-      <VoteForm schedule={schedule} attendList={attendList} lateList={lateList} absentList={absentList} noneList={noneList} />
+      <VoteForm
+        schedule={schedule}
+        attendList={attendList}
+        lateList={lateList}
+        absentList={absentList}
+        noneList={noneList}
+      />
     </>
   );
 };
 
 Vote.getInitialProps = async ({ ctx, token, res, pk }) => {
-  const user = await checkLogin({ res, token })
+  const user = await checkLogin({ res, token });
   const { studyId, scheduleId } = ctx.query;
   if (!scheduleId) {
     redirect({ res });
@@ -99,6 +82,6 @@ Vote.propTypes = {
   lateList: PropTypes.array.isRequired,
   absentList: PropTypes.array.isRequired,
   noneList: PropTypes.array.isRequired,
-}
+};
 
 export default Vote;

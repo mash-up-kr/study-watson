@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback ,useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
@@ -59,14 +59,17 @@ const SignUpData = () => {
     }
   }, []);
 
-  const checkPassword2 = useCallback(e => {
-    setPassword2(e.target.value);
-    if (password1 === e.target.value) {
-      setIsPassword2Valid(true);
-    } else {
-      setIsPassword2Valid(false);
-    }
-  }, [password1]);
+  const checkPassword2 = useCallback(
+    e => {
+      setPassword2(e.target.value);
+      if (password1 === e.target.value) {
+        setIsPassword2Valid(true);
+      } else {
+        setIsPassword2Valid(false);
+      }
+    },
+    [password1],
+  );
 
   const checkNickname = useCallback(e => {
     setNickname(e.target.value);
@@ -89,60 +92,75 @@ const SignUpData = () => {
     }
   }, []);
 
-  const onSubmit = useCallback(async event => {
-    event.preventDefault();
-    try {
-      const result = await axios.post(
-        'https://study-watson.lhy.kr/api/v1/members/available/',
-        {
-          attributeName: 'email',
-          value: email,
-        },
-      );
-      if (result.data.exists === true) {
+  const onSubmit = useCallback(
+    async event => {
+      event.preventDefault();
+      try {
+        const result = await axios.post(
+          'https://study-watson.lhy.kr/api/v1/members/available/',
+          {
+            attributeName: 'email',
+            value: email,
+          },
+        );
+        if (result.data.exists === true) {
+          alert('이미 사용중인 이메일 입니다.');
+          return;
+        }
+      } catch (error) {
+        console.error(error.response);
         alert('이미 사용중인 이메일 입니다.');
         return;
       }
-    } catch (error) {
-      console.error(error.response);
-      alert('이미 사용중인 이메일 입니다.');
-      return;
-    }
 
-    if (isEmailValid === false) {
-      alert('올바른 이메일 형식을 입력해주세요');
-      return;
-    }
-    if (isPassword1Valid === false) {
-      alert('올바른 비밀번호를 입력해주세요');
-      return;
-    }
-    if (isPassword2Valid === false) {
-      alert('비밀번호를 다시 한 번 확인해주세요');
-      return;
-    }
-    if (isNicknameValid === false) {
-      alert('올바른 이름을 입력해주세요');
-      return;
-    }
-    if (isPhoneNumberValid === false) {
-      alert('올바른 전화번호를 입력해주세요');
-      return;
-    }
+      if (isEmailValid === false) {
+        alert('올바른 이메일 형식을 입력해주세요');
+        return;
+      }
+      if (isPassword1Valid === false) {
+        alert('올바른 비밀번호를 입력해주세요');
+        return;
+      }
+      if (isPassword2Valid === false) {
+        alert('비밀번호를 다시 한 번 확인해주세요');
+        return;
+      }
+      if (isNicknameValid === false) {
+        alert('올바른 이름을 입력해주세요');
+        return;
+      }
+      if (isPhoneNumberValid === false) {
+        alert('올바른 전화번호를 입력해주세요');
+        return;
+      }
 
-    dispatch({
-      type: SIGN_UP_REQUEST,
-      data: {
-        username: email,
-        password1,
-        password2,
-        type,
-        email,
-        phoneNumber,
-        nickname,
-      },
-    });
-  }, [email, password1, password2, type, phoneNumber, nickname, isEmailValid, isPassword1Valid, isPassword2Valid, isNicknameValid, isPhoneNumberValid]);
+      dispatch({
+        type: SIGN_UP_REQUEST,
+        data: {
+          username: email,
+          password1,
+          password2,
+          type,
+          email,
+          phoneNumber,
+          nickname,
+        },
+      });
+    },
+    [
+      email,
+      password1,
+      password2,
+      type,
+      phoneNumber,
+      nickname,
+      isEmailValid,
+      isPassword1Valid,
+      isPassword2Valid,
+      isNicknameValid,
+      isPhoneNumberValid,
+    ],
+  );
 
   const onClickInput = useCallback(value => {
     setFocus(value);
