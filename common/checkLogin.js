@@ -10,13 +10,13 @@ export default async ({ res, token }) => {
       headers: { Authorization: `Token ${token}` },
     });
     if (!result.data.pk) {
-      login(res);
+      login({ res });
     }
     return result.data;
   } catch (error) {
     console.log(error);
     deleteCookie('token');
     deleteCookie('pk');
-    login(res);
+    login({ res });
   }
-}
+};

@@ -3,22 +3,27 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import checkLogin from '../../common/checkLogin';
-import redirect from '../../common/redirect'
+import redirect from '../../common/redirect';
 import Header from '../../components/Header';
 import JoinForm from './JoinForm';
 
 const Join = ({ study, token, id, user, userProfileCount }) => {
-  console.log(user)
   return (
     <>
       <Header user={user} />
-      <JoinForm study={study} token={token} id={id} userProfileCount={userProfileCount} />
+      <JoinForm
+        study={study}
+        token={token}
+        id={id}
+        userProfileCount={userProfileCount}
+      />
     </>
   );
 };
 
 Join.getInitialProps = async ({ ctx, token, res, pk }) => {
-  const user = await checkLogin({ res, token })
+  console.log(1111111);
+  const user = await checkLogin({ res, token });
   const { id } = ctx.query;
   if (!id) {
     redirect({ res });
@@ -41,8 +46,7 @@ Join.getInitialProps = async ({ ctx, token, res, pk }) => {
     // }
     const study = result.data;
     const userProfileCount =
-      (!!study.studyMembers &&
-        study.studyMembers.length > 3)
+      !!study.studyMembers && study.studyMembers.length > 3
         ? `+${study.studyMembers.length - 3}`
         : '';
 
@@ -65,6 +69,6 @@ Join.propTypes = {
   study: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-}
+};
 
 export default Join;
