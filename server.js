@@ -6,9 +6,9 @@ const http = require('http');
 const { parse } = require('url');
 const { resolve } = require('path');
 
-setInterval(function() {
-  http.get('http://study-watson.herokuapp.com');
-}, 300000);
+// setInterval(function() {
+//   http.get('http://study-watson.herokuapp.com');
+// }, 300000);
 
 const port = process.env.PORT || 8080;
 const router = require('./routes');
