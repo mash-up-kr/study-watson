@@ -14,6 +14,7 @@ import CategoryDevelop from '../../components/CategoryDevelop';
 import CategoryDesign from '../../components/CategoryDesign';
 import StudyIcon from '../../components/StudyIcon';
 
+//#region style
 const StyledScreen = styled.div`
   width: calc(100% - 2rem);
   margin: auto;
@@ -58,6 +59,7 @@ const StyledIconCategory = styled.div`
   color: #878d91;
   margin-bottom: 0.5rem;
 `;
+//#endregion
 
 const MakeStudy = ({
   onSubmitForm,
