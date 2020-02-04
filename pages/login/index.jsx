@@ -1,15 +1,3 @@
-import React from 'react';
-
-import Header from '../../components/Header';
-import LoginForm from './LoginForm';
-
-const Login = () => {
-  return (
-    <>
-      <Header />
-      <LoginForm />
-    </>
-  );
-};
+import Login from './Login';
 
 export default Login;
