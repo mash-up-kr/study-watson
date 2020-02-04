@@ -14,7 +14,7 @@ import AddFAB from '../../components/AddFAB';
 import { changeFormat } from '../../common/changeFormat';
 
 const StyledContainer = styled.div`
-  height: calc(100vh - 110px);
+  height: calc(100vh - 56px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,6 +83,19 @@ const StyledProfileContainer = styled.div`
   position: relative;
 `;
 
+const StyledImage = styled.img`
+  width: 100%;
+  margin-bottom: 2rem;
+`;
+
+const StyledImageSubText = styled.div`
+  color: #4d5256;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 2rem;
+`;
+
 export const getNearestScheduleStartAt = schedules => {
   const filterSchedules =
     schedules &&
@@ -104,7 +117,6 @@ export const getNearestScheduleStartAt = schedules => {
 };
 
 const MainLogIn = ({ studies }) => {
-
   return (
     <div>
       <div>
@@ -122,12 +134,8 @@ const MainLogIn = ({ studies }) => {
                 return (
                   <Link
                     key={idx}
-                    route={`/study/${study &&
-                      study.study &&
-                      study.study.pk}`}
-                    href={`/study/${study &&
-                      study.study &&
-                      study.study.pk}`}
+                    route={`/study/${study && study.study && study.study.pk}`}
+                    href={`/study/${study && study.study && study.study.pk}`}
                   >
                     <a>
                       <StyledCard>
@@ -135,8 +143,8 @@ const MainLogIn = ({ studies }) => {
                           {study.study.category.name === 'Develop' ? (
                             <CategoryDevelop />
                           ) : (
-                              <CategoryDesign />
-                            )}
+                            <CategoryDesign />
+                          )}
                         </div>
                         <StyledTitle>
                           {study && study.study && study.study.name}
@@ -190,24 +198,27 @@ const MainLogIn = ({ studies }) => {
             </Link>
           </>
         ) : (
-            <StyledContainer>
-              <img
-                src="/static/image_main.svg"
-                alt="main illust"
-                style={{ marginBottom: '2rem' }}
-              />
-              <StyledImageText>
-                진행중인 스터디가 없습니다.
+          <StyledContainer>
+            <StyledImage src="/static/image_main.png" alt="main illust" />
+            <StyledImageText>
+              진행중인 스터디가 없습니다.
               <br />
-                스터디를 만들고 관리해보세요!
+              스터디를 만들고 관리해보세요!
             </StyledImageText>
-              <Link route="/addStudy" href="/addStudy">
-                <a>
-                  <StyledActionButton type="button" value="스터디 만들기" />
-                </a>
-              </Link>
-            </StyledContainer>
-          )}
+            <StyledImageSubText>
+              스터디 관리, 제대로 하고 계신가요?
+              <br />
+              공지, 투표, 출결, 일정, 자료 관리 등 모든 스터디
+              <br />
+              관리를 스터디 왓슨에서 시작해보세요!
+            </StyledImageSubText>
+            <Link route="/addStudy" href="/addStudy">
+              <a>
+                <StyledActionButton type="button" value="스터디 만들기" />
+              </a>
+            </Link>
+          </StyledContainer>
+        )}
       </div>
     </div>
   );
