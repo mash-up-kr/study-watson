@@ -8,6 +8,7 @@ import {
 import { Link } from '../../routes';
 
 const StyledContainer = styled.div`
+  height: calc(100vh - 56px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,21 +16,24 @@ const StyledContainer = styled.div`
 `;
 
 const StyledText = styled.div`
-  color: #4D5256;
+  color: #4d5256;
   font-size: 0.9rem;
   line-height: 1.5;
   text-align: center;
-  font-weight: lighter;
+  margin-bottom: 2rem;
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
   margin-bottom: 2rem;
 `;
 
 const Start = () => {
   return (
     <StyledContainer>
-      <img
-        src="/static/image_main_logout.svg"
+      <StyledImage
+        src="/static/image_main_logout.png"
         alt="main illustration"
-        style={{ marginBottom: '2rem' }}
       />
       <StyledImageText>
         효율적으로 스터디를

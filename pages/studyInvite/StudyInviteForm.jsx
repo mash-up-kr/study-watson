@@ -11,8 +11,7 @@ import {
 import { Link } from '../../routes';
 
 const StyledContainer = styled.div`
-  width: calc(100vw - 2rem);
-  height: calc(100vh - 110px);
+  height: calc(100vh - 56px);
   margin: auto;
   display: flex;
   justify-content: center;
@@ -22,15 +21,14 @@ const StyledContainer = styled.div`
 
 const StyledLink = styled.input`
   border: 1px solid #ededed;
-  width: 100%;
+  width: calc(100% - 32px);
   padding: 1rem;
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
   text-align: center;
   border-radius: 8px;
-  color: #4D5256;
+  color: #4d5256;
 `;
-
 
 const StyledToast = styled.div`
   width: 100%;
@@ -41,6 +39,11 @@ const StyledToast = styled.div`
   bottom: 3rem;
   font-size: 0.9rem;
   text-align: center;
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  margin-bottom: 2rem;
 `;
 
 const StudyInviteForm = ({ studyId, token }) => {
@@ -79,16 +82,12 @@ const StudyInviteForm = ({ studyId, token }) => {
 
   return (
     <StyledContainer>
-      <img
-        src="/static/image_invite.svg"
-        alt="invite illustration"
-        style={{ marginBottom: '1rem' }}
-      />
+      <StyledImage src="/static/image_invite.png" alt="invite illustration" />
       <StyledImageText>
         링크를 공유해서
-          <br />
+        <br />
         스터디원을 초대해보세요!
-        </StyledImageText>
+      </StyledImageText>
       <StyledLink
         type="text"
         value={url}
@@ -96,14 +95,13 @@ const StudyInviteForm = ({ studyId, token }) => {
         onClick={onClickLink}
         readOnly
       />
-      <StyledActionButton onClick={clickLink} name="make" type="button" value="링크 생성" />
+      <StyledActionButton
+        onClick={clickLink}
+        name="make"
+        type="button"
+        value="링크 생성"
+      />
       {show && <StyledToast>링크가 복사되었습니다!</StyledToast>}
-      <br />
-      <Link route="/" href="/">
-        <a>
-          <StyledButton type="button" value="홈으로 돌아가기" />
-        </a>
-      </Link>
     </StyledContainer>
   );
 };
