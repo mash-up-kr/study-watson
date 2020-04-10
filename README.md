@@ -8,6 +8,7 @@
 ### 💻 [API](https://study-watson.lhy.kr/)
 
 ### 📺[DemoVideo](https://www.youtube.com/playlist?list=PLbQ4nksKW6u5o5FfUzHWTwenpdDJhMLBZ)
+[![study watson](https://img.youtube.com/vi/nKn6scRu-hk/0.jpg)](https://www.youtube.com/watch?v=nKn6scRu-hk)
 
 # MashUp React Project
 
